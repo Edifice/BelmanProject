@@ -14,7 +14,7 @@ public class FileManager {
      * creates a configuration file which is returned.
      *
      */
-    public static Properties readPropertiesFile(String path) throws Exception{
+    public static Properties readPropertiesFile(String path) throws FileNotFoundException{
         try {
             Properties config = new Properties();
             FileInputStream file = new FileInputStream(path);
@@ -22,7 +22,7 @@ public class FileManager {
             return config;
         } catch (IOException ex) {
             Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
-            throw new Exception("File not found " + path);
+            throw new FileNotFoundException("File not found " + path);
         }
     }
 }

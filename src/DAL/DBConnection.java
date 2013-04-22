@@ -1,18 +1,19 @@
 package DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
 
-    private Connection connection;
+    private Connection connection; // the connection
     private SQLServerDataSource dataSource;
-    private final String PATH = "dbconfig.cfg";
-    private static volatile DBConnection instance = null;
+    private final String PATH = "dbconfig.cfg"; // the path to the config file
+    private static volatile DBConnection instance = null; // the instance of this class
 
-    private DBConnection() throws SQLException, Exception {
+    private DBConnection() throws SQLException, FileNotFoundException {
         dataSource = new SQLServerDataSource();
         Properties conf = FileManager.readPropertiesFile(PATH);
 
@@ -23,7 +24,16 @@ public class DBConnection {
         dataSource.setDatabaseName(conf.getProperty("DBNAME"));
     }
 
-    public static DBConnection getInstance() throws SQLException, Exception {
+    /**
+     * This method makes it possible that we have one and only one instance of
+     * the connection. For more information look up the "Singleton pattern"
+     * online.
+     *
+     * @return the Connection instance
+     * @throws SQLException in case the connection failed to the database
+     * @throws Exception in case we couldn't read from the configuration file
+     */
+    public static DBConnection getInstance() throws SQLException, FileNotFoundException {
         if (instance == null) {
             instance = new DBConnection();
         }
