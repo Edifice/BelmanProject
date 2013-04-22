@@ -3,16 +3,30 @@ _**Project description:** Belman is a make-to-order company and	needs an IT syst
 
 ___
 
+## Team Setup
+Our team consists of the following members:
+
+- Antal János Monori
+- Daniel Salamon
+- Martin Rasmussen
+
+**Product owner:** Antal János Monori
+
+**Scrum Master:** Stig Salskov Iversen
+
+**Coaches:** Ole Eriksen, Henrik Kühl, Bent Pedersen
+
+
 ## Project Setup
 We use the following applications in this project:
 
 - **IDE:** [NetBeans](https://netbeans.org/downloads/start.html?platform=windows&lang=en&option=javase)
 - **Programming Language:** [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
-- **Online Scrum Tool:** *Waiting for suggestions...*
+- **Online Scrum Tool:** [Redmine](http://li452-111.members.linode.com:3000/projects/belman)
 - **Database:** [Microsoft SQL Server 2012 Express](http://www.microsoft.com/en-us/download/details.aspx?id=29062)
 - **DVCS:** [Git](http://git-scm.com/downloads)
 - **Git Client:** [SmartGit/Hg](http://www.syntevo.com/smartgithg/), [Git Extensions](https://code.google.com/p/gitextensions/)
-- **Communication channel:** [Facebook Group](https://www.facebook.com/groups/belmanproject/), [Email](mailto:belmanproject@groups.facebook.com), [To-Do List](https://www.wunderlist.com/#/lists/1cd4b7335e7259aa7c5e9c24ca0370f0), [Shared Google Drive folder](https://drive.google.com/folderview?id=0BzZ6N-_fiu5GZ2ZXbGlObkg5eWc&usp=sharing)
+- **Communication channel:** [Facebook Group](https://www.facebook.com/groups/belmanproject/), [Google Drive folder](https://drive.google.com/folderview?id=0BzZ6N-_fiu5GZ2ZXbGlObkg5eWc&usp=sharing)
 - **Mock-up tool:** [Pencil](http://pencil.evolus.vn/Downloads.html)
 
 ## Workflow
@@ -24,11 +38,24 @@ We use the following applications in this project:
 6. `git push` your changes.
 7. Start the process all over again.
 
+## Coding Conventions
+
+
 ## Policies
 - Follow the workflow!
-- Never push up code that is not working!
+- We use Redmine as our primary scrum board, and the whiteboard as our secondary one!
+- Never push up code to the `master` branch that is not working, therefore the `master` branch should always work!
+- Use the `dev` branch for unfinished code!
 - No author name or license info included in the files (Tools > Templates in NetBeans)!
+- Follow the coding conventions!
 - Only `push` when it is necessary (fewer conflicts)!
+- When you `commit` use the following in the header, so we can identify the tasks and user stories related to it: **ref #[idnum]**
 - Always add proper JavaDoc!
 - JavaDoc first, programming after!
-- *More coming later...*
+- We always come to "work" on Monday, Tuesday and Friday!
+- If it's possible we also meet on Wednesday and Thursday!
+- If it's necessary we meet on the weekends as well!
+- The usual working hours are between 10 am and 2 pm
+- We always start with a 5 minutes Scrum Daily Meeting and we have a regular (preferably less then 1 hour) team meeting, but only if necessary.
+- Come prepared to the meetings!
+- Bring your sense of humor as well! **(Very important)**
