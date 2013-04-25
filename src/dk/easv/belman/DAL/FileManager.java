@@ -1,4 +1,4 @@
-package DAL;
+package dk.easv.belman.DAL;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

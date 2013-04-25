@@ -1,4 +1,4 @@
-package DAL;
+package dk.easv.belman.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.io.FileNotFoundException;
