@@ -1,10 +1,30 @@
 package dk.easv.belman.BE;
 
+import java.lang.reflect.Field;
+
 public class SalesOrder extends IEntity {
-    
-    private int orderId;
-    private String orderDescription;
-    private boolean isDone;
+
+    private int id;
+    private String description;
+    private boolean done;
+
+    public SalesOrder() {
+    }
+
+    /**
+     * Getting an existing Sales order from DB by id
+     *
+     * @param pk
+     */
+    public SalesOrder(int id) {
+
+        // @TODO get by id
+        SalesOrder now = new SalesOrder();
+        
+        this.id = now.id;
+        this.description = now.description;
+        this.done = now.done;
+    }
 
     @Override
     public void save() {
@@ -17,44 +37,44 @@ public class SalesOrder extends IEntity {
     }
 
     /**
-     * @return the orderId
+     * @return the id
      */
-    public int getOrderId() {
-        return orderId;
+    public int getId() {
+        return id;
     }
 
     /**
-     * @param orderId the orderId to set
+     * @param id the id to set
      */
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
-     * @return the orderDescription
+     * @return the description
      */
-    public String getOrderDescription() {
-        return orderDescription;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * @param orderDescription the orderDescription to set
+     * @param description the description to set
      */
-    public void setOrderDescription(String orderDescription) {
-        this.orderDescription = orderDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
-     * @return the isDone
+     * @return the done
      */
     public boolean isDone() {
-        return isDone;
+        return done;
     }
 
     /**
-     * @param isDone the isDone to set
+     * @param done the done to set
      */
-    public void setDone(boolean isDone) {
-        this.isDone = isDone;
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }
