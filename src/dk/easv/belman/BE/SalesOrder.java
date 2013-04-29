@@ -1,7 +1,5 @@
 package dk.easv.belman.BE;
 
-import java.lang.reflect.Field;
-
 public class SalesOrder extends IEntity {
 
     private int id;

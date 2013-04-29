@@ -55,6 +55,21 @@ public class BList<Type extends IEntity> {
     }
 
     /**
+     * Re-populates the list with all of the existing Entities.
+     */
+    public void selectAll() {
+        throw new UnsupportedOperationException("Not implemented method call");
+    }
+    
+    /**
+     * Re-populates the list with the given id's.
+     * @param indexes
+     */
+    public void selectByPk(int[] index) {
+        throw new UnsupportedOperationException("Not implemented method call");
+    }
+
+    /**
      * Getting 1 element from the list.
      *
      * @return the element at the specified index.
@@ -107,5 +122,14 @@ public class BList<Type extends IEntity> {
      */
     public void add(int i, Type elem) {
         list.add(i, elem);
+    }
+
+    /**
+     * Returns the size of the stored list.
+     *
+     * @return int size
+     */
+    public int size() {
+        return list.size();
     }
 }

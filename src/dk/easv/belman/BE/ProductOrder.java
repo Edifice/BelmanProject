@@ -1,12 +1,32 @@
 package dk.easv.belman.BE;
 
 public class ProductOrder extends IEntity {
-    
+
     private int id;
     private int salesOrderId;
     private String description;
     private long dueDate;
     private boolean done;
+
+    public ProductOrder() {
+    }
+
+    /**
+     * Getting an existing Sales order from DB by id
+     *
+     * @param pk
+     */
+    public ProductOrder(int id) {
+
+        // @TODO get by id
+        ProductOrder now = new ProductOrder();
+
+        this.id = now.id;
+        this.salesOrderId = now.salesOrderId;
+        this.description = now.description;
+        this.dueDate = now.dueDate;
+        this.done = now.done;
+    }
 
     @Override
     public void save() {

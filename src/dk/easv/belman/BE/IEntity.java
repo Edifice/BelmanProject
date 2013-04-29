@@ -17,12 +17,28 @@ public class IEntity {
         now.update();
     }
 
+    /**
+     * Saves this entity to the database. And after saving it refreshes it.
+     */
     public void save() {
+        //@TODO  do the saving
+        //@TODO  set the pk from the DB, so we can use it
+        this.update();
         throw new UnsupportedOperationException("Not implemented method call");
     }
 
+    /**
+     * Refreshes the Entity from the DB by primary key.
+     */
     public void update() {
-        //@TODO set pk when getting data!
+        throw new UnsupportedOperationException("Not implemented method call");
+    }
+    
+    /**
+     * Changes the Entity to another one.
+     * @param indexes
+     */
+    public void selectByPk(int index) {
         throw new UnsupportedOperationException("Not implemented method call");
     }
 
