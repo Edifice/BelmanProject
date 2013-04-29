@@ -1,9 +1,17 @@
 package dk.easv.belman.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import dk.easv.belman.BE.Item;
+import dk.easv.belman.BE.ItemList;
+import dk.easv.belman.BE.ProductOrder;
+import dk.easv.belman.BE.ProductOrderList;
+import dk.easv.belman.BE.SalesOrder;
+import dk.easv.belman.BE.SalesOrderList;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class DBConnection {
@@ -39,4 +47,140 @@ public class DBConnection {
         }
         return instance;
     }
+
+    /**
+     * This method returns a list of all sales order from the database.
+     */
+    public SalesOrderList getAllSalesOrder() throws SQLException {
+        SalesOrderList ret = new SalesOrderList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM SalesOrder");
+            while (rs.next()) {
+                SalesOrder ord = new SalesOrder();
+                ord.setId(rs.getInt("order_id"));
+                ord.setDescription(rs.getString("order_description"));
+                ord.setDone(rs.getBoolean("is_done"));
+                ret.add(ord);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+        return ret;
+    }
+
+    /**
+     * This method returns a list of all production order from the database.
+     */
+    public ProductOrderList getAllProductionOrder() throws SQLException {
+        ProductOrderList ret = new ProductOrderList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM ProductionOrder");
+            while (rs.next()) {
+                ProductOrder ord = new ProductOrder();
+                ord.setId(rs.getInt("order_id"));
+                ord.setDescription(rs.getString("order_description"));
+                ord.setDone(rs.getBoolean("is_done"));
+                ord.setDueDate(rs.getTimestamp("due_date").getTime());
+                ord.setSalesOrderId(rs.getInt("sales_order"));
+                ret.add(ord);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+        return ret;
+    }
+    
+    public ProductOrderList getAllProductionOrder(int sales_order) throws SQLException { // to do
+        ProductOrderList ret = new ProductOrderList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM ProductionOrder");
+            while (rs.next()) {
+                ProductOrder ord = new ProductOrder();
+                ord.setId(rs.getInt("order_id"));
+                ord.setDescription(rs.getString("order_description"));
+                ord.setDone(rs.getBoolean("is_done"));
+                ord.setDueDate(rs.getTimestamp("due_date").getTime());
+                ord.setSalesOrderId(rs.getInt("sales_order"));
+                ret.add(ord);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+        return ret;
+    }
+    
+        public ItemList getAllItems() throws SQLException {
+        ItemList ret = new ItemList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Item");
+            while (rs.next()) {
+                Item itm = new Item();
+                itm.setId(rs.getInt("order_id"));
+                itm.setQuantity(rs.getInt("quantity"));
+                itm.setMaterialId(rs.getInt("material_id"));
+                itm.setThickness(rs.getDouble("thickness"));
+                itm.setWidth(rs.getDouble("width"));
+                itm.setCircumference(rs.getDouble("circumference"));
+                itm.setProductOrderId(rs.getInt("production_order"));
+                ret.add(itm);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+        return ret;
+    }
+        public ItemList getAllItems(int production_order) throws SQLException { // to do
+        ItemList ret = new ItemList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM Item");
+            while (rs.next()) {
+                Item itm = new Item();
+                itm.setId(rs.getInt("order_id"));
+                itm.setQuantity(rs.getInt("quantity"));
+                itm.setMaterialId(rs.getInt("material_id"));
+                itm.setThickness(rs.getDouble("thickness"));
+                itm.setWidth(rs.getDouble("width"));
+                itm.setCircumference(rs.getDouble("circumference"));
+                itm.setProductOrderId(rs.getInt("production_order"));
+                ret.add(itm);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+        return ret;
+    }
 }
+
+
+//class Test {
+//
+//    public static void main(String[] args) throws SQLException, FileNotFoundException {
+//        DBConnection dbc = DBConnection.getInstance();
+//        dbc.getAllSalesOrder();
+//    }
+//}
