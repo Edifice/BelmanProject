@@ -1,6 +1,6 @@
 package dk.easv.belman.BE;
 
-public class SalesOrder implements IEntity {
+public class SalesOrder extends IEntity {
 
     @Override
     public void save() {
