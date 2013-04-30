@@ -105,13 +105,13 @@ public class DBConnection {
      * This method returns all the production orders that are related to a
      * specific sales order.
      */
-    public ProductOrderList getAllProductionOrder(int sales_order) throws SQLException {
+    public ProductOrderList getAllProductionOrder(int salesOrder) throws SQLException {
         ProductOrderList ret = new ProductOrderList();
         connection = dataSource.getConnection();
         try {
             connection.setAutoCommit(false);
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM ProductionOrder WHERE sales_order = " + sales_order);
+            ResultSet rs = st.executeQuery("SELECT * FROM ProductionOrder WHERE sales_order = " + salesOrder);
             while (rs.next()) {
                 ProductOrder ord = new ProductOrder();
                 ord.setId(rs.getInt("order_id"));
@@ -132,7 +132,7 @@ public class DBConnection {
     /**
      * This method returns a list of all items from the database.
      */
-    public ItemList getAllItems() throws SQLException {
+    public ItemList getAllItem() throws SQLException {
         ItemList ret = new ItemList();
         connection = dataSource.getConnection();
         try {
@@ -141,7 +141,7 @@ public class DBConnection {
             ResultSet rs = st.executeQuery("SELECT * FROM Item");
             while (rs.next()) {
                 Item itm = new Item();
-                itm.setId(rs.getInt("order_id"));
+                itm.setId(rs.getInt("id"));
                 itm.setQuantity(rs.getInt("quantity"));
                 itm.setMaterialId(rs.getInt("material_id"));
                 itm.setThickness(rs.getDouble("thickness"));
@@ -162,16 +162,16 @@ public class DBConnection {
      * This method returns all the Items that are related to a specific
      * Production Order.
      */
-    public ItemList getAllItems(int production_order) throws SQLException {
+    public ItemList getAllItem(int productionOrder) throws SQLException {
         ItemList ret = new ItemList();
         connection = dataSource.getConnection();
         try {
             connection.setAutoCommit(false);
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Item WHERE production_order = " + production_order);
+            ResultSet rs = st.executeQuery("SELECT * FROM Item WHERE production_order = " + productionOrder);
             while (rs.next()) {
                 Item itm = new Item();
-                itm.setId(rs.getInt("order_id"));
+                itm.setId(rs.getInt("id"));
                 itm.setQuantity(rs.getInt("quantity"));
                 itm.setMaterialId(rs.getInt("material_id"));
                 itm.setThickness(rs.getDouble("thickness"));

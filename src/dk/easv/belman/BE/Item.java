@@ -9,6 +9,7 @@ public class Item extends IEntity {
     private double thickness;
     private double width;
     private double circumference;
+    private boolean done;
 
     public Item() {
     }
@@ -25,6 +26,7 @@ public class Item extends IEntity {
         this.thickness = now.thickness;
         this.width = now.width;
         this.circumference = now.circumference;
+        this.done = now.done;
     }
 
     /**
@@ -123,5 +125,19 @@ public class Item extends IEntity {
      */
     public void setCircumference(double circumference) {
         this.circumference = circumference;
+    }
+
+    /**
+     * @return the done
+     */
+    public boolean isDone() {
+        return done;
+    }
+
+    /**
+     * @param done the done to set
+     */
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }
