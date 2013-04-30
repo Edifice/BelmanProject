@@ -15,80 +15,41 @@ import java.util.List;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class MyTreeTableModel extends AbstractTreeTableModel {
-    
+
     private MyTreeNode root;
     private ListManager allLists;
-    
+
     public MyTreeTableModel() {
         init();
         populateTable();
-        
-        
     }
-    
+
     private void init() {
         allLists = new ListManager();
-        
     }
-    
+
     private void populateTable() {
-        
-        
         root = new MyTreeNode();
-
-
-//        for (int i = 0; i < 4; i++) {
-//            sOrders.add(new SalesOrder(i));
-//        }
-//        pOrders.add(new ProductionOrder(0, 0, "01-01-2013"));
-//        pOrders.add(new ProductionOrder(1, 1, "02-02-2013"));
-//        pOrders.add(new ProductionOrder(2, 1, "03-02-2013"));
-//        pOrders.add(new ProductionOrder(3, 3, "03-02-2013"));
-//        pOrders.add(new ProductionOrder(4, 4, "03-02-2013"));
-//        pOrders.add(new ProductionOrder(4, 2, "03-02-2013"));
-//
-//        items.add(new Item("10", 1, 300, 400, 0.22, 30));
-//        items.add(new Item("15", 1, 500, 400, 0.22, 30));
-//        items.add(new Item("12", 2, 800, 400, 0.22, 30));
-//        items.add(new Item("5", 2, 800, 400, 0.22, 30));
-//        items.add(new Item("7", 0, 800, 400, 0.22, 30));
-//        items.add(new Item("8", 3, 800, 400, 0.22, 30));
-//        items.add(new Item("333", 4, 800, 400, 0.22, 30));
-//        items.add(new Item("40", 4, 800, 400, 0.22, 30));
-
         for (SalesOrder s : allLists.getAllSalesOrder().getList()) {
-            //Uncomment this to set ID as name
-            //String sName = String.valueOf(s.getId());
-
-            //Change to sName;
-            MyTreeNode sRoot = new MyTreeNode(s.getId(), s.getDescription());
-            
+            MyTreeNode sRoot = new MyTreeNode(s);
             root.getChildren().add(sRoot);
-            
-            for (ProductOrder p : allLists.getAllProductOrder(s.getId()).getList()) {
-                //Uncomment this to set ID as name
-                //String pName = String.valueOf(p.getId());
 
-                //Change first param to pName;
-                MyTreeNode pRoot = new MyTreeNode(p.getId(), p.getDescription(), p.getDueDate());
-                //if (s.getId() == p.getSId()) {
+            for (ProductOrder p : allLists.getAllProductOrder(s.getId()).getList()) {
+                MyTreeNode pRoot = new MyTreeNode(p);
                 sRoot.getChildren().add(pRoot);
-                //}
 
                 for (Item item : allLists.getAllItems(p.getId()).getList()) {
-                    //if (p.getId() == item.getOrdId()) {
-                    pRoot.getChildren().add(new MyTreeNode(item.getId(), item.getMaterialId(), item.getWidth(), item.getCircumference(), item.getThickness(), item.getQuantity()));
-                    //}
+                    pRoot.getChildren().add(new MyTreeNode(item));
                 }
             }
         }
     }
-    
+
     @Override
     public int getColumnCount() {
         return 8;
     }
-    
+
     @Override
     public String getColumnName(int column) {
         switch (column) {
@@ -112,13 +73,13 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
                 return "Unknown";
         }
     }
-    
+
     @Override
     public Object getValueAt(Object node, int column) {
         //System.out.println("getValueAt: " + node + ", " + column);
         MyTreeNode treenode = (MyTreeNode) node;
         switch (column) {
-            
+
             case 0:
                 return treenode.getId();
             case 1:
@@ -162,21 +123,21 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
             default:
                 return "Unknown";
         }
-        
+
     }
-    
+
     @Override
     public Object getChild(Object node, int index) {
         MyTreeNode treenode = (MyTreeNode) node;
         return treenode.getChildren().get(index);
     }
-    
+
     @Override
     public int getChildCount(Object parent) {
         MyTreeNode treenode = (MyTreeNode) parent;
         return treenode.getChildren().size();
     }
-    
+
     @Override
     public int getIndexOfChild(Object parent, Object child) {
         MyTreeNode treenode = (MyTreeNode) parent;
@@ -189,7 +150,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         // TODO Auto-generated method stub
         return 0;
     }
-    
+
     public boolean isLeaf(Object node) {
         MyTreeNode treenode = (MyTreeNode) node;
         if (treenode.getChildren().size() > 0) {
@@ -197,7 +158,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         }
         return true;
     }
-    
+
     @Override
     public Object getRoot() {
         return root;
@@ -205,164 +166,81 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
 }
 
 class MyTreeNode {
-    
+
     private List<MyTreeNode> children = new ArrayList<>();
     private String description, name;
     private double thickness, width, circumference;
     private int quantity, id, matId;
     private long dueDate;
-    
+
     public MyTreeNode() {
     }
-    //Sales order node
 
-    public MyTreeNode(int id, String description) {
-        this.id = id;
-        this.description = description;
-        
-        
+    public MyTreeNode(SalesOrder salesOrder) {
+        this.id = salesOrder.getId();
+        this.description = salesOrder.getDescription();
     }
-    //Production order node
 
-    public MyTreeNode(int id, String description, long dueDate) {
-        this.id = id;
-        this.description = description;
-        this.dueDate = dueDate;
+    public MyTreeNode(ProductOrder productOrder) {
+        this.id = productOrder.getId();
+        this.description = productOrder.getDescription();
+        this.dueDate = productOrder.getDueDate();
     }
-    
-    //Item order node
-    public MyTreeNode(int id, int matId, double width, double thickness, double circumference, int quantity) {
-        
-        this.matId = matId;
-        this.id = id;
-        this.width = width;
-        this.circumference = circumference;
-        this.quantity = quantity;
-        this.thickness = thickness;
+
+    public MyTreeNode(Item item) {
+        this.id = item.getId();
+        this.matId = item.getId();
+        this.circumference = item.getCircumference();
+        this.thickness = item.getThickness();
+        this.width = item.getWidth();
+        this.quantity = item.getQuantity();
     }
-    
+
     public int getId() {
         return id;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public double getThickness() {
         return thickness;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public List<MyTreeNode> getChildren() {
         return children;
     }
-    
+
     public int getMatId() {
         return matId;
     }
-    
+
     public long getDueDate() {
         return dueDate;
     }
-    
+
     public String getDescription() {
         return description;
     }
-    
+
     public double getWidth() {
         return width;
     }
-    
+
     public double getCircumference() {
         return circumference;
     }
-    
+
     public int getQuantity() {
         return quantity;
     }
-    
+
     public String toString() {
         return "MyTreeNode: " + id;
     }
 }
-//class SalesOrder {
-//
-//    private int id;
-//
-//    public SalesOrder(int id) {
-//        this.id = id;
-//    }
-//
-//    public int getId() {
-//        return id;
-//    }
-//}
-//
-//class ProductionOrder {
-//
-//    private int id;
-//    private int sId;
-//    private String dueDate;
-//
-//    public ProductionOrder(int id, int sId, String dueDate) {
-//        this.id = id;
-//        this.sId = sId;
-//        this.dueDate = dueDate;
-//    }
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public int getSId() {
-//        return sId;
-//    }
-//
-//    public String getDueDate() {
-//        return dueDate;
-//    }
-//}
-//
-//class Item {
-//
-//    private String matId;
-//    private int ordId, quantity;
-//    private double length, width, circumference;
-//
-//    public Item(String matId, int ordId, double length, double width, double circumference, int quantity) {
-//        this.matId = matId;
-//        this.ordId = ordId;
-//        this.length = length;
-//        this.width = width;
-//        this.circumference = circumference;
-//        this.quantity = quantity;
-//    }
-//
-//    public String getMatId() {
-//        return matId;
-//    }
-//
-//    public int getQuantity() {
-//        return quantity;
-//    }
-//
-//    public double getWidth() {
-//        return width;
-//    }
-//
-//    public double getCircumference() {
-//        return circumference;
-//    }
-//
-//    public int getOrdId() {
-//        return ordId;
-//    }
-//
-//    public double getLength() {
-//        return length;
-//    }
-// }
