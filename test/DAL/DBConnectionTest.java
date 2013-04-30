@@ -9,10 +9,6 @@ import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.DAL.DBConnection;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -54,7 +50,7 @@ public class DBConnectionTest {
         ord.setDone(false);
         expResult.add(ord);
         
-        ProductOrderList result = instance.getAllProductionOrder();
+        SalesOrderList result = instance.getAllSalesOrder();
         
         assertEquals(expResult.get(0).getId(), result.get(0).getId());
         assertEquals(expResult.get(0).getDescription(), result.get(0).getDescription());

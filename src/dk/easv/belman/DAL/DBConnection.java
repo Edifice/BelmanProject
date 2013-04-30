@@ -30,6 +30,7 @@ public class DBConnection {
         dataSource.setServerName(conf.getProperty("SERVERNAME"));
         dataSource.setInstanceName(conf.getProperty("INSTANCENAME"));
         dataSource.setDatabaseName(conf.getProperty("DBNAME"));
+        dataSource.setPortNumber(1433);
     }
 
     /**
@@ -61,7 +62,7 @@ public class DBConnection {
             while (rs.next()) {
                 SalesOrder ord = new SalesOrder();
                 ord.setId(rs.getInt("order_id"));
-                ord.setDescription(rs.getString("order_description"));
+                ord.setDescription(rs.getString("order_desc"));
                 ord.setDone(rs.getBoolean("is_done"));
                 ret.add(ord);
             }
@@ -86,7 +87,7 @@ public class DBConnection {
             while (rs.next()) {
                 ProductOrder ord = new ProductOrder();
                 ord.setId(rs.getInt("order_id"));
-                ord.setDescription(rs.getString("order_description"));
+                ord.setDescription(rs.getString("order_desc"));
                 ord.setDone(rs.getBoolean("is_done"));
                 ord.setDueDate(rs.getTimestamp("due_date").getTime());
                 ord.setSalesOrderId(rs.getInt("sales_order"));
@@ -99,18 +100,22 @@ public class DBConnection {
         }
         return ret;
     }
-    
-    public ProductOrderList getAllProductionOrder(int sales_order) throws SQLException { // to do
+
+    /**
+     * This method returns all the production orders that are related to a
+     * specific sales order.
+     */
+    public ProductOrderList getAllProductionOrder(int sales_order) throws SQLException {
         ProductOrderList ret = new ProductOrderList();
         connection = dataSource.getConnection();
         try {
             connection.setAutoCommit(false);
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM ProductionOrder");
+            ResultSet rs = st.executeQuery("SELECT * FROM ProductionOrder WHERE sales_order = " + sales_order);
             while (rs.next()) {
                 ProductOrder ord = new ProductOrder();
                 ord.setId(rs.getInt("order_id"));
-                ord.setDescription(rs.getString("order_description"));
+                ord.setDescription(rs.getString("order_desc"));
                 ord.setDone(rs.getBoolean("is_done"));
                 ord.setDueDate(rs.getTimestamp("due_date").getTime());
                 ord.setSalesOrderId(rs.getInt("sales_order"));
@@ -123,8 +128,11 @@ public class DBConnection {
         }
         return ret;
     }
-    
-        public ItemList getAllItems() throws SQLException {
+
+    /**
+     * This method returns a list of all items from the database.
+     */
+    public ItemList getAllItems() throws SQLException {
         ItemList ret = new ItemList();
         connection = dataSource.getConnection();
         try {
@@ -149,13 +157,18 @@ public class DBConnection {
         }
         return ret;
     }
-        public ItemList getAllItems(int production_order) throws SQLException { // to do
+
+    /**
+     * This method returns all the Items that are related to a specific
+     * Production Order.
+     */
+    public ItemList getAllItems(int production_order) throws SQLException {
         ItemList ret = new ItemList();
         connection = dataSource.getConnection();
         try {
             connection.setAutoCommit(false);
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Item");
+            ResultSet rs = st.executeQuery("SELECT * FROM Item WHERE production_order = " + production_order);
             while (rs.next()) {
                 Item itm = new Item();
                 itm.setId(rs.getInt("order_id"));
@@ -175,8 +188,6 @@ public class DBConnection {
         return ret;
     }
 }
-
-
 //class Test {
 //
 //    public static void main(String[] args) throws SQLException, FileNotFoundException {
