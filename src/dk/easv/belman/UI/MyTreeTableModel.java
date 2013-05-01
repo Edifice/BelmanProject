@@ -30,16 +30,25 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
 
     private void populateTable() {
         root = new MyTreeNode();
-        for (SalesOrder s : allLists.getAllSalesOrder().getList()) {
+        SalesOrderList sList = allLists.getAllSalesOrder();
+        int sOrdId = 0;
+        ProductOrderList pList = allLists.getAllProductOrder();
+        ItemList items = allLists.getAllItem();
+
+        for (SalesOrder s : sList.getList()) {
             MyTreeNode sRoot = new MyTreeNode(s);
             root.getChildren().add(sRoot);
+            sOrdId = s.getId();
 
-            for (ProductOrder p : allLists.getAllProductOrder(s.getId()).getList()) {
-                MyTreeNode pRoot = new MyTreeNode(p);
-                sRoot.getChildren().add(pRoot);
+            for (ProductOrder p : pList.getList()) {
+                if (p.getSalesOrderId() == s.getId()) {
+                    MyTreeNode pRoot = new MyTreeNode(p);
+                    sRoot.getChildren().add(pRoot);
 
-                for (Item item : allLists.getAllItems(p.getId()).getList()) {
-                    pRoot.getChildren().add(new MyTreeNode(item));
+                    for (Item item : items.getList()) {
+                        if(item.getProductOrderId() == p.getId())
+                        pRoot.getChildren().add(new MyTreeNode(item));
+                    }
                 }
             }
         }
