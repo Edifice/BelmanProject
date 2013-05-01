@@ -1,4 +1,4 @@
-package BE;
+package dk.easv.belman.BE;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;

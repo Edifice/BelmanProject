@@ -61,8 +61,8 @@ public class DBConnectionTest {
 
         SalesOrderList expResult = new SalesOrderList();
         SalesOrder ord = new SalesOrder();
-        ord.setId(95428);
-        ord.setDescription("2013-026");
+        ord.setId(94109);
+        ord.setDescription("4313-03001");
         ord.setDone(false);
         expResult.add(ord);
 
@@ -73,8 +73,8 @@ public class DBConnectionTest {
         assertEquals(expResult.get(0).isDone(), result.get(0).isDone());
 
         SalesOrder ord2 = new SalesOrder();
-        ord2.setId(95432);
-        ord2.setDescription("3113-04046");
+        ord2.setId(81413);
+        ord2.setDescription("5811-12004");
         ord2.setDone(false);
         expResult.add(ord2);
 
@@ -96,12 +96,12 @@ public class DBConnectionTest {
 
         ProductOrderList expResult = new ProductOrderList();
         ProductOrder ord = new ProductOrder();
-        ord.setId(228955);
-        ord.setDescription("2013-026-010-0");
+        ord.setId(188514);
+        ord.setDescription("4411-09002-070-0");
         Date date = null;
-        String dateStr = "2013-04-25";
+        String dateStr = "2013-03-19 00:00:00.000";
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
             date = formatter.parse(dateStr);
         } catch (ParseException e) {
             System.out.println(e.toString());
@@ -109,7 +109,7 @@ public class DBConnectionTest {
         }
         ord.setDueDate(date.getTime());
         ord.setDone(false);
-        ord.setSalesOrderId(95428);
+        ord.setSalesOrderId(78549);
         expResult.add(ord);
 
         ProductOrderList result = instance.getAllProductionOrder();
@@ -121,37 +121,37 @@ public class DBConnectionTest {
         assertEquals(expResult.get(0).getSalesOrderId(), result.get(0).getSalesOrderId());
 
         ProductOrder ord2 = new ProductOrder();
-        ord2.setId(228956);
-        ord2.setDescription("2013-026-020-0");
+        ord2.setId(196030);
+        ord2.setDescription("9710-05021-010-1");
         Date date2 = null;
-        String dateStr2 = "2013-04-25";
+        String dateStr2 = "2013-03-26 00:00:00.000";
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date = formatter.parse(dateStr2);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            date2 = formatter.parse(dateStr2);
         } catch (ParseException e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }
-        ord2.setDueDate(date.getTime());
+        ord2.setDueDate(date2.getTime());
         ord2.setDone(false);
-        ord2.setSalesOrderId(95428);
+        ord2.setSalesOrderId(64727);
         expResult.add(ord2);
 
         ProductOrder ord3 = new ProductOrder();
-        ord3.setId(228968);
-        ord3.setDescription("3113-04046-010-0");
+        ord3.setId(204523);
+        ord3.setDescription("4512-04005-010-0");
         Date date3 = null;
-        String dateStr3 = "2013-05-02";
+        String dateStr3 = "2013-04-10 00:00:00.000";
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date = formatter.parse(dateStr3);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            date3 = formatter.parse(dateStr3);
         } catch (ParseException e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }
-        ord3.setDueDate(date.getTime());
+        ord3.setDueDate(date3.getTime());
         ord3.setDone(false);
-        ord3.setSalesOrderId(95432);
+        ord3.setSalesOrderId(85045);
         expResult.add(ord3);
 
         assertEquals(expResult.get(2).getId(), result.get(2).getId());
@@ -162,7 +162,7 @@ public class DBConnectionTest {
 
         System.out.println("Testing getAllProductionOrder() - Done!");
     }
-    
+
     /**
      * Test of getAllProductionOrder method, of class DBConnection.
      */
@@ -173,15 +173,15 @@ public class DBConnectionTest {
         DBConnection instance = DBConnection.getInstance();
 
         int salesOrder = 95428;
-        
+
         ProductOrderList expResult = new ProductOrderList();
         ProductOrder ord = new ProductOrder();
         ord.setId(228955);
         ord.setDescription("2013-026-010-0");
         Date date = null;
-        String dateStr = "2013-04-25";
+        String dateStr = "2013-04-25 00:00:00.000";
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
             date = formatter.parse(dateStr);
         } catch (ParseException e) {
             System.out.println(e.toString());
@@ -204,15 +204,15 @@ public class DBConnectionTest {
         ord2.setId(228956);
         ord2.setDescription("2013-026-020-0");
         Date date2 = null;
-        String dateStr2 = "2013-04-25";
+        String dateStr2 = "2013-04-25 00:00:00.000";
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date = formatter.parse(dateStr2);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            date2 = formatter.parse(dateStr2);
         } catch (ParseException e) {
             System.out.println(e.toString());
             e.printStackTrace();
         }
-        ord2.setDueDate(date.getTime());
+        ord2.setDueDate(date2.getTime());
         ord2.setDone(false);
         ord2.setSalesOrderId(95428);
         expResult.add(ord2);
@@ -238,13 +238,13 @@ public class DBConnectionTest {
         ItemList expResult = new ItemList();
         Item itm = new Item();
         itm.setId(1);
-        itm.setQuantity(3);
+        itm.setQuantity(2);
         itm.setMaterialId(10);
         itm.setThickness(0.4);
-        itm.setWidth(399);
+        itm.setWidth(271.4);
+        itm.setCircumference(1342.72);
         itm.setDone(false);
-        itm.setCircumference(441.71);
-        itm.setProductOrderId(228955);
+        itm.setProductOrderId(225835);
         expResult.add(itm);
 
         ItemList result = instance.getAllItem();
@@ -260,24 +260,24 @@ public class DBConnectionTest {
 
         Item itm2 = new Item();
         itm2.setId(2);
-        itm2.setQuantity(3);
+        itm2.setQuantity(69);
         itm2.setMaterialId(10);
-        itm2.setThickness(0.4);
-        itm2.setWidth(347);
+        itm2.setThickness(0.5);
+        itm2.setWidth(1235.0);
+        itm2.setCircumference(2455.15);
         itm2.setDone(false);
-        itm2.setCircumference(280.86);
-        itm2.setProductOrderId(228956);
+        itm2.setProductOrderId(222576);
         expResult.add(itm2);
 
         Item itm3 = new Item();
         itm3.setId(3);
-        itm3.setQuantity(10);
+        itm3.setQuantity(69);
         itm3.setMaterialId(10);
         itm3.setThickness(0.5);
-        itm3.setWidth(875);
+        itm3.setWidth(1235.0);
+        itm3.setCircumference(2458.30);
         itm3.setDone(false);
-        itm3.setCircumference(692.72);
-        itm3.setProductOrderId(228968);
+        itm3.setProductOrderId(222576);
         expResult.add(itm3);
 
         assertEquals(expResult.get(2).getId(), result.get(2).getId());
@@ -291,8 +291,8 @@ public class DBConnectionTest {
 
         System.out.println("Testing getAllItems() - Done!");
     }
-    
-        /**
+
+    /**
      * Test of getAllItem method, of class DBConnection.
      */
     @Test
@@ -300,12 +300,12 @@ public class DBConnectionTest {
         System.out.println("Testing getAllItems(int productionOrder)");
 
         DBConnection instance = DBConnection.getInstance();
-        
+
         int productionOrder = 228956;
 
         ItemList expResult = new ItemList();
         Item itm = new Item();
-        itm.setId(2);
+        itm.setId(145);
         itm.setQuantity(3);
         itm.setMaterialId(10);
         itm.setThickness(0.4);

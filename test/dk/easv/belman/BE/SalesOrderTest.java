@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package BE;
+package dk.easv.belman.BE;
 
 import dk.easv.belman.BE.SalesOrder;
 import org.junit.After;

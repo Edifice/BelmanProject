@@ -1,4 +1,4 @@
-package BE;
+package dk.easv.belman.BE;
 
 import dk.easv.belman.BE.ProductOrder;
 import java.util.Date;
