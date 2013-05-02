@@ -1,6 +1,5 @@
 package dk.easv.belman.UI;
 
-import dk.easv.belman.BE.BList;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.ProductOrder;
@@ -11,13 +10,14 @@ import dk.esav.belman.BLL.ListManager;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
+
 
 public class MyTreeTableModel extends AbstractTreeTableModel {
 
     private MyTreeNode root;
     private ListManager allLists;
+    private ProductOrderList pList;
 
     public MyTreeTableModel() {
         init();
@@ -28,11 +28,17 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         allLists = new ListManager();
     }
 
+    public ListManager getAllLists() {
+        return allLists;
+    }
+    public ProductOrderList getPList() {
+        return pList;
+    }
     private void populateTable() {
         root = new MyTreeNode();
         SalesOrderList sList = allLists.getAllSalesOrder();
         int sOrdId = 0;
-        ProductOrderList pList = allLists.getAllProductOrder();
+        pList = allLists.getAllProductOrder();
         ItemList items = allLists.getAllItem();
 
         for (SalesOrder s : sList.getList()) {
@@ -173,14 +179,16 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         return root;
     }
 }
-
 class MyTreeNode {
 
     private List<MyTreeNode> children = new ArrayList<>();
-    private String description, name;
+    private String description, name, function;
     private double thickness, width, circumference;
     private int quantity, id, matId;
     private long dueDate;
+    private SalesOrder sOrder;
+    private ProductOrder pOrder;
+    private Item item;
 
     public MyTreeNode() {
     }
@@ -188,25 +196,35 @@ class MyTreeNode {
     public MyTreeNode(SalesOrder salesOrder) {
         this.id = salesOrder.getId();
         this.description = salesOrder.getDescription();
+        this.function = "SalesOrder";
+        this.sOrder = salesOrder;
     }
 
     public MyTreeNode(ProductOrder productOrder) {
         this.id = productOrder.getId();
         this.description = productOrder.getDescription();
         this.dueDate = productOrder.getDueDate();
+        this.function = "ProductOrder";
+        this.pOrder = productOrder;
     }
 
     public MyTreeNode(Item item) {
         this.id = item.getId();
-        this.matId = item.getId();
+        this.matId = item.getMaterialId();
         this.circumference = item.getCircumference();
         this.thickness = item.getThickness();
         this.width = item.getWidth();
         this.quantity = item.getQuantity();
+        this.function = "Item";
+        this.item = item;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getFunction() {
+        return function;
     }
 
     public String getName() {
@@ -250,6 +268,9 @@ class MyTreeNode {
     }
 
     public String toString() {
-        return "MyTreeNode: " + id;
+        return String.valueOf(id);
+    }
+    public Item getItem() {
+    return item;
     }
 }

@@ -4,33 +4,68 @@
  */
 package dk.easv.belman.UI;
 
-import java.awt.BorderLayout;
-import javax.swing.JButton;
+import dk.easv.belman.BE.Item;
+import dk.easv.belman.BE.ItemList;
+import dk.easv.belman.BE.ProductOrderList;
+import java.sql.Timestamp;
+import org.jdesktop.swingx.JXTreeTable;
 
 /**
  *
  * @author Dani
  */
 public class MainGui extends javax.swing.JFrame {
+
     private boolean isExpanded;
     private final double SPNLWEST_EXPANDED_SIZE = 0.5;
     private double normalSize;
+    private OrderListing listing;
+    QueueTableModel queueTableModel;
+
     /**
      * Creates new form Belman
      */
     public MainGui() {
         initComponents();
-        init();       
-       
+        init();
+
     }
-    public void setNormalSize(double size){
+
+    public void setNormalSize(double size) {
         normalSize = size;
     }
+
+    public ProductOrderList getPList() {
+        return listing.getPList();
+    }
+
     private void init() {
         isExpanded = false;
         // Set objects //
-        OrderListing listing = new OrderListing(this);
+        listing = new OrderListing(this);
+
+
+        //DescriptionPane
+        lbl1.setVisible(false);
+        lbl2.setVisible(false);
+        lbl3.setVisible(false);
+        lbl4.setVisible(false);
+        lbl5.setVisible(false);
+        lbl6.setVisible(false);
+
+        txt1.setVisible(false);
+        txt2.setVisible(false);
+        txt3.setVisible(false);
+        txt4.setVisible(false);
+        txt5.setVisible(false);
+        txt6.setVisible(false);
+
+        //Queue table
         
+        queueTableModel = new QueueTableModel(new ItemList(), this);
+        tblQueue.setModel(queueTableModel);
+        
+
     }
 
     /**
@@ -49,6 +84,22 @@ public class MainGui extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         spnlCenter = new javax.swing.JSplitPane();
         spnlEast = new javax.swing.JSplitPane();
+        jPanel2 = new javax.swing.JPanel();
+        lblDescription = new javax.swing.JLabel();
+        lbl1 = new javax.swing.JLabel();
+        lbl2 = new javax.swing.JLabel();
+        lbl3 = new javax.swing.JLabel();
+        lbl4 = new javax.swing.JLabel();
+        txt1 = new javax.swing.JTextField();
+        txt2 = new javax.swing.JTextField();
+        txt3 = new javax.swing.JTextField();
+        txt4 = new javax.swing.JTextField();
+        lbl5 = new javax.swing.JLabel();
+        txt5 = new javax.swing.JTextField();
+        lbl6 = new javax.swing.JLabel();
+        txt6 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblQueue = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 600));
@@ -89,9 +140,8 @@ public class MainGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
                 .addContainerGap(144, Short.MAX_VALUE))
         );
 
@@ -103,7 +153,120 @@ public class MainGui extends javax.swing.JFrame {
 
         spnlEast.setDividerLocation(300);
         spnlEast.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        lblDescription.setText("Description");
+
+        lbl1.setText("ID");
+
+        lbl2.setText("jLabel2");
+
+        lbl3.setText("jLabel2");
+
+        lbl4.setText("jLabel2");
+
+        txt1.setText("jTextField1");
+
+        txt2.setText("jTextField1");
+
+        txt3.setText("jTextField1");
+
+        txt4.setText("jTextField1");
+
+        lbl5.setText("jLabel2");
+
+        txt5.setText("jTextField1");
+
+        lbl6.setText("jLabel2");
+
+        txt6.setText("jTextField1");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt4, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblDescription)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblDescription)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl1)
+                    .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl2)
+                    .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl3)
+                    .addComponent(txt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl4)
+                    .addComponent(txt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl5)
+                    .addComponent(txt5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl6)
+                    .addComponent(txt6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(118, Short.MAX_VALUE))
+        );
+
+        spnlEast.setTopComponent(jPanel2);
+
         spnlCenter.setRightComponent(spnlEast);
+
+        tblQueue.setAutoCreateRowSorter(true);
+        tblQueue.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblQueue);
+
+        spnlCenter.setLeftComponent(jScrollPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,29 +287,117 @@ public class MainGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           if(!isExpanded){
-               int expHeight = (int) (this.getHeight()*0.5);
-               
-               
-        spnlWest.setDividerLocation(expHeight);
-           isExpanded = true;
-           }
-           else {
-               int normalHeight = (int) (this.getHeight()*0.85);
-               spnlWest.setDividerLocation(normalHeight);
-               isExpanded = false;
-           }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    public void setDescriptionPane(MyTreeNode node) {
+        lbl1.setVisible(true);
+        lbl2.setVisible(true);
+        lbl3.setVisible(true);
+        txt1.setVisible(true);
+        txt2.setVisible(true);
+        txt3.setVisible(true);
 
+        lbl1.setText("Function: ");
+        txt1.setText(node.getFunction());
+        txt1.setEditable(false);
+
+        lbl2.setText("ID: ");
+        txt2.setText(String.valueOf(node.getId()));
+        txt2.setEditable(false);
+
+        txt3.setEditable(false);
+        txt4.setEditable(false);
+        txt5.setEditable(false);
+        txt6.setEditable(false);
+
+        switch (node.getFunction()) {
+            case "SalesOrder":
+                lbl3.setText("Description");
+                txt3.setText(node.getDescription());
+
+                lbl4.setVisible(false);
+                txt4.setVisible(false);
+                lbl5.setVisible(false);
+                txt5.setVisible(false);
+                lbl6.setVisible(false);
+                txt6.setVisible(false);
+                break;
+            case "ProductOrder":
+                lbl3.setText("Description");
+                txt3.setText(node.getDescription());
+
+                lbl4.setVisible(true);
+                lbl4.setText("Due Date: ");
+                txt4.setVisible(true);
+                txt4.setText(String.valueOf(new Timestamp(node.getDueDate())));
+
+                lbl5.setVisible(false);
+                txt5.setVisible(false);
+                lbl6.setVisible(false);
+                txt6.setVisible(false);
+                break;
+            case "Item":
+                lbl4.setVisible(true);
+                txt4.setVisible(true);
+                lbl5.setVisible(true);
+                txt5.setVisible(true);
+                lbl6.setVisible(true);
+                txt6.setVisible(true);
+
+                lbl3.setText("Material ID: ");
+                txt3.setText(String.valueOf(node.getMatId()));
+                lbl4.setText("Width: ");
+                txt4.setText(String.valueOf(node.getWidth()));
+                lbl5.setText("Circumference: ");
+                txt5.setText(String.valueOf(node.getCircumference()));
+                lbl6.setText("Thickness: ");
+                txt6.setText(String.valueOf(node.getThickness()));
+                break;
+        }
+
+
+    }
+
+    public void setQueueTable(Item item) {
+        queueTableModel.addItems(item);
+        queueTableModel.fireTableDataChanged();
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        if (!isExpanded) {
+            int expHeight = (int) (this.getHeight() * 0.5);
+
+
+            spnlWest.setDividerLocation(expHeight);
+            isExpanded = true;
+        } else {
+            int normalHeight = (int) (this.getHeight() * 0.85);
+            spnlWest.setDividerLocation(normalHeight);
+            isExpanded = false;
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl1;
+    private javax.swing.JLabel lbl2;
+    private javax.swing.JLabel lbl3;
+    private javax.swing.JLabel lbl4;
+    private javax.swing.JLabel lbl5;
+    private javax.swing.JLabel lbl6;
+    private javax.swing.JLabel lblDescription;
     private javax.swing.JSplitPane spnlCenter;
     private javax.swing.JSplitPane spnlEast;
     private javax.swing.JSplitPane spnlWest;
+    private javax.swing.JTable tblQueue;
+    private javax.swing.JTextField txt1;
+    private javax.swing.JTextField txt2;
+    private javax.swing.JTextField txt3;
+    private javax.swing.JTextField txt4;
+    private javax.swing.JTextField txt5;
+    private javax.swing.JTextField txt6;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -162,5 +413,4 @@ public class MainGui extends javax.swing.JFrame {
     public javax.swing.JSplitPane getSpnlWest() {
         return spnlWest;
     }
-
 }
