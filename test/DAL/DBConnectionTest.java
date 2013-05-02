@@ -61,8 +61,18 @@ public class DBConnectionTest {
 
         SalesOrderList expResult = new SalesOrderList();
         SalesOrder ord = new SalesOrder();
-        ord.setId(94109);
-        ord.setDescription("4313-03001");
+        ord.setId(64727);
+        ord.setDescription("9710-05021");
+        Date date = null;
+        String dateStr = "2013-03-26 00:00:00.000";
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            date = formatter.parse(dateStr);
+        } catch (ParseException e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
+        ord.setDueDate(date.getTime());
         ord.setDone(false);
         expResult.add(ord);
 
@@ -70,16 +80,28 @@ public class DBConnectionTest {
 
         assertEquals(expResult.get(0).getId(), result.get(0).getId());
         assertEquals(expResult.get(0).getDescription(), result.get(0).getDescription());
+        assertEquals(expResult.get(0).getDueDate(), result.get(0).getDueDate());
         assertEquals(expResult.get(0).isDone(), result.get(0).isDone());
 
         SalesOrder ord2 = new SalesOrder();
-        ord2.setId(81413);
-        ord2.setDescription("5811-12004");
+        ord2.setId(69634);
+        ord2.setDescription("4710-11003");
+        Date date2 = null;
+        String dateStr2 = "2013-03-15 00:00:00.000";
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            date2 = formatter.parse(dateStr2);
+        } catch (ParseException e) {
+            System.out.println(e.toString());
+            e.printStackTrace();
+        }
+        ord2.setDueDate(date2.getTime());
         ord2.setDone(false);
         expResult.add(ord2);
 
         assertEquals(expResult.get(1).getId(), result.get(1).getId());
         assertEquals(expResult.get(1).getDescription(), result.get(1).getDescription());
+        assertEquals(expResult.get(1).getDueDate(), result.get(1).getDueDate());
         assertEquals(expResult.get(1).isDone(), result.get(1).isDone());
 
         System.out.println("Testing getAllSalesOrder() - Done!");
@@ -98,16 +120,6 @@ public class DBConnectionTest {
         ProductOrder ord = new ProductOrder();
         ord.setId(188514);
         ord.setDescription("4411-09002-070-0");
-        Date date = null;
-        String dateStr = "2013-03-19 00:00:00.000";
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            date = formatter.parse(dateStr);
-        } catch (ParseException e) {
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
-        ord.setDueDate(date.getTime());
         ord.setDone(false);
         ord.setSalesOrderId(78549);
         expResult.add(ord);
@@ -117,22 +129,11 @@ public class DBConnectionTest {
         assertEquals(expResult.get(0).getId(), result.get(0).getId());
         assertEquals(expResult.get(0).getDescription(), result.get(0).getDescription());
         assertEquals(expResult.get(0).isDone(), result.get(0).isDone());
-        assertEquals(expResult.get(0).getDueDate(), result.get(0).getDueDate());
         assertEquals(expResult.get(0).getSalesOrderId(), result.get(0).getSalesOrderId());
 
         ProductOrder ord2 = new ProductOrder();
         ord2.setId(196030);
         ord2.setDescription("9710-05021-010-1");
-        Date date2 = null;
-        String dateStr2 = "2013-03-26 00:00:00.000";
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            date2 = formatter.parse(dateStr2);
-        } catch (ParseException e) {
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
-        ord2.setDueDate(date2.getTime());
         ord2.setDone(false);
         ord2.setSalesOrderId(64727);
         expResult.add(ord2);
@@ -140,16 +141,6 @@ public class DBConnectionTest {
         ProductOrder ord3 = new ProductOrder();
         ord3.setId(204523);
         ord3.setDescription("4512-04005-010-0");
-        Date date3 = null;
-        String dateStr3 = "2013-04-10 00:00:00.000";
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            date3 = formatter.parse(dateStr3);
-        } catch (ParseException e) {
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
-        ord3.setDueDate(date3.getTime());
         ord3.setDone(false);
         ord3.setSalesOrderId(85045);
         expResult.add(ord3);
@@ -157,7 +148,6 @@ public class DBConnectionTest {
         assertEquals(expResult.get(2).getId(), result.get(2).getId());
         assertEquals(expResult.get(2).getDescription(), result.get(2).getDescription());
         assertEquals(expResult.get(2).isDone(), result.get(2).isDone());
-        assertEquals(expResult.get(2).getDueDate(), result.get(2).getDueDate());
         assertEquals(expResult.get(2).getSalesOrderId(), result.get(2).getSalesOrderId());
 
         System.out.println("Testing getAllProductionOrder() - Done!");
@@ -178,16 +168,6 @@ public class DBConnectionTest {
         ProductOrder ord = new ProductOrder();
         ord.setId(228955);
         ord.setDescription("2013-026-010-0");
-        Date date = null;
-        String dateStr = "2013-04-25 00:00:00.000";
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            date = formatter.parse(dateStr);
-        } catch (ParseException e) {
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
-        ord.setDueDate(date.getTime());
         ord.setDone(false);
         ord.setSalesOrderId(95428);
         expResult.add(ord);
@@ -197,22 +177,11 @@ public class DBConnectionTest {
         assertEquals(expResult.get(0).getId(), result.get(0).getId());
         assertEquals(expResult.get(0).getDescription(), result.get(0).getDescription());
         assertEquals(expResult.get(0).isDone(), result.get(0).isDone());
-        assertEquals(expResult.get(0).getDueDate(), result.get(0).getDueDate());
         assertEquals(expResult.get(0).getSalesOrderId(), result.get(0).getSalesOrderId());
 
         ProductOrder ord2 = new ProductOrder();
         ord2.setId(228956);
         ord2.setDescription("2013-026-020-0");
-        Date date2 = null;
-        String dateStr2 = "2013-04-25 00:00:00.000";
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            date2 = formatter.parse(dateStr2);
-        } catch (ParseException e) {
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
-        ord2.setDueDate(date2.getTime());
         ord2.setDone(false);
         ord2.setSalesOrderId(95428);
         expResult.add(ord2);
@@ -220,7 +189,6 @@ public class DBConnectionTest {
         assertEquals(expResult.get(1).getId(), result.get(1).getId());
         assertEquals(expResult.get(1).getDescription(), result.get(1).getDescription());
         assertEquals(expResult.get(1).isDone(), result.get(1).isDone());
-        assertEquals(expResult.get(1).getDueDate(), result.get(1).getDueDate());
         assertEquals(expResult.get(1).getSalesOrderId(), result.get(1).getSalesOrderId());
 
         System.out.println("Testing getAllProductionOrder(int salesOrder) - Done!");

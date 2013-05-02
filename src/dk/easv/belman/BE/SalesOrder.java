@@ -4,6 +4,7 @@ public class SalesOrder extends IEntity {
 
     private int id;
     private String description;
+    private long dueDate;
     private boolean done;
 
     public SalesOrder() {
@@ -18,9 +19,10 @@ public class SalesOrder extends IEntity {
 
         // @TODO get by id
         SalesOrder now = new SalesOrder();
-        
+
         this.id = now.id;
         this.description = now.description;
+        this.dueDate = now.dueDate;
         this.done = now.done;
     }
 
@@ -74,5 +76,19 @@ public class SalesOrder extends IEntity {
      */
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    /**
+     * @return the dueDate
+     */
+    public long getDueDate() {
+        return dueDate;
+    }
+
+    /**
+     * @param dueDate the dueDate to set
+     */
+    public void setDueDate(long dueDate) {
+        this.dueDate = dueDate;
     }
 }

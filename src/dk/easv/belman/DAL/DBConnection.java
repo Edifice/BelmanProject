@@ -63,6 +63,7 @@ public class DBConnection {
                 SalesOrder ord = new SalesOrder();
                 ord.setId(rs.getInt("order_id"));
                 ord.setDescription(rs.getString("order_desc"));
+                ord.setDueDate(rs.getTimestamp("due_date").getTime());
                 ord.setDone(rs.getBoolean("is_done"));
                 ret.add(ord);
             }
@@ -89,7 +90,6 @@ public class DBConnection {
                 ord.setId(rs.getInt("order_id"));
                 ord.setDescription(rs.getString("order_desc"));
                 ord.setDone(rs.getBoolean("is_done"));
-                ord.setDueDate(rs.getTimestamp("due_date").getTime());
                 ord.setSalesOrderId(rs.getInt("sales_order"));
                 ret.add(ord);
             }
@@ -117,7 +117,6 @@ public class DBConnection {
                 ord.setId(rs.getInt("order_id"));
                 ord.setDescription(rs.getString("order_desc"));
                 ord.setDone(rs.getBoolean("is_done"));
-                ord.setDueDate(rs.getTimestamp("due_date").getTime());
                 ord.setSalesOrderId(rs.getInt("sales_order"));
                 ret.add(ord);
             }
