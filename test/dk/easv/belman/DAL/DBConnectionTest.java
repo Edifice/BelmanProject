@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAL;
+package dk.easv.belman.DAL;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;

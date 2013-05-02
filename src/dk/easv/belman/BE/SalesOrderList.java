@@ -23,7 +23,7 @@ public class SalesOrderList extends BList<SalesOrder> {
     private static Comparator<SalesOrder> COMPARE_BY_DATE = new Comparator<SalesOrder>() {
         @Override
         public int compare(SalesOrder o1, SalesOrder o2) {
-            int codeDifference = o1.getId() - o2.getId();
+            int codeDifference = Long.compare(o1.getDueDate(), o2.getDueDate());
             return codeDifference;
         }
     };
