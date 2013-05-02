@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
-
 public class MyTreeTableModel extends AbstractTreeTableModel {
 
     private MyTreeNode root;
@@ -31,9 +30,11 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
     public ListManager getAllLists() {
         return allLists;
     }
+
     public ProductOrderList getPList() {
         return pList;
     }
+
     private void populateTable() {
         root = new MyTreeNode();
         SalesOrderList sList = allLists.getAllSalesOrder();
@@ -52,8 +53,9 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
                     sRoot.getChildren().add(pRoot);
 
                     for (Item item : items.getList()) {
-                        if(item.getProductOrderId() == p.getId())
-                        pRoot.getChildren().add(new MyTreeNode(item));
+                        if (item.getProductOrderId() == p.getId()) {
+                            pRoot.getChildren().add(new MyTreeNode(item));
+                        }
                     }
                 }
             }
@@ -179,6 +181,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         return root;
     }
 }
+
 class MyTreeNode {
 
     private List<MyTreeNode> children = new ArrayList<>();
@@ -196,6 +199,7 @@ class MyTreeNode {
     public MyTreeNode(SalesOrder salesOrder) {
         this.id = salesOrder.getId();
         this.description = salesOrder.getDescription();
+        this.dueDate = salesOrder.getDueDate();
         this.function = "SalesOrder";
         this.sOrder = salesOrder;
     }
@@ -203,7 +207,6 @@ class MyTreeNode {
     public MyTreeNode(ProductOrder productOrder) {
         this.id = productOrder.getId();
         this.description = productOrder.getDescription();
-        this.dueDate = productOrder.getDueDate();
         this.function = "ProductOrder";
         this.pOrder = productOrder;
     }
@@ -270,7 +273,8 @@ class MyTreeNode {
     public String toString() {
         return String.valueOf(id);
     }
+
     public Item getItem() {
-    return item;
+        return item;
     }
 }
