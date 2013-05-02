@@ -104,6 +104,9 @@ public class SalesOrder extends IEntity {
      * @param productOrder the productOrder to set
      */
     public void setProductOrderList(ProductOrderList productOrderList) {
+        for(ProductOrder po : productOrderList.getList()){
+            po.setSalesOrderId(this.id);
+        }
         this.productOrderList = productOrderList;
     }
 }

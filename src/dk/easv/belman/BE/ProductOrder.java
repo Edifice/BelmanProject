@@ -105,6 +105,9 @@ public class ProductOrder extends IEntity {
      * @param itemList the itemList to set
      */
     public void setItemList(ItemList itemList) {
+        for(Item po : itemList.getList()){
+            po.setProductOrderId(this.id);
+        }
         this.itemList = itemList;
     }
 }
