@@ -15,6 +15,7 @@ public class Item extends IEntity {
     }
 
     public Item(int id) {
+        this.setPk(id);
 
         // @TODO get by id
         Item now = new Item();
@@ -40,6 +41,7 @@ public class Item extends IEntity {
      * @param id the id to set
      */
     public void setId(int id) {
+        this.setPk(id);
         this.id = id;
     }
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class BList<Type extends IEntity> {
 
-    private ArrayList<Type> list;
+    protected ArrayList<Type> list;
 
     public BList() {
         list = new ArrayList<>();
@@ -131,5 +131,20 @@ public class BList<Type extends IEntity> {
      */
     public int size() {
         return list.size();
+    }
+    
+    /**
+     * Returns true, if the stored list have this specific item (checks by id)
+     * @param id
+     * @return 
+     */
+    public boolean hasId(int id){
+        boolean ret = false;
+        for(Type t : list){
+            if(t.getPk() == id){
+                ret = true;
+            }
+        }
+        return ret;
     }
 }

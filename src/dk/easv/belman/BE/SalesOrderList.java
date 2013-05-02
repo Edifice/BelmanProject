@@ -41,4 +41,82 @@ public class SalesOrderList extends BList<SalesOrder> {
     public void sortByDate() {
         Collections.sort(this.getList(), COMPARE_BY_DATE);
     }
+
+    /**
+     * Checks if have PO with the given ID.
+     *
+     * @param id
+     * @return
+     */
+    public boolean hasPO(int id) {
+        boolean ret = false;
+
+        for (SalesOrder so : this.getList()) {
+            for (ProductOrder po : so.getProductOrderList().getList()) {
+                if (po.getId() == id) {
+                    ret = true;
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /**
+     * Checks if have Item with the given ID.
+     *
+     * @param id
+     * @return
+     */
+    public boolean hasItem(int id) {
+        boolean ret = false;
+
+        for (SalesOrder so : this.getList()) {
+            for (ProductOrder po : so.getProductOrderList().getList()) {
+                for (Item item : po.getItemList().getList()) {
+                    if (item.getId() == id) {
+                        ret = true;
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    /**
+     * Search the list for 1 item by id
+     *
+     * @param id
+     * @return
+     */
+    public SalesOrder getById(int id) {
+        for (SalesOrder so : this.getList()) {
+            if (so.getId() == id) {
+                return so;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the items index in the stored array
+     * @param so
+     * @return
+     */
+    public int getIndex(SalesOrder so) {
+        for (int i = 0; i < this.size(); ++i) {
+            if(this.get(i).getId() == so.getId())
+                return i;
+        }
+        return 0;
+    }
+    
+    @Override
+    public void add(SalesOrder so){
+        for(ProductOrder po : so.getProductOrderList().getList()){
+            po.setSalesOrderId(so.getId());
+        }
+        list.add(so);
+    }
 }
