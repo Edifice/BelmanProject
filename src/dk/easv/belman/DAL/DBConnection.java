@@ -53,6 +53,9 @@ public class DBConnection {
      * This method returns a list of all sales order from the database.
      */
     public SalesOrderList getAll() throws SQLException {
+
+        int so_i = 0, po_i = 0, i_i = 0;
+
         SalesOrderList ret = new SalesOrderList();
         connection = dataSource.getConnection();
         try {
@@ -87,8 +90,10 @@ public class DBConnection {
                 if (so == null) {
                     SO_new = true;
                     PO_new = true;
-                } else if (!so.getProductOrderList().hasId(rs.getInt("po_id"))) {
-                    PO_new = true;
+                } else {
+                    if (so.getProductOrderList().getById(rs.getInt("po_id")) == null) {
+                        PO_new = true;
+                    }
                 }
 
                 // if ther is no SO for this item, then create one
@@ -97,13 +102,15 @@ public class DBConnection {
                     so.setId(rs.getInt("so_id"));
                     so.setDescription(rs.getString("so_desc"));
                     so.setDone(rs.getBoolean("so_done"));
-                    so.setDueDate(rs.getLong("so_due_date"));
-                } else {
+                    so.setDueDate(rs.getTimestamp("so_due_date").getTime());
+                }
+                if (!PO_new) {
                     po = so.getProductOrderList().getById(rs.getInt("po_id"));
                 }
 
                 // if ther is no PO for this Item
                 if (PO_new) {
+                    po = new ProductOrder();
                     po.setId(rs.getInt("po_id"));
                     po.setDescription(rs.getString("po_desc"));
                     po.setDone(rs.getBoolean("po_done"));
@@ -126,19 +133,31 @@ public class DBConnection {
                 if (SO_new) {
                     so.getProductOrderList().add(po);
                     ret.add(so);
-                } else if (PO_new) {
-                    so.getProductOrderList().add(po);
-                    ret.set(so);
+                    so_i++;
+                    po_i++;
+                    i_i++;
                 } else {
-                    so.getProductOrderList().set(po);
-                    ret.set(so);
+                    if (PO_new) {
+                        so.getProductOrderList().set(po);
+                        ret.add(so);
+                        po_i++;
+                        i_i++;
+                    } else {
+                        so.getProductOrderList().set(po);
+                        ret.set(so);
+                        i_i++;
+                    }
                 }
             }
             connection.commit();
         } finally {
             connection.setAutoCommit(true);
             connection.close();
+
         }
+
+        System.out.println("SO: " + so_i + ", PO: " + po_i + ", Item: " + i_i);
+        System.out.println("SO: " + ret.size() + ", PO: " + ret.getList().size());
         return ret;
     }
 

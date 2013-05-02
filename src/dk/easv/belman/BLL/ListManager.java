@@ -65,4 +65,12 @@ public class ListManager {
         }
         return null;
     }
+    public SalesOrderList getAll() {
+        try {
+            return myConnection.getAll();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

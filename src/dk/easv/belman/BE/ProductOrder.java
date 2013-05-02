@@ -10,6 +10,7 @@ public class ProductOrder extends IEntity {
     private ItemList itemList;
 
     public ProductOrder() {
+        itemList = new ItemList();
     }
 
     /**

@@ -101,20 +101,22 @@ public class SalesOrderList extends BList<SalesOrder> {
 
     /**
      * Returns the items index in the stored array
+     *
      * @param so
      * @return
      */
     public int getIndex(SalesOrder so) {
         for (int i = 0; i < this.size(); ++i) {
-            if(this.get(i).getId() == so.getId())
+            if (this.get(i).getId() == so.getId()) {
                 return i;
+            }
         }
         return 0;
     }
-    
+
     @Override
-    public void add(SalesOrder so){
-        for(ProductOrder po : so.getProductOrderList().getList()){
+    public void add(SalesOrder so) {
+        for (ProductOrder po : so.getProductOrderList().getList()) {
             po.setSalesOrderId(so.getId());
         }
         list.add(so);

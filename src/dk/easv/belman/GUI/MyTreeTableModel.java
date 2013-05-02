@@ -17,10 +17,11 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
     private ListManager allLists;
     private ProductOrderList pList;
     private SalesOrderList sList;
+    private SalesOrderList sol;
 
     public MyTreeTableModel() {
         init();
-        populateTable();
+        populateTable2();
     }
 
     private void init() {
@@ -56,6 +57,29 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
                     sRoot.getChildren().add(pRoot);
 
                     for (Item item : items.getList()) {
+                        if (item.getProductOrderId() == p.getId()) {
+                            pRoot.getChildren().add(new MyTreeNode(item));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void populateTable2() {
+        root = new MyTreeNode();
+        sol = allLists.getAll();
+
+        for (SalesOrder s : sol.getList()) {
+            MyTreeNode sRoot = new MyTreeNode(s);
+            root.getChildren().add(sRoot);
+
+            for (ProductOrder p : s.getProductOrderList().getList()) {
+                if (p.getSalesOrderId() == s.getId()) {
+                    MyTreeNode pRoot = new MyTreeNode(p);
+                    sRoot.getChildren().add(pRoot);
+
+                    for (Item item : p.getItemList().getList()) {
                         if (item.getProductOrderId() == p.getId()) {
                             pRoot.getChildren().add(new MyTreeNode(item));
                         }

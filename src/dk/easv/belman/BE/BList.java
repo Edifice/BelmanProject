@@ -60,9 +60,10 @@ public class BList<Type extends IEntity> {
     public void selectAll() {
         throw new UnsupportedOperationException("Not implemented method call");
     }
-    
+
     /**
      * Re-populates the list with the given id's.
+     *
      * @param indexes
      */
     public void selectByPk(int[] index) {
@@ -95,9 +96,10 @@ public class BList<Type extends IEntity> {
      */
     public void set(Type elem) {
         int index = 0;
-        for (Type t : list) {
-            if (t.getPk() == elem.getPk()) {
-                index = t.getPk();
+
+        for (int i = 0; i < size(); ++i) {
+            if(list.get(i).getPk() == elem.getPk()){
+                index = i;
             }
         }
         if (index != 0) {
@@ -132,16 +134,17 @@ public class BList<Type extends IEntity> {
     public int size() {
         return list.size();
     }
-    
+
     /**
      * Returns true, if the stored list have this specific item (checks by id)
+     *
      * @param id
-     * @return 
+     * @return
      */
-    public boolean hasId(int id){
+    public boolean hasId(int id) {
         boolean ret = false;
-        for(Type t : list){
-            if(t.getPk() == id){
+        for (Type t : list) {
+            if (t.getPk() == id) {
                 ret = true;
             }
         }

@@ -9,6 +9,7 @@ public class SalesOrder extends IEntity {
     private ProductOrderList productOrderList;
 
     public SalesOrder() {
+        productOrderList = new ProductOrderList();
     }
 
     /**
