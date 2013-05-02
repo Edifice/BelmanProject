@@ -1,19 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package dk.easv.belman.UI;
+package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.ProductOrderList;
 import java.sql.Timestamp;
-import org.jdesktop.swingx.JXTreeTable;
+import java.util.logging.Logger;
 
-/**
- *
- * @author Dani
- */
 public class MainGui extends javax.swing.JFrame {
 
     private boolean isExpanded;
@@ -28,6 +20,16 @@ public class MainGui extends javax.swing.JFrame {
     public MainGui() {
         initComponents();
         init();
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel settings ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
     }
 
@@ -61,10 +63,10 @@ public class MainGui extends javax.swing.JFrame {
         txt6.setVisible(false);
 
         //Queue table
-        
+
         queueTableModel = new QueueTableModel(new ItemList(), this);
         tblQueue.setModel(queueTableModel);
-        
+
 
     }
 
@@ -364,8 +366,6 @@ public class MainGui extends javax.swing.JFrame {
 
         if (!isExpanded) {
             int expHeight = (int) (this.getHeight() * 0.5);
-
-
             spnlWest.setDividerLocation(expHeight);
             isExpanded = true;
         } else {
@@ -373,6 +373,7 @@ public class MainGui extends javax.swing.JFrame {
             spnlWest.setDividerLocation(normalHeight);
             isExpanded = false;
         }
+            System.out.println(this.getHeight());
     }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

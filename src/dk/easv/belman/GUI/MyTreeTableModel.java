@@ -1,4 +1,4 @@
-package dk.easv.belman.UI;
+package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
@@ -6,7 +6,7 @@ import dk.easv.belman.BE.ProductOrder;
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
-import dk.esav.belman.BLL.ListManager;
+import dk.easv.belman.BLL.ListManager;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;

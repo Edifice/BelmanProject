@@ -50,6 +50,7 @@ public class ItemTest {
         assertEquals(1000.24, item.getCircumference(), 0.00001);
         
         item.save();
+        item.update();
         
         Item item2 = new Item(1);
         

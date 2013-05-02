@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.easv.belman.UI;
+package dk.easv.belman.GUI;
 
 
 import dk.easv.belman.BE.Item;

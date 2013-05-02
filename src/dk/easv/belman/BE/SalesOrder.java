@@ -6,6 +6,7 @@ public class SalesOrder extends IEntity {
     private String description;
     private long dueDate;
     private boolean done;
+    private ProductOrderList productOrderList;
 
     public SalesOrder() {
     }
@@ -90,5 +91,19 @@ public class SalesOrder extends IEntity {
      */
     public void setDueDate(long dueDate) {
         this.dueDate = dueDate;
+    }
+
+    /**
+     * @return the productOrder
+     */
+    public ProductOrderList getProductOrderList() {
+        return productOrderList;
+    }
+
+    /**
+     * @param productOrder the productOrder to set
+     */
+    public void setProductOrderList(ProductOrderList productOrderList) {
+        this.productOrderList = productOrderList;
     }
 }

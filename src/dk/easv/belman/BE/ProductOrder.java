@@ -6,6 +6,8 @@ public class ProductOrder extends IEntity {
     private int salesOrderId;
     private String description;
     private boolean done;
+    
+    private ItemList itemList;
 
     public ProductOrder() {
     }
@@ -90,5 +92,19 @@ public class ProductOrder extends IEntity {
      */
     public void setSalesOrderId(int salesOrderId) {
         this.salesOrderId = salesOrderId;
+    }
+
+    /**
+     * @return the itemList
+     */
+    public ItemList getItemList() {
+        return itemList;
+    }
+
+    /**
+     * @param itemList the itemList to set
+     */
+    public void setItemList(ItemList itemList) {
+        this.itemList = itemList;
     }
 }

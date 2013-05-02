@@ -1,4 +1,4 @@
-package dk.easv.belman.UI;
+package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.ProductOrderList;
 import java.awt.BorderLayout;

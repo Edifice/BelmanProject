@@ -41,7 +41,7 @@ public class ProductOrderTest {
         ProductOrder order = new ProductOrder();
         
         Date now = new Date();
-        long time = now.getTime();
+        //long time = now.getTime();
 
         assertNull(order.getDescription());
         assertEquals(0, order.getId());
@@ -49,14 +49,14 @@ public class ProductOrderTest {
         order.setId(1);
         order.setSalesOrderId(1);
         order.setDescription("test");
-        order.setDueDate(time);
+        //order.setDueDate(time);
         order.setDone(true);
 
         assertEquals(1, order.getId());
         assertEquals(1, order.getSalesOrderId());
         assertNotNull(order.getDescription());
         assertEquals("test", order.getDescription());
-        assertEquals(time, order.getDueDate());
+        //assertEquals(time, order.getDueDate());
         assertTrue(order.isDone());
 
         order.save();
@@ -67,7 +67,7 @@ public class ProductOrderTest {
         assertEquals(1, order2.getSalesOrderId());
         assertNotNull(order2.getDescription());
         assertEquals("test", order2.getDescription());
-        assertEquals(time, order2.getDueDate());
+        //assertEquals(time, order2.getDueDate());
         assertTrue(order2.isDone());
     }
 }
