@@ -1,6 +1,7 @@
 package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.ProductOrderList;
+import dk.easv.belman.BE.SalesOrderList;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,6 +27,9 @@ public final class OrderListing {
 
     public ProductOrderList getPList() {
         return treeTableModel.getPList();
+    }
+    public SalesOrderList getSList() {
+        return treeTableModel.getSList();
     }
 
     public void setOrderListing() {

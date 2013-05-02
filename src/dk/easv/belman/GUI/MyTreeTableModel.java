@@ -17,6 +17,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
     private MyTreeNode root;
     private ListManager allLists;
     private ProductOrderList pList;
+    private SalesOrderList sList;
 
     public MyTreeTableModel() {
         init();
@@ -34,10 +35,13 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
     public ProductOrderList getPList() {
         return pList;
     }
+    public SalesOrderList getSList() {
+        return sList;
+    }
 
     private void populateTable() {
         root = new MyTreeNode();
-        SalesOrderList sList = allLists.getAllSalesOrder();
+        sList = allLists.getAllSalesOrder();
         int sOrdId = 0;
         pList = allLists.getAllProductOrder();
         ItemList items = allLists.getAllItem();

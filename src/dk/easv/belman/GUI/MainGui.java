@@ -3,8 +3,9 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.ProductOrderList;
+import dk.easv.belman.BE.SalesOrderList;
 import java.sql.Timestamp;
-import java.util.logging.Logger;
+
 
 public class MainGui extends javax.swing.JFrame {
 
@@ -41,6 +42,10 @@ public class MainGui extends javax.swing.JFrame {
         return listing.getPList();
     }
 
+    public SalesOrderList getSList() {
+        return listing.getSList();
+    }
+
     private void init() {
         isExpanded = false;
         // Set objects //
@@ -67,7 +72,8 @@ public class MainGui extends javax.swing.JFrame {
         queueTableModel = new QueueTableModel(new ItemList(), this);
         tblQueue.setModel(queueTableModel);
 
-
+        
+      
     }
 
     /**
@@ -315,17 +321,6 @@ public class MainGui extends javax.swing.JFrame {
                 lbl3.setText("Description");
                 txt3.setText(node.getDescription());
 
-                lbl4.setVisible(false);
-                txt4.setVisible(false);
-                lbl5.setVisible(false);
-                txt5.setVisible(false);
-                lbl6.setVisible(false);
-                txt6.setVisible(false);
-                break;
-            case "ProductOrder":
-                lbl3.setText("Description");
-                txt3.setText(node.getDescription());
-
                 lbl4.setVisible(true);
                 lbl4.setText("Due Date: ");
                 txt4.setVisible(true);
@@ -335,6 +330,18 @@ public class MainGui extends javax.swing.JFrame {
                 txt5.setVisible(false);
                 lbl6.setVisible(false);
                 txt6.setVisible(false);
+                break;
+            case "ProductOrder":
+                lbl3.setText("Description");
+                txt3.setText(node.getDescription());
+
+                lbl4.setVisible(false);
+                txt4.setVisible(false);
+                lbl5.setVisible(false);
+                txt5.setVisible(false);
+                lbl6.setVisible(false);
+                txt6.setVisible(false);
+
                 break;
             case "Item":
                 lbl4.setVisible(true);
@@ -362,8 +369,12 @@ public class MainGui extends javax.swing.JFrame {
         queueTableModel.addItems(item);
         queueTableModel.fireTableDataChanged();
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+    public void updateQueueTable() {
+        queueTableModel.fireTableDataChanged();
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         if (!isExpanded) {
             int expHeight = (int) (this.getHeight() * 0.5);
             spnlWest.setDividerLocation(expHeight);
