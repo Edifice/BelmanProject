@@ -2,16 +2,14 @@ package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
+import dk.easv.belman.BE.MyTreeNode;
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
 import java.sql.Timestamp;
 
-
 public class MainGui extends javax.swing.JFrame {
 
     private boolean isExpanded;
-    private final double SPNLWEST_EXPANDED_SIZE = 0.5;
-    private double normalSize;
     private OrderListing listing;
     QueueTableModel queueTableModel;
 
@@ -34,10 +32,6 @@ public class MainGui extends javax.swing.JFrame {
 
     }
 
-    public void setNormalSize(double size) {
-        normalSize = size;
-    }
-
     public ProductOrderList getPList() {
         return listing.getPList();
     }
@@ -50,7 +44,6 @@ public class MainGui extends javax.swing.JFrame {
         isExpanded = false;
         // Set objects //
         listing = new OrderListing(this);
-
 
         //DescriptionPane
         lbl1.setVisible(false);
@@ -68,13 +61,14 @@ public class MainGui extends javax.swing.JFrame {
         txt6.setVisible(false);
 
         //Queue table
-
         queueTableModel = new QueueTableModel(new ItemList(), this);
         tblQueue.setModel(queueTableModel);
-
         
-      
-    }
+        //Filter menu
+        jpOrder.setVisible(false);
+        jpSleeve.setVisible(false);
+        jpStockItem.setVisible(false); 
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,10 +80,43 @@ public class MainGui extends javax.swing.JFrame {
     private void initComponents() {
 
         spnlWest = new javax.swing.JSplitPane();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jpMain = new javax.swing.JPanel();
+        btnFilterBySleeve = new javax.swing.JButton();
+        btnSubmit = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jpSleeve = new javax.swing.JPanel();
+        txtWidthMax = new javax.swing.JTextField();
+        txtCircumferenceMin = new javax.swing.JTextField();
+        txtWidthMin = new javax.swing.JTextField();
+        txtCircumferenceMax = new javax.swing.JTextField();
+        txtThickness = new javax.swing.JTextField();
+        txtMaterialID = new javax.swing.JTextField();
+        lblThickness = new javax.swing.JLabel();
+        lblWidth = new javax.swing.JLabel();
+        lblCircumference = new javax.swing.JLabel();
+        lblMaterialID = new javax.swing.JLabel();
+        jpOrder = new javax.swing.JPanel();
+        txtWidthMax1 = new javax.swing.JTextField();
+        txtCircumferenceMin1 = new javax.swing.JTextField();
+        txtWidthMin1 = new javax.swing.JTextField();
+        txtCircumferenceMax1 = new javax.swing.JTextField();
+        txtThickness1 = new javax.swing.JTextField();
+        txtMaterialID1 = new javax.swing.JTextField();
+        lblThickness1 = new javax.swing.JLabel();
+        lblWidth1 = new javax.swing.JLabel();
+        lblCircumference1 = new javax.swing.JLabel();
+        lblMaterialID1 = new javax.swing.JLabel();
+        jpStockItem = new javax.swing.JPanel();
+        txtWidthMax2 = new javax.swing.JTextField();
+        txtCircumferenceMin2 = new javax.swing.JTextField();
+        txtWidthMin2 = new javax.swing.JTextField();
+        txtCircumferenceMax2 = new javax.swing.JTextField();
+        txtThickness2 = new javax.swing.JTextField();
+        txtMaterialID2 = new javax.swing.JTextField();
+        lblThickness2 = new javax.swing.JLabel();
+        lblWidth2 = new javax.swing.JLabel();
+        lblCircumference2 = new javax.swing.JLabel();
+        lblMaterialID2 = new javax.swing.JLabel();
         spnlCenter = new javax.swing.JSplitPane();
         spnlEast = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
@@ -110,52 +137,230 @@ public class MainGui extends javax.swing.JFrame {
         tblQueue = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
 
         spnlWest.setDividerLocation(400);
         spnlWest.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnFilterBySleeve.setText("Show Filters");
+        btnFilterBySleeve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnFilterBySleeveActionPerformed(evt);
             }
         });
 
-        jButton2.setText("jButton2");
+        btnSubmit.setText("Submit");
 
-        jButton3.setText("jButton3");
+        lblThickness.setText("Thickness:");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        lblWidth.setText("Width:");
+
+        lblCircumference.setText("Circumference:");
+
+        lblMaterialID.setText("Material ID:");
+
+        javax.swing.GroupLayout jpSleeveLayout = new javax.swing.GroupLayout(jpSleeve);
+        jpSleeve.setLayout(jpSleeveLayout);
+        jpSleeveLayout.setHorizontalGroup(
+            jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSleeveLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMaterialID)
+                    .addComponent(lblThickness)
+                    .addComponent(lblWidth)
+                    .addComponent(lblCircumference))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtThickness, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(txtMaterialID)
+                    .addGroup(jpSleeveLayout.createSequentialGroup()
+                        .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCircumferenceMin, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                            .addComponent(txtWidthMin))
+                        .addGap(43, 43, 43)
+                        .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtWidthMax)
+                            .addComponent(txtCircumferenceMax, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+        jpSleeveLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtCircumferenceMax, txtCircumferenceMin, txtMaterialID, txtThickness, txtWidthMax, txtWidthMin});
 
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpSleeveLayout.setVerticalGroup(
+            jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpSleeveLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMaterialID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMaterialID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtThickness, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblThickness))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtWidthMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtWidthMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWidth))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCircumferenceMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCircumferenceMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCircumference))
+                .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+        jpSleeveLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCircumferenceMax, txtCircumferenceMin, txtMaterialID, txtThickness, txtWidthMax, txtWidthMin});
 
-        spnlWest.setBottomComponent(jPanel1);
+        jTabbedPane1.addTab("By Sleeve", jpSleeve);
+
+        lblThickness1.setText("Thickness:");
+
+        lblWidth1.setText("Width:");
+
+        lblCircumference1.setText("Circumference:");
+
+        lblMaterialID1.setText("Material ID:");
+
+        javax.swing.GroupLayout jpOrderLayout = new javax.swing.GroupLayout(jpOrder);
+        jpOrder.setLayout(jpOrderLayout);
+        jpOrderLayout.setHorizontalGroup(
+            jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpOrderLayout.createSequentialGroup()
+                .addContainerGap(63, Short.MAX_VALUE)
+                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMaterialID1)
+                    .addComponent(lblThickness1)
+                    .addComponent(lblWidth1)
+                    .addComponent(lblCircumference1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtThickness1, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addComponent(txtMaterialID1)
+                    .addGroup(jpOrderLayout.createSequentialGroup()
+                        .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCircumferenceMin1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                            .addComponent(txtWidthMin1))
+                        .addGap(30, 30, 30)
+                        .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtWidthMax1)
+                            .addComponent(txtCircumferenceMax1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(33, 33, 33))
+        );
+        jpOrderLayout.setVerticalGroup(
+            jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpOrderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMaterialID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMaterialID1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtThickness1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblThickness1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtWidthMin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtWidthMax1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWidth1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCircumferenceMax1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCircumferenceMin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCircumference1))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("By Order", jpOrder);
+
+        lblThickness2.setText("Thickness:");
+
+        lblWidth2.setText("Width:");
+
+        lblCircumference2.setText("Circumference:");
+
+        lblMaterialID2.setText("Material ID:");
+
+        javax.swing.GroupLayout jpStockItemLayout = new javax.swing.GroupLayout(jpStockItem);
+        jpStockItem.setLayout(jpStockItemLayout);
+        jpStockItemLayout.setHorizontalGroup(
+            jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpStockItemLayout.createSequentialGroup()
+                .addContainerGap(63, Short.MAX_VALUE)
+                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMaterialID2)
+                    .addComponent(lblThickness2)
+                    .addComponent(lblWidth2)
+                    .addComponent(lblCircumference2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtThickness2, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addComponent(txtMaterialID2)
+                    .addGroup(jpStockItemLayout.createSequentialGroup()
+                        .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCircumferenceMin2, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                            .addComponent(txtWidthMin2))
+                        .addGap(30, 30, 30)
+                        .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtWidthMax2)
+                            .addComponent(txtCircumferenceMax2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(33, 33, 33))
+        );
+        jpStockItemLayout.setVerticalGroup(
+            jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpStockItemLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtMaterialID2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMaterialID2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtThickness2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblThickness2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtWidthMin2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtWidthMax2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWidth2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCircumferenceMax2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCircumferenceMin2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCircumference2))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("By Stock Item", jpStockItem);
+
+        javax.swing.GroupLayout jpMainLayout = new javax.swing.GroupLayout(jpMain);
+        jpMain.setLayout(jpMainLayout);
+        jpMainLayout.setHorizontalGroup(
+            jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpMainLayout.createSequentialGroup()
+                        .addComponent(btnFilterBySleeve, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jpMainLayout.createSequentialGroup()
+                        .addComponent(jTabbedPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSubmit))))
+        );
+        jpMainLayout.setVerticalGroup(
+            jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnFilterBySleeve, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMainLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSubmit)
+                .addContainerGap())
+        );
+
+        spnlWest.setBottomComponent(jpMain);
 
         spnlCenter.setDividerLocation(300);
 
@@ -288,7 +493,7 @@ public class MainGui extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(spnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
             .addComponent(spnlCenter)
         );
 
@@ -361,8 +566,6 @@ public class MainGui extends javax.swing.JFrame {
                 txt6.setText(String.valueOf(node.getThickness()));
                 break;
         }
-
-
     }
 
     public void setQueueTable(Item item) {
@@ -373,8 +576,7 @@ public class MainGui extends javax.swing.JFrame {
     public void updateQueueTable() {
         queueTableModel.fireTableDataChanged();
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+    private void btnFilterBySleeveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterBySleeveActionPerformed
         if (!isExpanded) {
             int expHeight = (int) (this.getHeight() * 0.5);
             spnlWest.setDividerLocation(expHeight);
@@ -384,22 +586,38 @@ public class MainGui extends javax.swing.JFrame {
             spnlWest.setDividerLocation(normalHeight);
             isExpanded = false;
         }
-            System.out.println(this.getHeight());
-    }//GEN-LAST:event_jButton1ActionPerformed
+        System.out.println(this.getHeight());
+    }//GEN-LAST:event_btnFilterBySleeveActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnFilterBySleeve;
+    private javax.swing.JButton btnSubmit;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel jpMain;
+    private javax.swing.JPanel jpOrder;
+    private javax.swing.JPanel jpSleeve;
+    private javax.swing.JPanel jpStockItem;
     private javax.swing.JLabel lbl1;
     private javax.swing.JLabel lbl2;
     private javax.swing.JLabel lbl3;
     private javax.swing.JLabel lbl4;
     private javax.swing.JLabel lbl5;
     private javax.swing.JLabel lbl6;
+    private javax.swing.JLabel lblCircumference;
+    private javax.swing.JLabel lblCircumference1;
+    private javax.swing.JLabel lblCircumference2;
     private javax.swing.JLabel lblDescription;
+    private javax.swing.JLabel lblMaterialID;
+    private javax.swing.JLabel lblMaterialID1;
+    private javax.swing.JLabel lblMaterialID2;
+    private javax.swing.JLabel lblThickness;
+    private javax.swing.JLabel lblThickness1;
+    private javax.swing.JLabel lblThickness2;
+    private javax.swing.JLabel lblWidth;
+    private javax.swing.JLabel lblWidth1;
+    private javax.swing.JLabel lblWidth2;
     private javax.swing.JSplitPane spnlCenter;
     private javax.swing.JSplitPane spnlEast;
     private javax.swing.JSplitPane spnlWest;
@@ -410,6 +628,24 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JTextField txt4;
     private javax.swing.JTextField txt5;
     private javax.swing.JTextField txt6;
+    private javax.swing.JTextField txtCircumferenceMax;
+    private javax.swing.JTextField txtCircumferenceMax1;
+    private javax.swing.JTextField txtCircumferenceMax2;
+    private javax.swing.JTextField txtCircumferenceMin;
+    private javax.swing.JTextField txtCircumferenceMin1;
+    private javax.swing.JTextField txtCircumferenceMin2;
+    private javax.swing.JTextField txtMaterialID;
+    private javax.swing.JTextField txtMaterialID1;
+    private javax.swing.JTextField txtMaterialID2;
+    private javax.swing.JTextField txtThickness;
+    private javax.swing.JTextField txtThickness1;
+    private javax.swing.JTextField txtThickness2;
+    private javax.swing.JTextField txtWidthMax;
+    private javax.swing.JTextField txtWidthMax1;
+    private javax.swing.JTextField txtWidthMax2;
+    private javax.swing.JTextField txtWidthMin;
+    private javax.swing.JTextField txtWidthMin1;
+    private javax.swing.JTextField txtWidthMin2;
     // End of variables declaration//GEN-END:variables
 
     /**

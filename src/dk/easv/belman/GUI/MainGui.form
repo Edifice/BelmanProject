@@ -6,6 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -32,7 +33,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="spnlWest" pref="600" max="32767" attributes="0"/>
+          <Component id="spnlWest" pref="612" max="32767" attributes="0"/>
           <Component id="spnlCenter" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -46,7 +47,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="jpMain">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
               <JSplitPaneConstraints position="bottom"/>
@@ -58,48 +59,371 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" linkSize="3" min="-2" pref="98" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton2" linkSize="3" min="-2" pref="98" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton3" linkSize="3" min="-2" pref="92" max="-2" attributes="0"/>
-                      <EmptySpace pref="57" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="btnFilterBySleeve" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnSubmit" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jButton3" linkSize="4" pref="39" max="32767" attributes="0"/>
-                          <Component id="jButton1" linkSize="4" max="32767" attributes="0"/>
-                          <Component id="jButton2" linkSize="4" alignment="0" pref="39" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="144" max="32767" attributes="0"/>
+                      <Component id="btnFilterBySleeve" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTabbedPane1" pref="161" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnSubmit" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="btnFilterBySleeve">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jButton1"/>
+                <Property name="text" type="java.lang.String" value="Show Filters"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFilterBySleeveActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnSubmit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jButton2"/>
+                <Property name="text" type="java.lang.String" value="Submit"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jButton3"/>
-              </Properties>
-            </Component>
+            <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="jpSleeve">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="By Sleeve">
+                        <Property name="tabTitle" type="java.lang.String" value="By Sleeve"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblMaterialID" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtThickness" linkSize="5" alignment="0" pref="34" max="32767" attributes="0"/>
+                                  <Component id="txtMaterialID" linkSize="5" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtCircumferenceMin" linkSize="5" alignment="0" pref="34" max="32767" attributes="0"/>
+                                          <Component id="txtWidthMin" linkSize="5" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtWidthMax" linkSize="5" max="32767" attributes="0"/>
+                                          <Component id="txtCircumferenceMax" linkSize="5" min="-2" pref="33" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="107" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtMaterialID" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMaterialID" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtThickness" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtWidthMin" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtWidthMax" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtCircumferenceMax" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCircumferenceMin" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextField" name="txtWidthMax">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMin">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtWidthMin">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMax">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtThickness">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtMaterialID">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblThickness">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Thickness:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblWidth">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Width:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblCircumference">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Circumference:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblMaterialID">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Material ID:"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jpOrder">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="By Order">
+                        <Property name="tabTitle" type="java.lang.String" value="By Order"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace pref="63" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblMaterialID1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtThickness1" alignment="0" pref="132" max="32767" attributes="0"/>
+                                  <Component id="txtMaterialID1" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtCircumferenceMin1" alignment="0" pref="34" max="32767" attributes="0"/>
+                                          <Component id="txtWidthMin1" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtWidthMax1" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtCircumferenceMax1" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtMaterialID1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMaterialID1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtThickness1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtWidthMin1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtWidthMax1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtCircumferenceMax1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCircumferenceMin1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextField" name="txtWidthMax1">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMin1">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtWidthMin1">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMax1">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtThickness1">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtMaterialID1">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblThickness1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Thickness:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblWidth1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Width:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblCircumference1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Circumference:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblMaterialID1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Material ID:"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jpStockItem">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="By Stock Item">
+                        <Property name="tabTitle" type="java.lang.String" value="By Stock Item"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace pref="63" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblMaterialID2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtThickness2" alignment="0" pref="132" max="32767" attributes="0"/>
+                                  <Component id="txtMaterialID2" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtCircumferenceMin2" alignment="0" pref="34" max="32767" attributes="0"/>
+                                          <Component id="txtWidthMin2" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtWidthMax2" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtCircumferenceMax2" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtMaterialID2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMaterialID2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtThickness2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtWidthMin2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtWidthMax2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtCircumferenceMax2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCircumferenceMin2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextField" name="txtWidthMax2">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMin2">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtWidthMin2">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMax2">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtThickness2">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtMaterialID2">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblThickness2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Thickness:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblWidth2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Width:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblCircumference2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Circumference:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblMaterialID2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Material ID:"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
       </SubComponents>
