@@ -19,7 +19,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
 
     public MyTreeTableModel() {
         init();
-        populateTable();
+        populateTable(allLists.getAll());
     }
 
     private void init() {
@@ -34,9 +34,8 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         return sol;
     }
 
-    private void populateTable() {
+    private void populateTable(SalesOrderList sol) {
         root = new MyTreeNode();
-        sol = allLists.getAll();
 
         for (SalesOrder s : sol.getList()) {
             MyTreeNode sRoot = new MyTreeNode(s);

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.easv.belman.DAL;
 
 import dk.easv.belman.BE.Item;
@@ -10,18 +6,12 @@ import dk.easv.belman.BE.ProductOrder;
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
-import dk.easv.belman.DAL.DBConnection;
-import java.security.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author AntalJános
- */
 public class DBConnectionTest {
 
     public DBConnectionTest() {
@@ -53,7 +43,7 @@ public class DBConnectionTest {
     /**
      * Test of getAllSalesOrder method, of class DBConnection.
      */
-    @Test
+    /*@Test
     public void testGetAllSalesOrder() throws Exception {
         System.out.println("Testing getAllSalesOrder()");
 
@@ -106,11 +96,11 @@ public class DBConnectionTest {
 
         System.out.println("Testing getAllSalesOrder() - Done!");
     }
-
+*/
     /**
      * Test of getAllProductionOrder method, of class DBConnection.
      */
-    @Test
+   /* @Test
     public void testGetAllProductionOrder() throws Exception {
         System.out.println("Testing getAllProductionOrder()");
 
@@ -152,11 +142,11 @@ public class DBConnectionTest {
 
         System.out.println("Testing getAllProductionOrder() - Done!");
     }
-
+*/
     /**
      * Test of getAllProductionOrder method, of class DBConnection.
      */
-    @Test
+   /* @Test
     public void testGetAllProductionOrderBySalesOrder() throws Exception {
         System.out.println("Testing getAllProductionOrder(int salesOrder)");
 
@@ -193,11 +183,11 @@ public class DBConnectionTest {
 
         System.out.println("Testing getAllProductionOrder(int salesOrder) - Done!");
     }
-
+*/
     /**
      * Test of getAllItem method, of class DBConnection.
      */
-    @Test
+ /*   @Test
     public void testGetAllItem() throws Exception {
         System.out.println("Testing getAllItems()");
 
@@ -259,11 +249,11 @@ public class DBConnectionTest {
 
         System.out.println("Testing getAllItems() - Done!");
     }
-
+*/
     /**
      * Test of getAllItem method, of class DBConnection.
      */
-    @Test
+  /*  @Test
     public void testGetAllItemByProductionOrder() throws Exception {
         System.out.println("Testing getAllItems(int productionOrder)");
 
@@ -295,5 +285,5 @@ public class DBConnectionTest {
         assertEquals(expResult.get(0).getProductOrderId(), result.get(0).getProductOrderId());
 
         System.out.println("Testing getAllItems(int productionOrder) - Done!");
-    }
+    }*/
 }

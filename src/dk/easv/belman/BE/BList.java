@@ -95,14 +95,14 @@ public class BList<Type extends IEntity> {
      * @param elem element with the updated values
      */
     public void set(Type elem) {
-        int index = 0;
+        int index = -1;
 
         for (int i = 0; i < size(); ++i) {
-            if(list.get(i).getPk() == elem.getPk()){
+            if (list.get(i).getPk() == elem.getPk()) {
                 index = i;
             }
         }
-        if (index != 0) {
+        if (index != -1) {
             list.set(index, elem);
         }
     }
@@ -149,5 +149,22 @@ public class BList<Type extends IEntity> {
             }
         }
         return ret;
+    }
+
+    /**
+     * Removes a specific element from the stored list.
+     * @param elem
+     */
+    public void remove(Type elem) {
+        int index = -1;
+
+        for (int i = 0; i < size(); ++i) {
+            if (list.get(i).getPk() == elem.getPk()) {
+                index = i;
+            }
+        }
+        if (index != -1) {
+            list.remove(index);
+        }
     }
 }

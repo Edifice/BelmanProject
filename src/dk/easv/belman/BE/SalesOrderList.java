@@ -121,4 +121,32 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         list.add(so);
     }
+
+    /**
+     * Removes an item from the list's itemlist and removes all unnecessary.
+     *
+     * @param item Item
+     */
+    public void removeItem(Item item) {
+        for (SalesOrder so : this.getList()) {
+            for (ProductOrder po : so.getProductOrderList().getList()) {
+                for (Item i : po.getItemList().getList()) {
+                    if (item.getId() == i.getId()) {
+                        po.getItemList().remove(i);
+
+                        // if there is no more item in the list, delete the POL.
+                        if (po.getItemList().size() == 0) {
+                            so.getProductOrderList().remove(po);
+                            
+                            // if there is no more PO in the SO, then remove it.
+                            if (so.getProductOrderList().size() == 0) {
+                                this.remove(so);
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
 }
