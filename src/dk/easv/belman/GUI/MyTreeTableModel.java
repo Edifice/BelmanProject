@@ -22,6 +22,11 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         populateTable(allLists.getAll());
     }
 
+    public MyTreeTableModel(SalesOrderList so) {
+        init();
+        populateTable(so);
+    }
+
     private void init() {
         allLists = new ListManager();
     }

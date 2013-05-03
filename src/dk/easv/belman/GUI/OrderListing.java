@@ -36,12 +36,14 @@ public final class OrderListing {
 
     private JPanel getPanel() {
         JPanel p = new JPanel(new BorderLayout());
-        JScrollPane sp = new JScrollPane(getTreeTable());
+        JScrollPane sp = new JScrollPane(setTreeTable());
         p.add(sp);
         return p;
     }
-
-    public JXTreeTable getTreeTable() {
+    public MyTreeTableModel getTreeTableModel() {
+        return treeTableModel;
+    }
+    public JXTreeTable setTreeTable() {
         treeTableModel = new MyTreeTableModel();
         treeTable = new JXTreeTable(treeTableModel);
         treeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

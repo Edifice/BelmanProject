@@ -5,6 +5,7 @@ import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.MyTreeNode;
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BLL.Filter;
 import java.sql.Timestamp;
 
 public class MainGui extends javax.swing.JFrame {
@@ -14,6 +15,7 @@ public class MainGui extends javax.swing.JFrame {
     QueueTableModel queueTableModel;
     private int EXPANDED_SIZE;
     private int COLLAPSED_SIZE;
+    private Filter filter;
 
     /**
      * Creates new form Belman
@@ -32,6 +34,9 @@ public class MainGui extends javax.swing.JFrame {
     }
 
     private void init() {
+        //
+        filter = new Filter();
+        
         // 
         isExpanded = false;
         EXPANDED_SIZE = (int) this.getHeight() / 2;
@@ -148,6 +153,11 @@ public class MainGui extends javax.swing.JFrame {
         });
 
         btnSubmit.setText("Submit");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
 
         lblThickness.setText("Thickness:");
 
@@ -605,6 +615,17 @@ public class MainGui extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnFilterBySleeveActionPerformed
+
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        int materialID = (txtMaterialID.getText().isEmpty() ? 0 : Integer.valueOf(txtMaterialID.getText()));
+        int thickness = (txtThickness.getText().isEmpty() ? 0 : Integer.valueOf(txtThickness.getText()));
+        int width_min = (txtWidthMin.getText().isEmpty() ? 0 : Integer.valueOf(txtWidthMin.getText()));
+        int width_max = (txtWidthMax.getText().isEmpty() ? 0 : Integer.valueOf(txtWidthMax.getText()));;
+        int circumference_min = (txtCircumferenceMin.getText().isEmpty() ? 0 : Integer.valueOf(txtCircumferenceMin.getText()));
+        int circumference_max = (txtCircumferenceMax.getText().isEmpty() ? 0 : Integer.valueOf(txtCircumferenceMax.getText()));
+        
+        listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFilterBySleeve;
