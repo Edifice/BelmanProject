@@ -24,6 +24,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
 
     public MyTreeTableModel(SalesOrderList so) {
         init();
+        root = new MyTreeNode();
         populateTable(so);
     }
 

@@ -21,6 +21,8 @@ public final class OrderListing {
     private JXTreeTable treeTable;
 
     public OrderListing(MainGui parent) {
+        treeTableModel = new MyTreeTableModel();
+        treeTable = new JXTreeTable(treeTableModel);
         this.parent = parent;
         setOrderListing();
         setParentPanes();
@@ -34,27 +36,29 @@ public final class OrderListing {
         parent.getSpnlWest().setLeftComponent(getPanel());
     }
 
-    private JPanel getPanel() {
+    public JPanel getPanel() {
         JPanel p = new JPanel(new BorderLayout());
         JScrollPane sp = new JScrollPane(setTreeTable());
         p.add(sp);
         return p;
     }
-    public MyTreeTableModel getTreeTableModel() {
-        return treeTableModel;
-    }
-    public JXTreeTable setTreeTable() {
-        treeTableModel = new MyTreeTableModel();
+    public void setTreeTableModel(SalesOrderList so) {
+        treeTableModel = new MyTreeTableModel(so);
         treeTable = new JXTreeTable(treeTableModel);
-        treeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    public JXTreeTable setTreeTable() {      
+        
 
         // Build the tree table panel
+        treeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         treeTable.setColumnControlVisible(true);
         treeTable.setShowGrid(true);
         treeTable.expandAll();
         treeTable.packAll();
         return treeTable;
     }
+    
+    
 
     /**
      * This method takes in a mouse action and returns the currently selected

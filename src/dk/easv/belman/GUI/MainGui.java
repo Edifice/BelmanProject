@@ -6,6 +6,7 @@ import dk.easv.belman.BE.MyTreeNode;
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.Filter;
+import java.awt.Button;
 import java.sql.Timestamp;
 
 public class MainGui extends javax.swing.JFrame {
@@ -624,7 +625,13 @@ public class MainGui extends javax.swing.JFrame {
         int circumference_min = (txtCircumferenceMin.getText().isEmpty() ? 0 : Integer.valueOf(txtCircumferenceMin.getText()));
         int circumference_max = (txtCircumferenceMax.getText().isEmpty() ? 0 : Integer.valueOf(txtCircumferenceMax.getText()));
         
-        listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
+        
+        SalesOrderList so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)); 
+        System.out.println("Salesorder size:" + so.size());
+        listing.setTreeTableModel(so);
+        listing.setOrderListing();
+//        repaint();
+        //listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
