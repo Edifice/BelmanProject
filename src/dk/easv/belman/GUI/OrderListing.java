@@ -6,7 +6,6 @@ import dk.easv.belman.BE.SalesOrderList;
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
@@ -27,12 +26,8 @@ public final class OrderListing {
         setParentPanes();
     }
 
-    public ProductOrderList getPList() {
-        return treeTableModel.getPList();
-    }
-
-    public SalesOrderList getSList() {
-        return treeTableModel.getSList();
+    public SalesOrderList getSalesOrderList() {
+        return treeTableModel.getSalesOrderList();
     }
 
     public void setOrderListing() {

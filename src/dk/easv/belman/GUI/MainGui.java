@@ -31,14 +31,6 @@ public class MainGui extends javax.swing.JFrame {
 
     }
 
-    public ProductOrderList getPList() {
-        return listing.getPList();
-    }
-
-    public SalesOrderList getSList() {
-        return listing.getSList();
-    }
-
     private void init() {
         // 
         isExpanded = false;

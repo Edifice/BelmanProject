@@ -15,13 +15,11 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
 
     private MyTreeNode root;
     private ListManager allLists;
-    private ProductOrderList pList;
-    private SalesOrderList sList;
     private SalesOrderList sol;
 
     public MyTreeTableModel() {
         init();
-        populateTable2();
+        populateTable();
     }
 
     private void init() {
@@ -32,41 +30,11 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         return allLists;
     }
 
-    public ProductOrderList getPList() {
-        return pList;
-    }
-    public SalesOrderList getSList() {
-        return sList;
+    public SalesOrderList getSalesOrderList() {
+        return sol;
     }
 
     private void populateTable() {
-        root = new MyTreeNode();
-        sList = allLists.getAllSalesOrder();
-        int sOrdId = 0;
-        pList = allLists.getAllProductOrder();
-        ItemList items = allLists.getAllItem();
-
-        for (SalesOrder s : sList.getList()) {
-            MyTreeNode sRoot = new MyTreeNode(s);
-            root.getChildren().add(sRoot);
-            sOrdId = s.getId();
-
-            for (ProductOrder p : pList.getList()) {
-                if (p.getSalesOrderId() == s.getId()) {
-                    MyTreeNode pRoot = new MyTreeNode(p);
-                    sRoot.getChildren().add(pRoot);
-
-                    for (Item item : items.getList()) {
-                        if (item.getProductOrderId() == p.getId()) {
-                            pRoot.getChildren().add(new MyTreeNode(item));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void populateTable2() {
         root = new MyTreeNode();
         sol = allLists.getAll();
 
@@ -75,18 +43,15 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
             root.getChildren().add(sRoot);
 
             for (ProductOrder p : s.getProductOrderList().getList()) {
-                if (p.getSalesOrderId() == s.getId()) {
-                    MyTreeNode pRoot = new MyTreeNode(p);
-                    sRoot.getChildren().add(pRoot);
+                MyTreeNode pRoot = new MyTreeNode(p);
+                sRoot.getChildren().add(pRoot);
 
-                    for (Item item : p.getItemList().getList()) {
-                        if (item.getProductOrderId() == p.getId()) {
-                            pRoot.getChildren().add(new MyTreeNode(item));
-                        }
-                    }
+                for (Item item : p.getItemList().getList()) {
+                    pRoot.getChildren().add(new MyTreeNode(item));
                 }
             }
         }
+        Main.treeData = sol;
     }
 
     @Override
@@ -195,6 +160,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         return 0;
     }
 
+    @Override
     public boolean isLeaf(Object node) {
         MyTreeNode treenode = (MyTreeNode) node;
         if (treenode.getChildren().size() > 0) {

@@ -4,6 +4,7 @@ public class Item extends IEntity {
 
     private int id;
     private int productOrderId;
+    private int salesOrderId;
     private int quantity;
     private int materialId;
     private double thickness;
@@ -141,5 +142,19 @@ public class Item extends IEntity {
      */
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    /**
+     * @return the salesOrderId
+     */
+    public int getSalesOrderId() {
+        return salesOrderId;
+    }
+
+    /**
+     * @param salesOrderId the salesOrderId to set
+     */
+    public void setSalesOrderId(int salesOrderId) {
+        this.salesOrderId = salesOrderId;
     }
 }

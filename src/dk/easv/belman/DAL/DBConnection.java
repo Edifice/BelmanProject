@@ -77,15 +77,15 @@ public class DBConnection {
                     + "	so.is_done as so_done,"
                     + "	so.due_date AS so_due_date "
                     + "FROM Item AS i "
-                    + "LEFT JOIN ProductionOrder AS po ON po.order_id = i.production_order "
-                    + "LEFT JOIN SalesOrder AS so ON so.order_id = po.sales_order "
+                    + "RIGHT JOIN ProductionOrder AS po ON po.order_id = i.production_order "
+                    + "RIGHT JOIN SalesOrder AS so ON so.order_id = po.sales_order "
                     + "ORDER BY so_due_date ASC, so_id ASC, po_id ASC, item_id ASC;");
             while (rs.next()) {
                 boolean SO_new = false;
                 boolean PO_new = false;
 
                 SalesOrder so = ret.getById(rs.getInt("so_id"));
-                ProductOrder po = new ProductOrder();
+                ProductOrder po = null;
 
                 if (so == null) {
                     SO_new = true;
@@ -109,12 +109,11 @@ public class DBConnection {
                 }
 
                 // if ther is no PO for this Item
-                if (PO_new) {
+                if (po == null) {
                     po = new ProductOrder();
                     po.setId(rs.getInt("po_id"));
                     po.setDescription(rs.getString("po_desc"));
                     po.setDone(rs.getBoolean("po_done"));
-                    //po.setSalesOrderId(rs.getInt("so_id"));
                 }
 
                 Item item = new Item();
@@ -125,7 +124,7 @@ public class DBConnection {
                 item.setWidth(rs.getDouble("item_width"));
                 item.setCircumference(rs.getDouble("item_circumference"));
                 item.setDone(rs.getBoolean("item_done"));
-                //item.setProductOrderId(rs.getInt("po_id"));
+                item.setSalesOrderId(rs.getInt("so_id"));
 
                 po.getItemList().add(item);
 
@@ -138,8 +137,8 @@ public class DBConnection {
                     i_i++;
                 } else {
                     if (PO_new) {
-                        so.getProductOrderList().set(po);
-                        ret.add(so);
+                        so.getProductOrderList().add(po);
+                        ret.set(so);
                         po_i++;
                         i_i++;
                     } else {
@@ -156,8 +155,7 @@ public class DBConnection {
 
         }
 
-        System.out.println("SO: " + so_i + ", PO: " + po_i + ", Item: " + i_i);
-        System.out.println("SO: " + ret.size() + ", PO: " + ret.getList().size());
+        System.out.println("statistics: \n\tSO: " + so_i + ", \n\tPO: " + po_i + ", \n\tItem: " + i_i);
         return ret;
     }
 

@@ -4,15 +4,19 @@
  */
 package dk.easv.belman.GUI;
 
-
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.ProductOrderList;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 public class QueueTableModel extends AbstractTableModel {
     // Instance fields containing the employees to show in the table.
+
     private Item item;
     private ItemList items;
     // The names of columns
@@ -24,7 +28,7 @@ public class QueueTableModel extends AbstractTableModel {
     public QueueTableModel(ItemList items, MainGui parent) {
         this.items = items;
         this.parent = parent;
-        
+
         fireTableDataChanged();
 
 
@@ -42,23 +46,15 @@ public class QueueTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col) {
-        ProductOrderList pList = parent.getPList();
         item = items.get(row);
-        
+
         switch (col) {
-            
-            case 0:                
-                return item.getId();                
-                
+            case 0:
+                return item.getId();
+
             case 1:
-                
-                for (int i = 0; i < pList.size(); i++){
-                    if(item.getProductOrderId() == pList.get(i).getId()){
-                    //    return new Timestamp(pList.get(i).getDueDate());
-                    }
-                }
-                   
-                
+                DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                return df.format(new Date(Main.treeData.getById(item.getSalesOrderId()).getDueDate()));
         }
         return null;
     }
@@ -79,14 +75,12 @@ public class QueueTableModel extends AbstractTableModel {
         return true;
     }
 
-    
     public void addItems(Item item) {
         items.add(item);
     }
 
     /**
-     * Return the item instance from the table model with the given row
-     * index.
+     * Return the item instance from the table model with the given row index.
      *
      * @param row the index for the item in the items list.
      * @return the item at the given row index.
