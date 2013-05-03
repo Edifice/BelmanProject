@@ -6,7 +6,6 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -25,7 +24,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="spnlWest" max="32767" attributes="0"/>
+              <Component id="spnlWest" pref="393" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="spnlCenter" min="-2" pref="591" max="-2" attributes="0"/>
           </Group>
@@ -65,7 +64,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                              <Component id="jTabbedPane1" pref="0" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnSubmit" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -124,26 +123,27 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblMaterialID" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblThickness" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblWidth" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblCircumference" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtThickness" linkSize="5" alignment="0" pref="34" max="32767" attributes="0"/>
                                   <Component id="txtMaterialID" linkSize="5" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtCircumferenceMin" linkSize="5" alignment="0" pref="34" max="32767" attributes="0"/>
-                                          <Component id="txtWidthMin" linkSize="5" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtWidthMax" linkSize="5" max="32767" attributes="0"/>
-                                          <Component id="txtCircumferenceMax" linkSize="5" min="-2" pref="33" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="txtCircumferenceMin" linkSize="5" alignment="0" pref="34" max="32767" attributes="0"/>
+                                  <Component id="txtWidthMin" linkSize="5" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="107" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtWidthMax" linkSize="5" max="32767" attributes="0"/>
+                                  <Component id="txtCircumferenceMax" linkSize="5" min="-2" pref="33" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="89" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -165,12 +165,14 @@
                                   <Component id="txtWidthMin" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtWidthMax" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblWidth" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="txtCircumferenceMax" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtCircumferenceMin" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblCircumference" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -208,6 +210,16 @@
                     <Component class="javax.swing.JLabel" name="lblMaterialID">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Material ID:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&lt; x &lt;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel3">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&lt; x &lt;"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -330,30 +342,31 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="63" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblMaterialID2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblThickness2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblWidth2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCircumference2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtThickness2" alignment="0" pref="132" max="32767" attributes="0"/>
-                                  <Component id="txtMaterialID2" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtCircumferenceMin2" alignment="0" pref="34" max="32767" attributes="0"/>
-                                          <Component id="txtWidthMin2" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtWidthMax2" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txtCircumferenceMax2" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="lblMaterialID3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth3" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtThickness3" alignment="0" pref="35" max="32767" attributes="0"/>
+                                  <Component id="txtCircumferenceMin3" alignment="0" pref="35" max="32767" attributes="0"/>
+                                  <Component id="txtWidthMin3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtMaterialID3" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtWidthMax3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtCircumferenceMax3" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -362,25 +375,27 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtMaterialID2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMaterialID2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMaterialID3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMaterialID3" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtThickness2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblThickness2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtThickness3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblThickness3" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtWidthMin2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtWidthMax2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblWidth2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtWidthMin3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtWidthMax3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblWidth3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtCircumferenceMax2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCircumferenceMin2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCircumference2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCircumferenceMax3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCircumferenceMin3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCircumference3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -388,37 +403,47 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="txtWidthMax2">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtCircumferenceMin2">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtWidthMin2">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtCircumferenceMax2">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtThickness2">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtMaterialID2">
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblThickness2">
+                    <Component class="javax.swing.JLabel" name="lblMaterialID3">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Thickness:"/>
+                        <Property name="text" type="java.lang.String" value="Material ID:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblWidth2">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Width:"/>
-                      </Properties>
+                    <Component class="javax.swing.JTextField" name="txtMaterialID3">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblCircumference2">
+                    <Component class="javax.swing.JTextField" name="txtThickness3">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtWidthMin3">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMin3">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblCircumference3">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Circumference:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblMaterialID2">
+                    <Component class="javax.swing.JLabel" name="lblWidth3">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Material ID:"/>
+                        <Property name="text" type="java.lang.String" value="Width:"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblThickness3">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Thickness:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel4">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&lt; x &lt;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel5">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&lt; x &lt;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtCircumferenceMax3">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtWidthMax3">
                     </Component>
                   </SubComponents>
                 </Container>
