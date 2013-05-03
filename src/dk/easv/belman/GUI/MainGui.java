@@ -22,9 +22,6 @@ public class MainGui extends javax.swing.JFrame {
         initComponents();
         init();
         //<editor-fold defaultstate="collapsed" desc=" Look and feel settings ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
@@ -505,13 +502,6 @@ public class MainGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public static void main(String[] args) {
-        MainGui gui = new MainGui();
-        gui.setVisible(true);
-        gui.setExtendedState(gui.MAXIMIZED_BOTH);
-        gui.getSpnlWest().setDividerLocation(gui.getHeight() - 90);
-    }
 
     public void setDescriptionPane(MyTreeNode node) {
         lbl1.setVisible(true);
