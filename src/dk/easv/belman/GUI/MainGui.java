@@ -12,6 +12,8 @@ public class MainGui extends javax.swing.JFrame {
     private boolean isExpanded;
     private OrderListing listing;
     QueueTableModel queueTableModel;
+    private int EXPANDED_SIZE;
+    private int COLLAPSED_SIZE;
 
     /**
      * Creates new form Belman
@@ -41,7 +43,11 @@ public class MainGui extends javax.swing.JFrame {
     }
 
     private void init() {
+        // 
         isExpanded = false;
+        EXPANDED_SIZE = (int) this.getHeight() / 2;
+        COLLAPSED_SIZE = this.getHeight();
+
         // Set objects //
         listing = new OrderListing(this);
 
@@ -63,12 +69,12 @@ public class MainGui extends javax.swing.JFrame {
         //Queue table
         queueTableModel = new QueueTableModel(new ItemList(), this);
         tblQueue.setModel(queueTableModel);
-        
+
         //Filter menu
         jpOrder.setVisible(false);
         jpSleeve.setVisible(false);
-        jpStockItem.setVisible(false); 
-   }
+        jpStockItem.setVisible(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -500,6 +506,13 @@ public class MainGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public static void main(String[] args) {
+        MainGui gui = new MainGui();
+        gui.setVisible(true);
+        gui.setExtendedState(gui.MAXIMIZED_BOTH);
+        gui.getSpnlWest().setDividerLocation(gui.getHeight() - 90);
+    }
+
     public void setDescriptionPane(MyTreeNode node) {
         lbl1.setVisible(true);
         lbl2.setVisible(true);
@@ -578,17 +591,18 @@ public class MainGui extends javax.swing.JFrame {
     }
     private void btnFilterBySleeveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterBySleeveActionPerformed
         if (!isExpanded) {
-            int expHeight = (int) (this.getHeight() * 0.5);
-            spnlWest.setDividerLocation(expHeight);
+            spnlWest.setDividerLocation(EXPANDED_SIZE);
+//            System.out.println("Frame's size: " + this.getHeight());
+//            System.out.println("Expanded size: " + EXPANDED_SIZE);
             isExpanded = true;
         } else {
-            int normalHeight = (int) (this.getHeight() * 0.85);
-            spnlWest.setDividerLocation(normalHeight);
+            spnlWest.setDividerLocation(COLLAPSED_SIZE);
+//            System.out.println("Frame's size: " + this.getHeight());
+//            System.out.println("Collapsed size: " + COLLAPSED_SIZE);
             isExpanded = false;
         }
-        System.out.println(this.getHeight());
-    }//GEN-LAST:event_btnFilterBySleeveActionPerformed
 
+    }//GEN-LAST:event_btnFilterBySleeveActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFilterBySleeve;
     private javax.swing.JButton btnSubmit;

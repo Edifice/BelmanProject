@@ -79,7 +79,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnFilterBySleeve" min="-2" pref="34" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" pref="161" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane1" pref="155" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
