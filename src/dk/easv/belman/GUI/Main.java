@@ -16,14 +16,14 @@ public class Main {
     }
 
     public static void main(String[] args) throws UnsupportedLookAndFeelException, IllegalAccessException, InstantiationException, ClassNotFoundException {
-        com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green", "INSERT YOUR LICENSE KEY HERE", "my company");
+        com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green");
         UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
         MainGui gui = new MainGui();
 
-        // select the Look and Feel
+//        // select the Look and Feel
 
         gui.setExtendedState(MainGui.MAXIMIZED_BOTH);
-        gui.getSpnlWest().setDividerLocation(gui.getHeight() - 40);
+        gui.getSpnlWest().setDividerLocation(gui.getHeight() - 90);
         gui.setVisible(true);
     }
 }

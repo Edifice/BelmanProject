@@ -618,12 +618,23 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFilterBySleeveActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        int materialID = (txtMaterialID.getText().isEmpty() ? 0 : Integer.valueOf(txtMaterialID.getText()));
-        int thickness = (txtThickness.getText().isEmpty() ? 0 : Integer.valueOf(txtThickness.getText()));
-        int width_min = (txtWidthMin.getText().isEmpty() ? 0 : Integer.valueOf(txtWidthMin.getText()));
-        int width_max = (txtWidthMax.getText().isEmpty() ? 0 : Integer.valueOf(txtWidthMax.getText()));;
-        int circumference_min = (txtCircumferenceMin.getText().isEmpty() ? 0 : Integer.valueOf(txtCircumferenceMin.getText()));
-        int circumference_max = (txtCircumferenceMax.getText().isEmpty() ? 0 : Integer.valueOf(txtCircumferenceMax.getText()));
+        int materialID = 0;
+        double thickness = 0, width_min = 0, width_max = 0, circumference_min = 0, circumference_max = 0;
+        
+        try {
+            materialID = (!txtMaterialID.getText().isEmpty()) ? Integer.parseInt(txtMaterialID.getText()) : 0;
+            thickness = (!txtThickness.getText().isEmpty()) ? Double.parseDouble(txtThickness.getText()) : 0;
+            width_min = (!txtWidthMin.getText().isEmpty()) ? Double.parseDouble(txtWidthMin.getText()) : 0;
+            width_max = (!txtWidthMax.getText().isEmpty()) ? Double.parseDouble(txtWidthMax.getText()) : 0;
+            circumference_min = (!txtCircumferenceMin.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMin.getText()) : 0;
+            circumference_max = (!txtCircumferenceMax.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMax.getText()) : 0;
+                    
+        } catch (NumberFormatException ex) {
+            //to do
+            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex.getStackTrace());
+        }
+        
         
         
         SalesOrderList so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)); 
@@ -631,7 +642,7 @@ public class MainGui extends javax.swing.JFrame {
         listing.setTreeTableModel(so);
         listing.setOrderListing();
 //        repaint();
-        //listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
+//        listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

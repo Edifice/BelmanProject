@@ -1,14 +1,14 @@
 package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Item;
-import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.ProductOrder;
-import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.MyTreeNode;
 import dk.easv.belman.BLL.ListManager;
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class MyTreeTableModel extends AbstractTreeTableModel {
@@ -100,7 +100,8 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
                 return treenode.getDescription();
             case 2:
                 if (treenode.getDueDate() != 0) {
-                    return new Timestamp(treenode.getDueDate());
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    return df.format(new Date(treenode.getDueDate()));
                 } else {
                     return "";
                 }
