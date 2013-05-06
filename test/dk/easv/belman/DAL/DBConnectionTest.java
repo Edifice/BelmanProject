@@ -1,14 +1,5 @@
 package dk.easv.belman.DAL;
 
-import dk.easv.belman.BE.Item;
-import dk.easv.belman.BE.ItemList;
-import dk.easv.belman.BE.ProductOrder;
-import dk.easv.belman.BE.ProductOrderList;
-import dk.easv.belman.BE.SalesOrder;
-import dk.easv.belman.BE.SalesOrderList;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,7 +11,7 @@ public class DBConnectionTest {
     /**
      * Test of getInstance method, of class DBConnection.
      */
-    @Test
+    /*@Test
     public void testGetInstance() throws Exception {
         System.out.println("Testing getInstance()");
 
@@ -38,7 +29,7 @@ public class DBConnectionTest {
         assertEquals(expResult, result);
 
         System.out.println("Testing getInstance() - Done!");
-    }
+    }*/
 
     /**
      * Test of getAllSalesOrder method, of class DBConnection.

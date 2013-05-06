@@ -6,6 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -24,21 +25,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-              <Component id="spnlWest" pref="393" max="32767" attributes="0"/>
+              <Component id="jspWest" pref="393" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="spnlCenter" min="-2" pref="591" max="-2" attributes="0"/>
+              <Component id="jspCenter" min="-2" pref="591" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="spnlWest" pref="612" max="32767" attributes="0"/>
-          <Component id="spnlCenter" alignment="0" max="32767" attributes="0"/>
+          <Component id="jspWest" pref="612" max="32767" attributes="0"/>
+          <Component id="jspCenter" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JSplitPane" name="spnlWest">
+    <Container class="javax.swing.JSplitPane" name="jspWest">
       <Properties>
         <Property name="dividerLocation" type="int" value="400"/>
         <Property name="orientation" type="int" value="0"/>
@@ -64,7 +65,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jTabbedPane1" pref="0" max="32767" attributes="0"/>
+                              <Component id="jtpFilter" pref="0" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="btnSubmit" max="32767" attributes="0"/>
@@ -82,7 +83,7 @@
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Component id="btnFilter" min="-2" pref="34" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" pref="155" max="32767" attributes="0"/>
+                      <Component id="jtpFilter" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
@@ -111,7 +112,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSubmitActionPerformed"/>
               </Events>
             </Component>
-            <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+            <Container class="javax.swing.JTabbedPane" name="jtpFilter">
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
               <SubComponents>
@@ -245,137 +246,18 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="59" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblMaterialID1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblThickness1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblWidth1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCircumference1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtThickness1" alignment="0" pref="128" max="32767" attributes="0"/>
-                                  <Component id="txtMaterialID1" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtCircumferenceMin1" alignment="0" pref="34" max="32767" attributes="0"/>
-                                          <Component id="txtWidthMin1" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtWidthMax1" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txtCircumferenceMax1" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtMaterialID1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMaterialID1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtThickness1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblThickness1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtWidthMin1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtWidthMax1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblWidth1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtCircumferenceMax1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCircumferenceMin1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCircumference1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JTextField" name="txtWidthMax1">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtCircumferenceMin1">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtWidthMin1">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtCircumferenceMax1">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtThickness1">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtMaterialID1">
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblThickness1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Thickness:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblWidth1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Width:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblCircumference1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Circumference:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblMaterialID1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Material ID:"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JPanel" name="jpStockItem">
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="By Stock Item">
-                        <Property name="tabTitle" type="java.lang.String" value="By Stock Item"/>
-                      </JTabbedPaneConstraints>
-                    </Constraint>
-                  </Constraints>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblMaterialID3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblThickness3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCircumference3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblWidth3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSalesOrderID" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblProductionOrderID" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtThickness3" alignment="0" pref="27" max="32767" attributes="0"/>
-                                  <Component id="txtCircumferenceMin3" alignment="0" pref="27" max="32767" attributes="0"/>
-                                  <Component id="txtWidthMin3" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtMaterialID3" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtWidthMax3" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtCircumferenceMax3" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="txtProductionOrderID" pref="90" max="32767" attributes="0"/>
+                                  <Component id="txtSalesOrderID" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                              <EmptySpace pref="76" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -384,75 +266,33 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtMaterialID3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblMaterialID3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtSalesOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblSalesOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtThickness3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblThickness3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtProductionOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblProductionOrderID" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtWidthMin3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtWidthMax3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblWidth3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txtCircumferenceMax3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCircumferenceMin3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCircumference3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblMaterialID3">
+                    <Component class="javax.swing.JTextField" name="txtProductionOrderID">
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txtSalesOrderID">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="lblProductionOrderID">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Material ID:"/>
+                        <Property name="text" type="java.lang.String" value="Production Order ID:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtMaterialID3">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtThickness3">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtWidthMin3">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtCircumferenceMin3">
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblCircumference3">
+                    <Component class="javax.swing.JLabel" name="lblSalesOrderID">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Circumference:"/>
+                        <Property name="text" type="java.lang.String" value="Sales Order ID:"/>
                       </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblWidth3">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Width:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="lblThickness3">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Thickness:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel4">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="&lt; x &lt;"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel5">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="&lt; x &lt;"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtCircumferenceMax3">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtWidthMax3">
                     </Component>
                   </SubComponents>
                 </Container>
@@ -470,14 +310,14 @@
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JSplitPane" name="spnlCenter">
+    <Container class="javax.swing.JSplitPane" name="jspCenter">
       <Properties>
         <Property name="dividerLocation" type="int" value="300"/>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JSplitPane" name="spnlEast">
+        <Container class="javax.swing.JSplitPane" name="jspEast">
           <Properties>
             <Property name="dividerLocation" type="int" value="300"/>
             <Property name="orientation" type="int" value="0"/>
@@ -490,7 +330,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jPanel2">
+            <Container class="javax.swing.JPanel" name="jpDescription">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="top"/>
@@ -504,38 +344,38 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbl1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDescriptionText1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt1" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="txtDescription1" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbl2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="68" max="32767" attributes="0"/>
-                                  <Component id="txt2" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="lblDescriptionText2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="80" max="32767" attributes="0"/>
+                                  <Component id="txtDescription2" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbl3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDescriptionText3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt3" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="txtDescription3" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbl4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDescriptiontext4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt4" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="txtDescription4" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbl5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDescriptionText5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt5" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="txtDescription5" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="lblDescription" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="lbl6" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDescriptionText6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="txt6" min="-2" pref="161" max="-2" attributes="0"/>
+                                  <Component id="txtDescription6" min="-2" pref="161" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -549,33 +389,33 @@
                           <Component id="lblDescription" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDescriptionText1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDescription1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDescriptionText2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDescription2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDescriptionText3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDescription3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDescriptiontext4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDescription4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDescriptionText5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDescription5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lbl6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txt6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDescriptionText6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDescription6" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="118" max="32767" attributes="0"/>
                       </Group>
@@ -588,71 +428,53 @@
                     <Property name="text" type="java.lang.String" value="Description"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lbl1">
+                <Component class="javax.swing.JLabel" name="lblDescriptionText1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ID"/>
+                    <Property name="text" type="java.lang.String" value="Text"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lbl2">
+                <Component class="javax.swing.JLabel" name="lblDescriptionText2">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
+                    <Property name="text" type="java.lang.String" value="Text"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lbl3">
+                <Component class="javax.swing.JLabel" name="lblDescriptionText3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
+                    <Property name="text" type="java.lang.String" value="Text"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lbl4">
+                <Component class="javax.swing.JLabel" name="lblDescriptiontext4">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
+                    <Property name="text" type="java.lang.String" value="Text"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt1">
+                <Component class="javax.swing.JTextField" name="txtDescription1">
+                </Component>
+                <Component class="javax.swing.JTextField" name="txtDescription2">
+                </Component>
+                <Component class="javax.swing.JTextField" name="txtDescription3">
+                </Component>
+                <Component class="javax.swing.JTextField" name="txtDescription4">
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblDescriptionText5">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jTextField1"/>
+                    <Property name="text" type="java.lang.String" value="Text"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt2">
+                <Component class="javax.swing.JTextField" name="txtDescription5">
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblDescriptionText6">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jTextField1"/>
+                    <Property name="text" type="java.lang.String" value="Text"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txt3">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jTextField1"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt4">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jTextField1"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lbl5">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt5">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jTextField1"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lbl6">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel2"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="txt6">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="jTextField1"/>
-                  </Properties>
+                <Component class="javax.swing.JTextField" name="txtDescription6">
                 </Component>
               </SubComponents>
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+        <Container class="javax.swing.JScrollPane" name="jspQueue">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -667,14 +489,6 @@
             <Component class="javax.swing.JTable" name="tblQueue">
               <Properties>
                 <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                  </Table>
-                </Property>
               </Properties>
             </Component>
           </SubComponents>

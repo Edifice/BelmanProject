@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -47,10 +48,7 @@ public final class OrderListing {
         treeTableModel = new MyTreeTableModel(so);
         treeTable = new JXTreeTable(treeTableModel);
     }
-
-    public JXTreeTable setTreeTable() {
-
-
+    public JXTreeTable setTreeTable() {      
         // Build the tree table panel
         treeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         treeTable.setColumnControlVisible(true);

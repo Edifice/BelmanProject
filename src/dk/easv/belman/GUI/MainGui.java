@@ -3,13 +3,19 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.MyTreeNode;
+import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.Filter;
+import java.awt.Button;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.sql.Timestamp;
-import java.util.Enumeration;
-import javax.swing.DropMode;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.TableColumn;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class MainGui extends javax.swing.JFrame {
 
@@ -19,19 +25,18 @@ public class MainGui extends javax.swing.JFrame {
     private int EXPANDED_SIZE;
     private int COLLAPSED_SIZE;
     private Filter filter;
-   
 
     /**
      * Creates new form Belman
      */
     public MainGui() {
         initComponents();
-
         //<editor-fold defaultstate="collapsed" desc=" Look and feel settings ">
+        com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green");
         try {
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(MainGui.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -51,19 +56,8 @@ public class MainGui extends javax.swing.JFrame {
         listing = new OrderListing(this);
 
         //DescriptionPane
-        lbl1.setVisible(false);
-        lbl2.setVisible(false);
-        lbl3.setVisible(false);
-        lbl4.setVisible(false);
-        lbl5.setVisible(false);
-        lbl6.setVisible(false);
-
-        txt1.setVisible(false);
-        txt2.setVisible(false);
-        txt3.setVisible(false);
-        txt4.setVisible(false);
-        txt5.setVisible(false);
-        txt6.setVisible(false);
+        setVisibleTo(false, lblDescriptionText1, lblDescriptionText2, lblDescriptionText3, lblDescriptiontext4, lblDescriptionText5, lblDescriptionText6,
+                txtDescription1, txtDescription2, txtDescription3, txtDescription4, txtDescription5, txtDescription6);
 
         //Queue table
         queueTableModel = new QueueTableModel(new ItemList(), this);
@@ -79,17 +73,12 @@ public class MainGui extends javax.swing.JFrame {
             tc.setCellRenderer(new QueueTableCellRenderer());
         }
 
-        //Filter menu
-        jpOrder.setVisible(false);
-        jpSleeve.setVisible(false);
-        jpStockItem.setVisible(false);
-
         // 
         isExpanded = true;
-        EXPANDED_SIZE = this.getHeight()-160;//(int) this.getHeight() / 2;
+        EXPANDED_SIZE = this.getHeight() - 160;//(int) this.getHeight() / 2;
         COLLAPSED_SIZE = this.getHeight() + 10;
 
-        spnlWest.setDividerLocation(COLLAPSED_SIZE);
+        jspWest.setDividerLocation(COLLAPSED_SIZE);
         btnFilter.setText("Hide Filter");
     }
 
@@ -102,11 +91,11 @@ public class MainGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        spnlWest = new javax.swing.JSplitPane();
+        jspWest = new javax.swing.JSplitPane();
         jpMain = new javax.swing.JPanel();
         btnFilter = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jtpFilter = new javax.swing.JTabbedPane();
         jpSleeve = new javax.swing.JPanel();
         txtWidthMax = new javax.swing.JTextField();
         txtCircumferenceMin = new javax.swing.JTextField();
@@ -121,53 +110,34 @@ public class MainGui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jpOrder = new javax.swing.JPanel();
-        txtWidthMax1 = new javax.swing.JTextField();
-        txtCircumferenceMin1 = new javax.swing.JTextField();
-        txtWidthMin1 = new javax.swing.JTextField();
-        txtCircumferenceMax1 = new javax.swing.JTextField();
-        txtThickness1 = new javax.swing.JTextField();
-        txtMaterialID1 = new javax.swing.JTextField();
-        lblThickness1 = new javax.swing.JLabel();
-        lblWidth1 = new javax.swing.JLabel();
-        lblCircumference1 = new javax.swing.JLabel();
-        lblMaterialID1 = new javax.swing.JLabel();
-        jpStockItem = new javax.swing.JPanel();
-        lblMaterialID3 = new javax.swing.JLabel();
-        txtMaterialID3 = new javax.swing.JTextField();
-        txtThickness3 = new javax.swing.JTextField();
-        txtWidthMin3 = new javax.swing.JTextField();
-        txtCircumferenceMin3 = new javax.swing.JTextField();
-        lblCircumference3 = new javax.swing.JLabel();
-        lblWidth3 = new javax.swing.JLabel();
-        lblThickness3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtCircumferenceMax3 = new javax.swing.JTextField();
-        txtWidthMax3 = new javax.swing.JTextField();
+        txtProductionOrderID = new javax.swing.JTextField();
+        txtSalesOrderID = new javax.swing.JTextField();
+        lblProductionOrderID = new javax.swing.JLabel();
+        lblSalesOrderID = new javax.swing.JLabel();
         btnReset = new javax.swing.JButton();
-        spnlCenter = new javax.swing.JSplitPane();
-        spnlEast = new javax.swing.JSplitPane();
-        jPanel2 = new javax.swing.JPanel();
+        jspCenter = new javax.swing.JSplitPane();
+        jspEast = new javax.swing.JSplitPane();
+        jpDescription = new javax.swing.JPanel();
         lblDescription = new javax.swing.JLabel();
-        lbl1 = new javax.swing.JLabel();
-        lbl2 = new javax.swing.JLabel();
-        lbl3 = new javax.swing.JLabel();
-        lbl4 = new javax.swing.JLabel();
-        txt1 = new javax.swing.JTextField();
-        txt2 = new javax.swing.JTextField();
-        txt3 = new javax.swing.JTextField();
-        txt4 = new javax.swing.JTextField();
-        lbl5 = new javax.swing.JLabel();
-        txt5 = new javax.swing.JTextField();
-        lbl6 = new javax.swing.JLabel();
-        txt6 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        lblDescriptionText1 = new javax.swing.JLabel();
+        lblDescriptionText2 = new javax.swing.JLabel();
+        lblDescriptionText3 = new javax.swing.JLabel();
+        lblDescriptiontext4 = new javax.swing.JLabel();
+        txtDescription1 = new javax.swing.JTextField();
+        txtDescription2 = new javax.swing.JTextField();
+        txtDescription3 = new javax.swing.JTextField();
+        txtDescription4 = new javax.swing.JTextField();
+        lblDescriptionText5 = new javax.swing.JLabel();
+        txtDescription5 = new javax.swing.JTextField();
+        lblDescriptionText6 = new javax.swing.JLabel();
+        txtDescription6 = new javax.swing.JTextField();
+        jspQueue = new javax.swing.JScrollPane();
         tblQueue = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        spnlWest.setDividerLocation(400);
-        spnlWest.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jspWest.setDividerLocation(400);
+        jspWest.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         btnFilter.setText("Show Filters");
         btnFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -253,133 +223,42 @@ public class MainGui extends javax.swing.JFrame {
 
         jpSleeveLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCircumferenceMax, txtCircumferenceMin, txtMaterialID, txtThickness, txtWidthMax, txtWidthMin});
 
-        jTabbedPane1.addTab("By Sleeve", jpSleeve);
+        jtpFilter.addTab("By Sleeve", jpSleeve);
 
-        lblThickness1.setText("Thickness:");
+        lblProductionOrderID.setText("Production Order ID:");
 
-        lblWidth1.setText("Width:");
-
-        lblCircumference1.setText("Circumference:");
-
-        lblMaterialID1.setText("Material ID:");
+        lblSalesOrderID.setText("Sales Order ID:");
 
         javax.swing.GroupLayout jpOrderLayout = new javax.swing.GroupLayout(jpOrder);
         jpOrder.setLayout(jpOrderLayout);
         jpOrderLayout.setHorizontalGroup(
             jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpOrderLayout.createSequentialGroup()
-                .addContainerGap(59, Short.MAX_VALUE)
+            .addGroup(jpOrderLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMaterialID1)
-                    .addComponent(lblThickness1)
-                    .addComponent(lblWidth1)
-                    .addComponent(lblCircumference1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtThickness1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                    .addComponent(txtMaterialID1)
-                    .addGroup(jpOrderLayout.createSequentialGroup()
-                        .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCircumferenceMin1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                            .addComponent(txtWidthMin1))
-                        .addGap(30, 30, 30)
-                        .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtWidthMax1)
-                            .addComponent(txtCircumferenceMax1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(33, 33, 33))
+                    .addComponent(lblSalesOrderID)
+                    .addComponent(lblProductionOrderID))
+                .addGap(21, 21, 21)
+                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtProductionOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(txtSalesOrderID))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jpOrderLayout.setVerticalGroup(
             jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpOrderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMaterialID1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaterialID1))
+                    .addComponent(txtSalesOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSalesOrderID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtThickness1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblThickness1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtWidthMin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtWidthMax1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblWidth1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCircumferenceMax1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCircumferenceMin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCircumference1))
-                .addContainerGap())
+                    .addComponent(txtProductionOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblProductionOrderID))
+                .addGap(70, 70, 70))
         );
 
-        jTabbedPane1.addTab("By Order", jpOrder);
-
-        lblMaterialID3.setText("Material ID:");
-
-        lblCircumference3.setText("Circumference:");
-
-        lblWidth3.setText("Width:");
-
-        lblThickness3.setText("Thickness:");
-
-        jLabel4.setText("< x <");
-
-        jLabel5.setText("< x <");
-
-        javax.swing.GroupLayout jpStockItemLayout = new javax.swing.GroupLayout(jpStockItem);
-        jpStockItem.setLayout(jpStockItemLayout);
-        jpStockItemLayout.setHorizontalGroup(
-            jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpStockItemLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMaterialID3)
-                    .addComponent(lblThickness3)
-                    .addComponent(lblCircumference3)
-                    .addComponent(lblWidth3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtThickness3, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                    .addComponent(txtCircumferenceMin3, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                    .addComponent(txtWidthMin3)
-                    .addComponent(txtMaterialID3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(17, 17, 17)
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtWidthMax3)
-                    .addComponent(txtCircumferenceMax3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(89, 89, 89))
-        );
-        jpStockItemLayout.setVerticalGroup(
-            jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpStockItemLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMaterialID3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaterialID3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtThickness3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblThickness3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtWidthMin3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtWidthMax3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblWidth3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCircumferenceMax3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCircumferenceMin3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCircumference3)
-                    .addComponent(jLabel5))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("By Stock Item", jpStockItem);
+        jtpFilter.addTab("By Order", jpOrder);
 
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
@@ -399,7 +278,7 @@ public class MainGui extends javax.swing.JFrame {
                         .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jpMainLayout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jtpFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -412,7 +291,7 @@ public class MainGui extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
+                .addComponent(jtpFilter))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMainLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnReset)
@@ -421,126 +300,103 @@ public class MainGui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        spnlWest.setBottomComponent(jpMain);
+        jspWest.setBottomComponent(jpMain);
 
-        spnlCenter.setDividerLocation(300);
+        jspCenter.setDividerLocation(300);
 
-        spnlEast.setDividerLocation(300);
-        spnlEast.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jspEast.setDividerLocation(300);
+        jspEast.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         lblDescription.setText("Description");
 
-        lbl1.setText("ID");
+        lblDescriptionText1.setText("Text");
 
-        lbl2.setText("jLabel2");
+        lblDescriptionText2.setText("Text");
 
-        lbl3.setText("jLabel2");
+        lblDescriptionText3.setText("Text");
 
-        lbl4.setText("jLabel2");
+        lblDescriptiontext4.setText("Text");
 
-        txt1.setText("jTextField1");
+        lblDescriptionText5.setText("Text");
 
-        txt2.setText("jTextField1");
+        lblDescriptionText6.setText("Text");
 
-        txt3.setText("jTextField1");
-
-        txt4.setText("jTextField1");
-
-        lbl5.setText("jLabel2");
-
-        txt5.setText("jTextField1");
-
-        lbl6.setText("jLabel2");
-
-        txt6.setText("jTextField1");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpDescriptionLayout = new javax.swing.GroupLayout(jpDescription);
+        jpDescription.setLayout(jpDescriptionLayout);
+        jpDescriptionLayout.setHorizontalGroup(
+            jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDescriptionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl1)
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
+                        .addComponent(lblDescriptionText1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl3)
+                        .addComponent(txtDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
+                        .addComponent(lblDescriptionText2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addComponent(txtDescription2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
+                        .addComponent(lblDescriptionText3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl4)
+                        .addComponent(txtDescription3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
+                        .addComponent(lblDescriptiontext4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt4, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl5)
+                        .addComponent(txtDescription4, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
+                        .addComponent(lblDescriptionText5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtDescription5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
                         .addComponent(lblDescription)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl6)
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
+                        .addComponent(lblDescriptionText6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jpDescriptionLayout.setVerticalGroup(
+            jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDescriptionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblDescription)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl1)
-                    .addComponent(txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescriptionText1)
+                    .addComponent(txtDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl2)
-                    .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescriptionText2)
+                    .addComponent(txtDescription2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl3)
-                    .addComponent(txt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescriptionText3)
+                    .addComponent(txtDescription3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl4)
-                    .addComponent(txt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescriptiontext4)
+                    .addComponent(txtDescription4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl5)
-                    .addComponent(txt5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescriptionText5)
+                    .addComponent(txtDescription5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl6)
-                    .addComponent(txt6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescriptionText6)
+                    .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
-        spnlEast.setTopComponent(jPanel2);
+        jspEast.setTopComponent(jpDescription);
 
-        spnlCenter.setRightComponent(spnlEast);
+        jspCenter.setRightComponent(jspEast);
 
         tblQueue.setAutoCreateRowSorter(true);
-        tblQueue.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblQueue);
+        jspQueue.setViewportView(tblQueue);
 
-        spnlCenter.setLeftComponent(jScrollPane1);
+        jspCenter.setLeftComponent(jspQueue);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -548,84 +404,85 @@ public class MainGui extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(spnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+                .addComponent(jspWest, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jspCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
-            .addComponent(spnlCenter)
+            .addComponent(jspWest, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+            .addComponent(jspCenter)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public void setDescriptionPane(MyTreeNode node) {
-        lbl1.setVisible(true);
-        lbl2.setVisible(true);
-        lbl3.setVisible(true);
-        txt1.setVisible(true);
-        txt2.setVisible(true);
-        txt3.setVisible(true);
+        setVisibleTo(true, lblDescriptionText1, lblDescriptionText2, lblDescriptionText3, txtDescription1, txtDescription2, txtDescription3);
 
-        lbl1.setText("Function: ");
-        txt1.setText(node.getFunction());
-        txt1.setEditable(false);
+        lblDescriptionText1.setText("Function: ");
+        txtDescription1.setText(node.getFunction());
+        lblDescriptionText2.setText("ID: ");
+        txtDescription2.setText(String.valueOf(node.getId()));
 
-        lbl2.setText("ID: ");
-        txt2.setText(String.valueOf(node.getId()));
-        txt2.setEditable(false);
-
-        txt3.setEditable(false);
-        txt4.setEditable(false);
-        txt5.setEditable(false);
-        txt6.setEditable(false);
+        setEditableTo(false, txtDescription1, txtDescription2, txtDescription3, txtDescription4, txtDescription5, txtDescription6);
 
         switch (node.getFunction()) {
             case "SalesOrder":
-                lbl3.setText("Description");
-                txt3.setText(node.getDescription());
+                setVisibleTo(false, lblDescriptiontext4, txtDescription4, lblDescriptionText5, txtDescription5, lblDescriptionText6, txtDescription6);
 
-                lbl4.setVisible(true);
-                lbl4.setText("Due Date: ");
-                txt4.setVisible(true);
-                txt4.setText(String.valueOf(new Timestamp(node.getDueDate())));
+                lblDescriptionText3.setText("Description");
+                txtDescription3.setText(node.getDescription());
+                lblDescriptiontext4.setText("Due Date: ");
+                txtDescription4.setText(String.valueOf(new Timestamp(node.getDueDate())));
 
-                lbl5.setVisible(false);
-                txt5.setVisible(false);
-                lbl6.setVisible(false);
-                txt6.setVisible(false);
                 break;
+
             case "ProductOrder":
-                lbl3.setText("Description");
-                txt3.setText(node.getDescription());
+                setVisibleTo(false, lblDescriptiontext4, txtDescription4, lblDescriptionText5, txtDescription5, lblDescriptionText6, txtDescription6);
 
-                lbl4.setVisible(false);
-                txt4.setVisible(false);
-                lbl5.setVisible(false);
-                txt5.setVisible(false);
-                lbl6.setVisible(false);
-                txt6.setVisible(false);
+                lblDescriptionText3.setText("Description");
+                txtDescription3.setText(node.getDescription());
 
                 break;
+
             case "Item":
-                lbl4.setVisible(true);
-                txt4.setVisible(true);
-                lbl5.setVisible(true);
-                txt5.setVisible(true);
-                lbl6.setVisible(true);
-                txt6.setVisible(true);
+                setVisibleTo(true, lblDescriptiontext4, txtDescription4, lblDescriptionText5, txtDescription5, lblDescriptionText6, txtDescription6);
 
-                lbl3.setText("Material ID: ");
-                txt3.setText(String.valueOf(node.getMatId()));
-                lbl4.setText("Width: ");
-                txt4.setText(String.valueOf(node.getWidth()));
-                lbl5.setText("Circumference: ");
-                txt5.setText(String.valueOf(node.getCircumference()));
-                lbl6.setText("Thickness: ");
-                txt6.setText(String.valueOf(node.getThickness()));
+                lblDescriptionText3.setText("Material ID: ");
+                txtDescription3.setText(String.valueOf(node.getMatId()));
+                lblDescriptiontext4.setText("Width: ");
+                txtDescription4.setText(String.valueOf(node.getWidth()));
+                lblDescriptionText5.setText("Circumference: ");
+                txtDescription5.setText(String.valueOf(node.getCircumference()));
+                lblDescriptionText6.setText("Thickness: ");
+                txtDescription6.setText(String.valueOf(node.getThickness()));
+
                 break;
+        }
+    }
+
+    /**
+     * Takes in multiple Components and sets the visibility option for all.
+     *
+     * @param visibility
+     * @param comp All the components
+     */
+    public void setVisibleTo(boolean visibility, Component... comp) {
+        for (Component c : comp) {
+            c.setVisible(visibility);
+        }
+    }
+
+    /**
+     * Takes in multiple JTextFields and sets the editable attribute for all.
+     *
+     * @param visibility
+     * @param comp
+     */
+    public void setEditableTo(boolean visibility, JTextField... comp) {
+        for (JTextField c : comp) {
+            c.setEditable(visibility);
         }
     }
 
@@ -634,62 +491,90 @@ public class MainGui extends javax.swing.JFrame {
         queueTableModel.fireTableDataChanged();
     }
 
+    /**
+     * @return the spnlCenter
+     */
+    public javax.swing.JSplitPane getSpnlCenter() {
+        return jspCenter;
+    }
+
+    /**
+     * @return the spnlWest
+     */
+    public javax.swing.JSplitPane getSpnlWest() {
+        return jspWest;
+    }
+
     public void updateQueueTable() {
         queueTableModel.fireTableDataChanged();
     }
     private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
-        if (!isExpanded) {
+        if (!isExpanded) { // If it's not expanded, then expand it.
             btnFilter.setText("Hide Filter");
-            spnlWest.setDividerLocation(EXPANDED_SIZE);
-            System.out.println("Frame's size: " + this.getHeight());
-            System.out.println("Expanded size: " + EXPANDED_SIZE);
+            jspWest.setDividerLocation(EXPANDED_SIZE);
             isExpanded = true;
-        } else {
+        } else { // If it's already exanded, collapse it!
             btnFilter.setText("Show Filter");
-            spnlWest.setDividerLocation(COLLAPSED_SIZE);
-            System.out.println("Frame's size: " + this.getHeight());
-            System.out.println("Collapsed size: " + COLLAPSED_SIZE);
+            jspWest.setDividerLocation(COLLAPSED_SIZE);
             isExpanded = false;
         }
-
     }//GEN-LAST:event_btnFilterActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        
-        int materialID = 0;
-        double thickness = 0, width_min = 0, width_max = 0, circumference_min = 0, circumference_max = 0;
+        // The list of Sales Orders that we're going to set for the tree.
+        SalesOrderList so = null;
 
-        try {
-            materialID = (!txtMaterialID.getText().isEmpty()) ? Integer.parseInt(txtMaterialID.getText()) : 0;
-            thickness = (!txtThickness.getText().isEmpty()) ? Double.parseDouble(txtThickness.getText()) : 0;
-            width_min = (!txtWidthMin.getText().isEmpty()) ? Double.parseDouble(txtWidthMin.getText()) : 0;
-            width_max = (!txtWidthMax.getText().isEmpty()) ? Double.parseDouble(txtWidthMax.getText()) : 0;
-            circumference_min = (!txtCircumferenceMin.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMin.getText()) : 0;
-            circumference_max = (!txtCircumferenceMax.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMax.getText()) : 0;
+        // Initialize local variables
+        int salesOrderID,
+                productionOrderID,
+                materialID;
+        double thickness,
+                width_min,
+                width_max,
+                circumference_min,
+                circumference_max;
 
-        } catch (NumberFormatException ex) {
-            //to do
-            System.out.println(ex.getLocalizedMessage());
-            System.out.println(ex.getStackTrace());
+        if (jtpFilter.getSelectedIndex() == 0) { // Filter by Sleeve
+            try {
+                // Get the values from the right text fields.
+                materialID = (!txtMaterialID.getText().isEmpty()) ? Integer.parseInt(txtMaterialID.getText()) : 0;
+                thickness = (!txtThickness.getText().isEmpty()) ? Double.parseDouble(txtThickness.getText()) : 0;
+                width_min = (!txtWidthMin.getText().isEmpty()) ? Double.parseDouble(txtWidthMin.getText()) : 0;
+                width_max = (!txtWidthMax.getText().isEmpty()) ? Double.parseDouble(txtWidthMax.getText()) : 0;
+                circumference_min = (!txtCircumferenceMin.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMin.getText()) : 0;
+                circumference_max = (!txtCircumferenceMax.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMax.getText()) : 0;
+                so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max));
+            } catch (NumberFormatException ex) {
+                // In case of parsing error, create a popup window with the error message.
+                JOptionPane.showMessageDialog(this, "Wrong input " + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (jtpFilter.getSelectedIndex() == 1) { // Filter by Order
+            try {
+                // Get the values from the right text fields.
+                salesOrderID = (!txtSalesOrderID.getText().isEmpty()) ? Integer.parseInt(txtSalesOrderID.getText()) : 0;
+                productionOrderID = (!txtProductionOrderID.getText().isEmpty()) ? Integer.parseInt(txtProductionOrderID.getText()) : 0;
+                so = (filter.filterByOrder(Main.treeData, salesOrderID, productionOrderID));
+            } catch (NumberFormatException ex) {
+                // In case of parsing error, create a popup window with the error message.
+                JOptionPane.showMessageDialog(this, "Wrong input " + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
-        SalesOrderList so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max));
-        System.out.println("Salesorder size:" + so.size());
+        // Re-create the tree
         listing.setTreeTableModel(so);
         listing.setOrderListing();
-        
-        // Sets back the size of the pane
-        spnlWest.setDividerLocation(EXPANDED_SIZE);
-//        repaint();
-//        listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
+
+        // Collapse the Filter Menu
+        btnFilterActionPerformed(evt);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-//        listing.setTreeTableModel(Main.allOrderData);
-//        listing.setOrderListing();
-//        
-        System.out.println(MainGui.this.getHeight() - spnlWest.getRightComponent().getHeight());
+        listing.setTreeTableModel(Main.allOrderData);
+        listing.setOrderListing();
+
+        // Collapse the Filter Menu
+        btnFilterActionPerformed(evt);
     }//GEN-LAST:event_btnResetActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -698,75 +583,42 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel jpDescription;
     private javax.swing.JPanel jpMain;
     private javax.swing.JPanel jpOrder;
     private javax.swing.JPanel jpSleeve;
-    private javax.swing.JPanel jpStockItem;
-    private javax.swing.JLabel lbl1;
-    private javax.swing.JLabel lbl2;
-    private javax.swing.JLabel lbl3;
-    private javax.swing.JLabel lbl4;
-    private javax.swing.JLabel lbl5;
-    private javax.swing.JLabel lbl6;
+    private javax.swing.JSplitPane jspCenter;
+    private javax.swing.JSplitPane jspEast;
+    private javax.swing.JScrollPane jspQueue;
+    private javax.swing.JSplitPane jspWest;
+    private javax.swing.JTabbedPane jtpFilter;
     private javax.swing.JLabel lblCircumference;
-    private javax.swing.JLabel lblCircumference1;
-    private javax.swing.JLabel lblCircumference3;
     private javax.swing.JLabel lblDescription;
+    private javax.swing.JLabel lblDescriptionText1;
+    private javax.swing.JLabel lblDescriptionText2;
+    private javax.swing.JLabel lblDescriptionText3;
+    private javax.swing.JLabel lblDescriptionText5;
+    private javax.swing.JLabel lblDescriptionText6;
+    private javax.swing.JLabel lblDescriptiontext4;
     private javax.swing.JLabel lblMaterialID;
-    private javax.swing.JLabel lblMaterialID1;
-    private javax.swing.JLabel lblMaterialID3;
+    private javax.swing.JLabel lblProductionOrderID;
+    private javax.swing.JLabel lblSalesOrderID;
     private javax.swing.JLabel lblThickness;
-    private javax.swing.JLabel lblThickness1;
-    private javax.swing.JLabel lblThickness3;
     private javax.swing.JLabel lblWidth;
-    private javax.swing.JLabel lblWidth1;
-    private javax.swing.JLabel lblWidth3;
-    private javax.swing.JSplitPane spnlCenter;
-    private javax.swing.JSplitPane spnlEast;
-    private javax.swing.JSplitPane spnlWest;
     private javax.swing.JTable tblQueue;
-    private javax.swing.JTextField txt1;
-    private javax.swing.JTextField txt2;
-    private javax.swing.JTextField txt3;
-    private javax.swing.JTextField txt4;
-    private javax.swing.JTextField txt5;
-    private javax.swing.JTextField txt6;
     private javax.swing.JTextField txtCircumferenceMax;
-    private javax.swing.JTextField txtCircumferenceMax1;
-    private javax.swing.JTextField txtCircumferenceMax3;
     private javax.swing.JTextField txtCircumferenceMin;
-    private javax.swing.JTextField txtCircumferenceMin1;
-    private javax.swing.JTextField txtCircumferenceMin3;
+    private javax.swing.JTextField txtDescription1;
+    private javax.swing.JTextField txtDescription2;
+    private javax.swing.JTextField txtDescription3;
+    private javax.swing.JTextField txtDescription4;
+    private javax.swing.JTextField txtDescription5;
+    private javax.swing.JTextField txtDescription6;
     private javax.swing.JTextField txtMaterialID;
-    private javax.swing.JTextField txtMaterialID1;
-    private javax.swing.JTextField txtMaterialID3;
+    private javax.swing.JTextField txtProductionOrderID;
+    private javax.swing.JTextField txtSalesOrderID;
     private javax.swing.JTextField txtThickness;
-    private javax.swing.JTextField txtThickness1;
-    private javax.swing.JTextField txtThickness3;
     private javax.swing.JTextField txtWidthMax;
-    private javax.swing.JTextField txtWidthMax1;
-    private javax.swing.JTextField txtWidthMax3;
     private javax.swing.JTextField txtWidthMin;
-    private javax.swing.JTextField txtWidthMin1;
-    private javax.swing.JTextField txtWidthMin3;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @return the spnlCenter
-     */
-    public javax.swing.JSplitPane getSpnlCenter() {
-        return spnlCenter;
-    }
-
-    /**
-     * @return the spnlWest
-     */
-    public javax.swing.JSplitPane getSpnlWest() {
-        return spnlWest;
-    }
 }
