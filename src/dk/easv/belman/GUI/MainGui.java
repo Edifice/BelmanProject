@@ -7,6 +7,7 @@ import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.Filter;
 import java.awt.Button;
+import java.awt.Dimension;
 import java.sql.Timestamp;
 
 public class MainGui extends javax.swing.JFrame {
@@ -17,13 +18,14 @@ public class MainGui extends javax.swing.JFrame {
     private int EXPANDED_SIZE;
     private int COLLAPSED_SIZE;
     private Filter filter;
+   
 
     /**
      * Creates new form Belman
      */
     public MainGui() {
         initComponents();
-        init();
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel settings ">
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
@@ -31,17 +33,14 @@ public class MainGui extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        init();
     }
 
     private void init() {
         //
         filter = new Filter();
-        
-        // 
-        isExpanded = false;
-        EXPANDED_SIZE = (int) this.getHeight() / 2;
-        COLLAPSED_SIZE = this.getHeight();
+
+
 
         // Set objects //
         listing = new OrderListing(this);
@@ -69,6 +68,14 @@ public class MainGui extends javax.swing.JFrame {
         jpOrder.setVisible(false);
         jpSleeve.setVisible(false);
         jpStockItem.setVisible(false);
+
+        // 
+        isExpanded = true;
+        EXPANDED_SIZE = this.getHeight()-160;//(int) this.getHeight() / 2;
+        COLLAPSED_SIZE = this.getHeight() + 10;
+
+        spnlWest.setDividerLocation(COLLAPSED_SIZE);
+        btnFilter.setText("Hide Filter");
     }
 
     /**
@@ -82,7 +89,7 @@ public class MainGui extends javax.swing.JFrame {
 
         spnlWest = new javax.swing.JSplitPane();
         jpMain = new javax.swing.JPanel();
-        btnFilterBySleeve = new javax.swing.JButton();
+        btnFilter = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jpSleeve = new javax.swing.JPanel();
@@ -122,6 +129,7 @@ public class MainGui extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtCircumferenceMax3 = new javax.swing.JTextField();
         txtWidthMax3 = new javax.swing.JTextField();
+        btnReset = new javax.swing.JButton();
         spnlCenter = new javax.swing.JSplitPane();
         spnlEast = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
@@ -146,10 +154,10 @@ public class MainGui extends javax.swing.JFrame {
         spnlWest.setDividerLocation(400);
         spnlWest.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        btnFilterBySleeve.setText("Show Filters");
-        btnFilterBySleeve.addActionListener(new java.awt.event.ActionListener() {
+        btnFilter.setText("Show Filters");
+        btnFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFilterBySleeveActionPerformed(evt);
+                btnFilterActionPerformed(evt);
             }
         });
 
@@ -197,7 +205,7 @@ public class MainGui extends javax.swing.JFrame {
                 .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtWidthMax)
                     .addComponent(txtCircumferenceMax, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         jpSleeveLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtCircumferenceMax, txtCircumferenceMin, txtMaterialID, txtThickness, txtWidthMax, txtWidthMin});
@@ -245,7 +253,7 @@ public class MainGui extends javax.swing.JFrame {
         jpOrderLayout.setHorizontalGroup(
             jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpOrderLayout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMaterialID1)
                     .addComponent(lblThickness1)
@@ -253,7 +261,7 @@ public class MainGui extends javax.swing.JFrame {
                     .addComponent(lblCircumference1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtThickness1, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addComponent(txtThickness1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                     .addComponent(txtMaterialID1)
                     .addGroup(jpOrderLayout.createSequentialGroup()
                         .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -316,8 +324,8 @@ public class MainGui extends javax.swing.JFrame {
                     .addComponent(lblWidth3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpStockItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtThickness3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(txtCircumferenceMin3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(txtThickness3, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(txtCircumferenceMin3, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(txtWidthMin3)
                     .addComponent(txtMaterialID3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -358,6 +366,13 @@ public class MainGui extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("By Stock Item", jpStockItem);
 
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpMainLayout = new javax.swing.GroupLayout(jpMain);
         jpMain.setLayout(jpMainLayout);
         jpMainLayout.setHorizontalGroup(
@@ -366,22 +381,27 @@ public class MainGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpMainLayout.createSequentialGroup()
-                        .addComponent(btnFilterBySleeve, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jpMainLayout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSubmit))))
+                        .addGroup(jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(8, 8, 8))))
         );
         jpMainLayout.setVerticalGroup(
             jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnFilterBySleeve, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
+                .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMainLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReset)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSubmit)
                 .addContainerGap())
         );
@@ -602,25 +622,28 @@ public class MainGui extends javax.swing.JFrame {
     public void updateQueueTable() {
         queueTableModel.fireTableDataChanged();
     }
-    private void btnFilterBySleeveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterBySleeveActionPerformed
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
         if (!isExpanded) {
+            btnFilter.setText("Hide Filter");
             spnlWest.setDividerLocation(EXPANDED_SIZE);
-//            System.out.println("Frame's size: " + this.getHeight());
-//            System.out.println("Expanded size: " + EXPANDED_SIZE);
+            System.out.println("Frame's size: " + this.getHeight());
+            System.out.println("Expanded size: " + EXPANDED_SIZE);
             isExpanded = true;
         } else {
+            btnFilter.setText("Show Filter");
             spnlWest.setDividerLocation(COLLAPSED_SIZE);
-//            System.out.println("Frame's size: " + this.getHeight());
-//            System.out.println("Collapsed size: " + COLLAPSED_SIZE);
+            System.out.println("Frame's size: " + this.getHeight());
+            System.out.println("Collapsed size: " + COLLAPSED_SIZE);
             isExpanded = false;
         }
 
-    }//GEN-LAST:event_btnFilterBySleeveActionPerformed
+    }//GEN-LAST:event_btnFilterActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        
         int materialID = 0;
         double thickness = 0, width_min = 0, width_max = 0, circumference_min = 0, circumference_max = 0;
-        
+
         try {
             materialID = (!txtMaterialID.getText().isEmpty()) ? Integer.parseInt(txtMaterialID.getText()) : 0;
             thickness = (!txtThickness.getText().isEmpty()) ? Double.parseDouble(txtThickness.getText()) : 0;
@@ -628,25 +651,32 @@ public class MainGui extends javax.swing.JFrame {
             width_max = (!txtWidthMax.getText().isEmpty()) ? Double.parseDouble(txtWidthMax.getText()) : 0;
             circumference_min = (!txtCircumferenceMin.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMin.getText()) : 0;
             circumference_max = (!txtCircumferenceMax.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMax.getText()) : 0;
-                    
+
         } catch (NumberFormatException ex) {
             //to do
             System.out.println(ex.getLocalizedMessage());
             System.out.println(ex.getStackTrace());
         }
-        
-        
-        
-        SalesOrderList so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)); 
+        SalesOrderList so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max));
         System.out.println("Salesorder size:" + so.size());
         listing.setTreeTableModel(so);
         listing.setOrderListing();
+        
+        // Sets back the size of the pane
+        spnlWest.setDividerLocation(EXPANDED_SIZE);
 //        repaint();
 //        listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
     }//GEN-LAST:event_btnSubmitActionPerformed
 
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+//        listing.setTreeTableModel(Main.allOrderData);
+//        listing.setOrderListing();
+//        
+        System.out.println(MainGui.this.getHeight() - spnlWest.getRightComponent().getHeight());
+    }//GEN-LAST:event_btnResetActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnFilterBySleeve;
+    private javax.swing.JButton btnFilter;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

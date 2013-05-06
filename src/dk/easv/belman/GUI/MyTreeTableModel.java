@@ -13,28 +13,18 @@ import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class MyTreeTableModel extends AbstractTreeTableModel {
 
-    private MyTreeNode root;
-    private ListManager allLists;
+    private MyTreeNode root;    
     private SalesOrderList sol;
 
-    public MyTreeTableModel() {
-        init();
-        populateTable(allLists.getAll());
+    public MyTreeTableModel() {     
+        populateTable(Main.allOrderData);
     }
 
-    public MyTreeTableModel(SalesOrderList so) {
-        init();
+    public MyTreeTableModel(SalesOrderList so) {        
         root = new MyTreeNode();
         populateTable(so);
     }
 
-    private void init() {
-        allLists = new ListManager();
-    }
-
-    public ListManager getAllLists() {
-        return allLists;
-    }
 
     public SalesOrderList getSalesOrderList() {
         return sol;
