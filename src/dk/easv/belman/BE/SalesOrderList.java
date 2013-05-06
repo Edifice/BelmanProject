@@ -27,7 +27,7 @@ public class SalesOrderList extends BList<SalesOrder> {
             return codeDifference;
         }
     };
-
+    
     /**
      * Basic sort by ID in ascending order.
      */

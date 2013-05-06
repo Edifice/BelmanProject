@@ -14,27 +14,33 @@ import org.jdesktop.swingx.JXTreeTable;
 
 public final class OrderListing {
 
-    private MyTreeTableModel treeTableModel;
-    private MyTreeNode treeNode;
-    private MainGui parent;
-    private JXTreeTable treeTable;
+    private MainGui parent; // Parent object.
+    private JXTreeTable treeTable; // The TreeTable.
+    private MyTreeTableModel treeTableModel; // The model for the TreeTable.
+    private MyTreeNode treeNode; // One selected object from the TreeTable.
 
     public OrderListing(MainGui parent) {
+        // Create the initial TreeTable.
         treeTableModel = new MyTreeTableModel();
         treeTable = new JXTreeTable(treeTableModel);
+        // Set the parent for this object.
         this.parent = parent;
+        // Set up the panes.
         setOrderListing();
         setParentPanes();
     }
 
-    public SalesOrderList getSalesOrderList() {
-        return treeTableModel.getSalesOrderList();
-    }
-
+    /**
+     * TODO JavaDoc
+     */
     public void setOrderListing() {
         parent.getSpnlWest().setLeftComponent(getPanel());
     }
 
+    /**
+     * TODO JavaDoc
+     * @return 
+     */
     public JPanel getPanel() {
         JPanel p = new JPanel(new BorderLayout());
         JScrollPane sp = new JScrollPane(setTreeTable());
@@ -42,11 +48,22 @@ public final class OrderListing {
         return p;
     }
 
+    /**
+     * TODO JavaDoc
+     *
+     * @param so
+     */
     public void setTreeTableModel(SalesOrderList so) {
         treeTableModel = new MyTreeTableModel(so);
-        treeTable = new JXTreeTable(treeTableModel);
+        treeTable.setTreeTableModel(treeTableModel);
     }
-    public JXTreeTable setTreeTable() {      
+
+    /**
+     * TODO JavaDoc
+     *
+     * @return
+     */
+    public JXTreeTable setTreeTable() {
         // Build the tree table panel
         treeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         treeTable.setColumnControlVisible(true);

@@ -12,8 +12,8 @@ import org.jdesktop.swingx.treetable.AbstractTreeTableModel;
 
 public class MyTreeTableModel extends AbstractTreeTableModel {
 
-    private MyTreeNode root;    
-    private SalesOrderList sol;
+    private MyTreeNode root; // The root tree node.    
+//    private SalesOrderList sol;
 
     public MyTreeTableModel() {     
         populateTable(Main.allOrderData);
@@ -23,14 +23,11 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
         root = new MyTreeNode();
         populateTable(so);
     }
-    public void init() {
-        
-    }
 
-    public SalesOrderList getSalesOrderList() {
-        return sol;
-    }
-
+    /**
+     * TODO JavaDoc
+     * @param sol 
+     */
     private void populateTable(SalesOrderList sol) {
         root = new MyTreeNode();
 
@@ -52,7 +49,7 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 8; // ?
     }
 
     @Override
@@ -81,7 +78,6 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
 
     @Override
     public Object getValueAt(Object node, int column) {
-        //System.out.println("getValueAt: " + node + ", " + column);
         MyTreeNode treenode = (MyTreeNode) node;
         switch (column) {
 

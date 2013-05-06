@@ -17,10 +17,10 @@ import javax.swing.table.TableColumn;
 public class MainGui extends javax.swing.JFrame {
 
     private boolean isExpanded;
-    private OrderListing listing;
-    QueueTableModel queueTableModel;
     private int EXPANDED_SIZE;
     private int COLLAPSED_SIZE;
+    private OrderListing listing;
+    QueueTableModel queueTableModel;
     private Filter filter;
 
     /**
@@ -46,8 +46,18 @@ public class MainGui extends javax.swing.JFrame {
         listing = new OrderListing(this);
 
         //DescriptionPane
-        setVisibleTo(false, lblDescriptionText1, lblDescriptionText2, lblDescriptionText3, lblDescriptiontext4, lblDescriptionText5, lblDescriptionText6,
-                txtDescription1, txtDescription2, txtDescription3, txtDescription4, txtDescription5, txtDescription6);
+        setVisibleTo(false, lblDescriptionText1, 
+                lblDescriptionText2, 
+                lblDescriptionText3, 
+                lblDescriptiontext4, 
+                lblDescriptionText5, 
+                lblDescriptionText6,
+                txtDescription1, 
+                txtDescription2, 
+                txtDescription3, 
+                txtDescription4, 
+                txtDescription5, 
+                txtDescription6);
 
         //Queue table
         queueTableModel = new QueueTableModel(new ItemList(), this);
@@ -408,18 +418,33 @@ public class MainGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void setDescriptionPane(MyTreeNode node) {
-        setVisibleTo(true, lblDescriptionText1, lblDescriptionText2, lblDescriptionText3, txtDescription1, txtDescription2, txtDescription3);
+        setVisibleTo(true, lblDescriptionText1, 
+                lblDescriptionText2, 
+                lblDescriptionText3, 
+                txtDescription1, 
+                txtDescription2, 
+                txtDescription3);
 
         lblDescriptionText1.setText("Function: ");
         txtDescription1.setText(node.getFunction());
         lblDescriptionText2.setText("ID: ");
         txtDescription2.setText(String.valueOf(node.getId()));
 
-        setEditableTo(false, txtDescription1, txtDescription2, txtDescription3, txtDescription4, txtDescription5, txtDescription6);
+        setEditableTo(false, txtDescription1, 
+                txtDescription2, 
+                txtDescription3, 
+                txtDescription4, 
+                txtDescription5, 
+                txtDescription6);
 
         switch (node.getFunction()) {
             case "SalesOrder":
-                setVisibleTo(false, lblDescriptiontext4, txtDescription4, lblDescriptionText5, txtDescription5, lblDescriptionText6, txtDescription6);
+                setVisibleTo(false, lblDescriptiontext4, 
+                        txtDescription4, 
+                        lblDescriptionText5, 
+                        txtDescription5, 
+                        lblDescriptionText6, 
+                        txtDescription6);
 
                 lblDescriptionText3.setText("Description");
                 txtDescription3.setText(node.getDescription());
@@ -429,7 +454,12 @@ public class MainGui extends javax.swing.JFrame {
                 break;
 
             case "ProductOrder":
-                setVisibleTo(false, lblDescriptiontext4, txtDescription4, lblDescriptionText5, txtDescription5, lblDescriptionText6, txtDescription6);
+                setVisibleTo(false, lblDescriptiontext4, 
+                        txtDescription4, 
+                        lblDescriptionText5, 
+                        txtDescription5, 
+                        lblDescriptionText6, 
+                        txtDescription6);
 
                 lblDescriptionText3.setText("Description");
                 txtDescription3.setText(node.getDescription());
@@ -437,7 +467,12 @@ public class MainGui extends javax.swing.JFrame {
                 break;
 
             case "Item":
-                setVisibleTo(true, lblDescriptiontext4, txtDescription4, lblDescriptionText5, txtDescription5, lblDescriptionText6, txtDescription6);
+                setVisibleTo(true, lblDescriptiontext4, 
+                        txtDescription4, 
+                        lblDescriptionText5, 
+                        txtDescription5, 
+                        lblDescriptionText6, 
+                        txtDescription6);
 
                 lblDescriptionText3.setText("Material ID: ");
                 txtDescription3.setText(String.valueOf(node.getMatId()));
