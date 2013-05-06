@@ -42,12 +42,14 @@ public final class OrderListing {
         p.add(sp);
         return p;
     }
+
     public void setTreeTableModel(SalesOrderList so) {
         treeTableModel = new MyTreeTableModel(so);
         treeTable = new JXTreeTable(treeTableModel);
     }
-    public JXTreeTable setTreeTable() {      
-        
+
+    public JXTreeTable setTreeTable() {
+
 
         // Build the tree table panel
         treeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -57,8 +59,6 @@ public final class OrderListing {
         treeTable.packAll();
         return treeTable;
     }
-    
-    
 
     /**
      * This method takes in a mouse action and returns the currently selected
@@ -113,8 +113,12 @@ public final class OrderListing {
                 if (e.getClickCount() != 2) {
                     parent.setDescriptionPane(treeNode);
                 } else {
-                    if (treeNode.getId() == treeNode.getItem().getId()) {
-                        parent.setQueueTable(treeNode.getItem());
+                    if (treeNode.getItem() != null) {
+                        if (treeNode.getId() == treeNode.getItem().getId()) {
+                            parent.setQueueTable(treeNode.getItem());
+                        }
+                    } else {
+                        System.out.println("You clicked on a non Item row!");
                     }
                 }
             }

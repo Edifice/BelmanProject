@@ -151,8 +151,6 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
                 return i;
             }
         }
-
-        // TODO Auto-generated method stub
         return 0;
     }
 

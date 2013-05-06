@@ -6,23 +6,20 @@ package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
-import dk.easv.belman.BE.ProductOrderList;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 public class QueueTableModel extends AbstractTableModel {
-    // Instance fields containing the employees to show in the table.
 
     private Item item;
     private ItemList items;
     // The names of columns
-    private String[] colNames = {"ID", "Due Date"};
+    private String[] colNames = {"ID", "Due Date", "Coil"};
     // The type of columns
-    private Class[] classes = {Integer.class, Long.class};
+    private Class[] classes = {Integer.class, Long.class, Integer.class};
     private final MainGui parent;
 
     public QueueTableModel(ItemList items, MainGui parent) {
@@ -30,8 +27,6 @@ public class QueueTableModel extends AbstractTableModel {
         this.parent = parent;
 
         fireTableDataChanged();
-
-
     }
 
     @Override
@@ -55,6 +50,10 @@ public class QueueTableModel extends AbstractTableModel {
             case 1:
                 DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 return df.format(new Date(Main.treeData.getById(item.getSalesOrderId()).getDueDate()));
+
+            case 2:
+                //TODO get the material's name here
+                return item.getMaterialId();
         }
         return null;
     }
@@ -66,7 +65,6 @@ public class QueueTableModel extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int col) {
-
         return classes[col];
     }
 
@@ -76,7 +74,9 @@ public class QueueTableModel extends AbstractTableModel {
     }
 
     public void addItems(Item item) {
-        items.add(item);
+        if (!items.hasId(item.getId())) {
+            items.add(item);
+        }
     }
 
     /**
@@ -87,5 +87,18 @@ public class QueueTableModel extends AbstractTableModel {
      */
     public Item getItemByRow(int row) {
         return items.get(row);
+    }
+
+    public void reorder(int fromIndex, int toIndex) {
+        if (fromIndex < toIndex) {
+            for (int i = fromIndex; i < toIndex-1;) {
+                Collections.swap(items.getList(), i, ++i);
+            }
+        } else {
+            for (int i = fromIndex; i > toIndex;) {
+                Collections.swap(items.getList(), i, --i);
+            }
+        }
+        this.fireTableDataChanged();
     }
 }

@@ -3,12 +3,13 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.MyTreeNode;
-import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.Filter;
-import java.awt.Button;
-import java.awt.Dimension;
 import java.sql.Timestamp;
+import java.util.Enumeration;
+import javax.swing.DropMode;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
 
 public class MainGui extends javax.swing.JFrame {
 
@@ -33,6 +34,7 @@ public class MainGui extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
         init();
     }
 
@@ -40,7 +42,10 @@ public class MainGui extends javax.swing.JFrame {
         //
         filter = new Filter();
 
-
+        // 
+        isExpanded = false;
+        EXPANDED_SIZE = (int) this.getHeight() / 2;
+        COLLAPSED_SIZE = this.getHeight();
 
         // Set objects //
         listing = new OrderListing(this);
@@ -63,6 +68,16 @@ public class MainGui extends javax.swing.JFrame {
         //Queue table
         queueTableModel = new QueueTableModel(new ItemList(), this);
         tblQueue.setModel(queueTableModel);
+        tblQueue.setDragEnabled(true);
+        tblQueue.setDropMode(DropMode.INSERT_ROWS);
+        tblQueue.setTransferHandler(new TableRowTransferHandler(tblQueue));
+        tblQueue.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        Enumeration<TableColumn> en = tblQueue.getColumnModel().getColumns();
+        while (en.hasMoreElements()) {
+            TableColumn tc = en.nextElement();
+            tc.setCellRenderer(new QueueTableCellRenderer());
+        }
 
         //Filter menu
         jpOrder.setVisible(false);
@@ -657,6 +672,7 @@ public class MainGui extends javax.swing.JFrame {
             System.out.println(ex.getLocalizedMessage());
             System.out.println(ex.getStackTrace());
         }
+
         SalesOrderList so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max));
         System.out.println("Salesorder size:" + so.size());
         listing.setTreeTableModel(so);
@@ -668,12 +684,14 @@ public class MainGui extends javax.swing.JFrame {
 //        listing.setOrderListing(listing.setTreeTable(filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max)));
     }//GEN-LAST:event_btnSubmitActionPerformed
 
+
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
 //        listing.setTreeTableModel(Main.allOrderData);
 //        listing.setOrderListing();
 //        
         System.out.println(MainGui.this.getHeight() - spnlWest.getRightComponent().getHeight());
     }//GEN-LAST:event_btnResetActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnReset;
