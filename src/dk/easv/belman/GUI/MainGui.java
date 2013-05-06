@@ -3,19 +3,16 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.MyTreeNode;
-import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.Filter;
-import java.awt.Button;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.sql.Timestamp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Enumeration;
+import javax.swing.DropMode;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
 
 public class MainGui extends javax.swing.JFrame {
 
@@ -30,17 +27,10 @@ public class MainGui extends javax.swing.JFrame {
      * Creates new form Belman
      */
     public MainGui() {
-        initComponents();
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel settings ">
-        com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green");
-        try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MainGui.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
+        initComponents();
         init();
+
     }
 
     private void init() {
@@ -568,7 +558,6 @@ public class MainGui extends javax.swing.JFrame {
         btnFilterActionPerformed(evt);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
-
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         listing.setTreeTableModel(Main.allOrderData);
         listing.setOrderListing();
@@ -576,7 +565,6 @@ public class MainGui extends javax.swing.JFrame {
         // Collapse the Filter Menu
         btnFilterActionPerformed(evt);
     }//GEN-LAST:event_btnResetActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnReset;
