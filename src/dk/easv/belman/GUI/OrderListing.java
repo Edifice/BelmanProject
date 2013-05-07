@@ -27,7 +27,6 @@ public final class OrderListing {
         this.parent = parent;
         // Set up the panes.
         setOrderListing();
-        setParentPanes();
     }
 
     /**
@@ -35,6 +34,7 @@ public final class OrderListing {
      */
     public void setOrderListing() {
         parent.getSpnlWest().setLeftComponent(getPanel());
+        addListeners();
     }
 
     /**
@@ -117,7 +117,7 @@ public final class OrderListing {
     /**
      * Sets the parents panes
      */
-    public void setParentPanes() {
+    public void addListeners() {
         // Listening for clicks on the TreeTable.
         treeTable.addMouseListener(new MouseAdapter() {
             @Override
@@ -147,7 +147,7 @@ public final class OrderListing {
                 if (e.getKeyCode() == keyUp || e.getKeyCode() == keyDown) {
                     parent.setDescriptionPane(treeNode);
                 } else if (e.getKeyCode() == keyEnter) {
-                    if (treeNode.getId() == treeNode.getItem().getId()) { // ?
+                    if (treeNode.getId() == treeNode.getItem().getId()) { // TODO Deal with the nullpointerexception when clicking or pressing enter on anything other than a item
                         parent.setQueueTable(treeNode.getItem());
                     }
                 }

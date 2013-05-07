@@ -5,6 +5,7 @@ import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.MyTreeNode;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.Filter;
+import dk.easv.belman.BLL.ListManager;
 import java.awt.Component;
 import java.sql.Timestamp;
 import java.util.Enumeration;
@@ -594,7 +595,7 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        listing.setTreeTableModel(Main.allOrderData);
+        listing.setTreeTableModel(new ListManager().getAll());
         listing.setOrderListing();
 
         // Collapse the Filter Menu
