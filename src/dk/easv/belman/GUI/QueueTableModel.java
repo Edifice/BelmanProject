@@ -49,7 +49,7 @@ public class QueueTableModel extends AbstractTableModel {
 
             case 1:
                 DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                return df.format(new Date(Main.treeData.getById(item.getSalesOrderId()).getDueDate()));
+                return df.format(new Date(Main.allOrderData.getById(item.getSalesOrderId()).getDueDate()));
 
             case 2:
                 //TODO get the material's name here

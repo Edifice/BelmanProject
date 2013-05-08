@@ -15,8 +15,12 @@ public class MyTreeTableModel extends AbstractTreeTableModel {
     private MyTreeNode root; // The root tree node.    
 //    private SalesOrderList sol;
 
-    public MyTreeTableModel() {     
-        populateTable(Main.allOrderData);
+    public MyTreeTableModel() {
+        
+        for (int i = 0; i < Main.allOrderData.size(); i++){
+        Main.treeData.add(Main.allOrderData.get(i));
+        }
+        populateTable(Main.treeData);
     }
 
     public MyTreeTableModel(SalesOrderList so) {        
