@@ -3,6 +3,9 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.ListManager;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -13,6 +16,7 @@ public class Main {
     public static SalesOrderList treeData;
     public static ProductOrderList queueData;
     public static SalesOrderList allOrderData;
+    private static final int SCHEDULER_PERIOD = 10; // minutes
 
     public static void main(String[] args) {
 
@@ -30,14 +34,28 @@ public class Main {
         queueData = new ProductOrderList();
 
         //Creates SalesOrderList with all SalesOrderLists in it
-        ListManager lists = new ListManager();
+        final ListManager lists = new ListManager();
         allOrderData = lists.getAll();
 
         //Program starts from here
-        MainGui gui = new MainGui();
+        final MainGui gui = new MainGui();
 
         gui.setExtendedState(MainGui.MAXIMIZED_BOTH);
         gui.getSpnlWest().setDividerLocation(gui.getHeight());
         gui.setVisible(true);
+
+        Runnable scheduledTask;
+        scheduledTask = new Runnable() {
+            @Override
+            public void run() {
+                allOrderData = lists.getAll();
+                gui.scheduledUpdate(true);
+            }
+        };
+
+        ScheduledExecutorService scheduler;
+        scheduler = Executors.newScheduledThreadPool(1);
+        //scheduler.scheduleAtFixedRate(scheduledTask, SCHEDULER_PERIOD, SCHEDULER_PERIOD, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(scheduledTask, 5, 5, TimeUnit.SECONDS); // for test
     }
 }

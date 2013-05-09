@@ -34,6 +34,12 @@ public class MainGui extends javax.swing.JFrame {
 
     }
 
+    public void scheduledUpdate(boolean showUrgentPopup) {
+        if (showUrgentPopup) {
+            JOptionPane.showMessageDialog(null, "There is a new Ugent order!", "Ugent order", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
     private void init() {
         //
         filter = new Filter();
@@ -47,17 +53,17 @@ public class MainGui extends javax.swing.JFrame {
         listing = new OrderListing(this);
 
         //DescriptionPane
-        setVisibleTo(false, lblDescriptionText1, 
-                lblDescriptionText2, 
-                lblDescriptionText3, 
-                lblDescriptiontext4, 
-                lblDescriptionText5, 
+        setVisibleTo(false, lblDescriptionText1,
+                lblDescriptionText2,
+                lblDescriptionText3,
+                lblDescriptiontext4,
+                lblDescriptionText5,
                 lblDescriptionText6,
-                txtDescription1, 
-                txtDescription2, 
-                txtDescription3, 
-                txtDescription4, 
-                txtDescription5, 
+                txtDescription1,
+                txtDescription2,
+                txtDescription3,
+                txtDescription4,
+                txtDescription5,
                 txtDescription6);
 
         //Queue table
@@ -419,11 +425,11 @@ public class MainGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void setDescriptionPane(MyTreeNode node) {
-        setVisibleTo(true, lblDescriptionText1, 
-                lblDescriptionText2, 
-                lblDescriptionText3, 
-                txtDescription1, 
-                txtDescription2, 
+        setVisibleTo(true, lblDescriptionText1,
+                lblDescriptionText2,
+                lblDescriptionText3,
+                txtDescription1,
+                txtDescription2,
                 txtDescription3);
 
         lblDescriptionText1.setText("Function: ");
@@ -431,20 +437,20 @@ public class MainGui extends javax.swing.JFrame {
         lblDescriptionText2.setText("ID: ");
         txtDescription2.setText(String.valueOf(node.getId()));
 
-        setEditableTo(false, txtDescription1, 
-                txtDescription2, 
-                txtDescription3, 
-                txtDescription4, 
-                txtDescription5, 
+        setEditableTo(false, txtDescription1,
+                txtDescription2,
+                txtDescription3,
+                txtDescription4,
+                txtDescription5,
                 txtDescription6);
 
         switch (node.getFunction()) {
             case "SalesOrder":
-                setVisibleTo(false, lblDescriptiontext4, 
-                        txtDescription4, 
-                        lblDescriptionText5, 
-                        txtDescription5, 
-                        lblDescriptionText6, 
+                setVisibleTo(false, lblDescriptiontext4,
+                        txtDescription4,
+                        lblDescriptionText5,
+                        txtDescription5,
+                        lblDescriptionText6,
                         txtDescription6);
 
                 lblDescriptionText3.setText("Description");
@@ -455,11 +461,11 @@ public class MainGui extends javax.swing.JFrame {
                 break;
 
             case "ProductOrder":
-                setVisibleTo(false, lblDescriptiontext4, 
-                        txtDescription4, 
-                        lblDescriptionText5, 
-                        txtDescription5, 
-                        lblDescriptionText6, 
+                setVisibleTo(false, lblDescriptiontext4,
+                        txtDescription4,
+                        lblDescriptionText5,
+                        txtDescription5,
+                        lblDescriptionText6,
                         txtDescription6);
 
                 lblDescriptionText3.setText("Description");
@@ -468,11 +474,11 @@ public class MainGui extends javax.swing.JFrame {
                 break;
 
             case "Item":
-                setVisibleTo(true, lblDescriptiontext4, 
-                        txtDescription4, 
-                        lblDescriptionText5, 
-                        txtDescription5, 
-                        lblDescriptionText6, 
+                setVisibleTo(true, lblDescriptiontext4,
+                        txtDescription4,
+                        lblDescriptionText5,
+                        txtDescription5,
+                        lblDescriptionText6,
                         txtDescription6);
 
                 lblDescriptionText3.setText("Material ID: ");
