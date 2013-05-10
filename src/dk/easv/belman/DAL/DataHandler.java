@@ -4,6 +4,8 @@ import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ProductOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.StockItem;
+import dk.easv.belman.BE.StockItemList;
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +20,7 @@ public class DataHandler extends DBConnection {
     /**
      * This method returns a list of all sales order from the database.
      */
-    public SalesOrderList getAll() throws SQLException {
+    public SalesOrderList getAllSO() throws SQLException {
 
         int so_i = 0, po_i = 0, i_i = 0;
 
@@ -122,6 +124,48 @@ public class DataHandler extends DBConnection {
         }
 
         System.out.println("statistics: \n\tSO: " + so_i + ", \n\tPO: " + po_i + ", \n\tItem: " + i_i);
+        return ret;
+    }
+
+    /**
+     * This method returns all the Stock items from the database.
+     */
+    public StockItemList getAllSI() throws SQLException {
+
+        StockItemList ret = new StockItemList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT "
+                    + "	StockItem.*, "
+                    + "	Material.material_name,"
+                    + " Material.material_density "
+                    + "	FROM StockItem"
+                    + "	INNER JOIN Material"
+                    + " ON Material.material_id = StockItem.material_id");
+            while (rs.next()) {
+                StockItem item = new StockItem();
+                item.setId(rs.getInt("id"));
+                item.setCode(rs.getString("code"));
+                item.setMaterialId(rs.getInt("material_id"));
+                item.setMaterialName(rs.getString("material_name"));
+                item.setMaterialDensity(rs.getDouble("material_density"));
+                item.setLenght(rs.getDouble("length"));
+                item.setWidth(rs.getDouble("width"));
+                item.setThickness(rs.getDouble("thickness"));
+                item.setBatchId(rs.getString("batch_id"));
+                item.setQuantity(rs.getDouble("quantity"));
+                ret.add(item);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+
+        }
+
+        System.out.println("Statistics: \n\tSI: " + ret.size());
         return ret;
     }
 }

@@ -7,6 +7,7 @@ public class SalesOrderList extends BList<SalesOrder> {
 
     public SalesOrderList() {
     }
+    
     /**
      * This is where the sorting by ID in an ascending order happens.
      */

@@ -26,7 +26,7 @@ public class SleeveTableTest {
     
     @Test
     public void testPopulator() {
-    SalesOrderList sol = new ListManager().getAll();
+    SalesOrderList sol = new ListManager().getAllSO();
     SleeveTableModel tblModel = new SleeveTableModel(sol);
     
     JXTreeTable table = new JXTreeTable();

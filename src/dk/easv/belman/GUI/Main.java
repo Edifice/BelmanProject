@@ -2,6 +2,7 @@ package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.BLL.ListManager;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -13,8 +14,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main {
 
-    public static SalesOrderList treeData;
-    public static ProductOrderList queueData;
+//    public static SalesOrderList treeData;
+    public static StockItemList allStockData;
     public static SalesOrderList allOrderData;
     private static final int SCHEDULER_PERIOD = 10; // minutes
     private static MainGui gui;
@@ -31,12 +32,12 @@ public class Main {
         }
         //</editor-fold>
 
-        treeData = new SalesOrderList();
-        queueData = new ProductOrderList();
+//        treeData = new SalesOrderList();
 
         //Creates SalesOrderList with all SalesOrderLists in it
         final ListManager lists = new ListManager();
-        allOrderData = lists.getAll();
+        allOrderData = lists.getAllSO();
+        allStockData = lists.getAllSI();
 
         //Program starts from here
         gui = new MainGui();        
@@ -48,7 +49,7 @@ public class Main {
         scheduledTask = new Runnable() {
             @Override
             public void run() {
-                allOrderData = lists.getAll();
+                allOrderData = lists.getAllSO();
                 gui.scheduledUpdate(true);
             }
         };

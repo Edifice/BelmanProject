@@ -1,6 +1,7 @@
 package dk.easv.belman.BLL;
 
 import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.DAL.DataHandler;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
@@ -19,9 +20,18 @@ public class ListManager {
         }
     }
 
-    public SalesOrderList getAll() {
+    public SalesOrderList getAllSO() {
         try {
-            return handler.getAll();
+            return handler.getAllSO();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public StockItemList getAllSI() {
+        try {
+            return handler.getAllSI();
         } catch (SQLException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
         }

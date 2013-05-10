@@ -22,10 +22,11 @@ import org.jdesktop.swingx.JXTable;
 
 public class MainGui extends javax.swing.JFrame {
 
-    
     private SleeveTableModel sleeveModel;
+    private StockTableModel stockModel;
     private Filter filter;
     private JXTable tblSleeves;
+    private JXTable tblStock;
     private Item selectedItem;
 
     /**
@@ -47,7 +48,7 @@ public class MainGui extends javax.swing.JFrame {
     private void init() {
         //
         filter = new Filter();
-        
+
         //DescriptionPane
         setVisibleTo(false, lblDescriptionText1,
                 lblDescriptionText2,
@@ -64,28 +65,33 @@ public class MainGui extends javax.swing.JFrame {
 
         //Sleeve table
         tblSleeves = new JXTable();
-        JXTable table = new JXTable();
+        tblStock = new JXTable();
 
-        JScrollPane sp = new JScrollPane(tblSleeves);        
-        
-        JScrollPane sf = new JScrollPane(table);
-        
+        JScrollPane sp = new JScrollPane(tblSleeves);
+
+        JScrollPane sf = new JScrollPane(tblStock);
+
 
         sleeveModel = new SleeveTableModel(Main.allOrderData);
-        table.setModel(sleeveModel);
-        table.packAll();
         tblSleeves.setModel(sleeveModel);
         tblSleeves.setColumnControlVisible(true);
         tblSleeves.packAll();
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
 
+        stockModel = new StockTableModel(Main.allStockData);
+        tblStock.setModel(stockModel);
+        tblStock.setColumnControlVisible(true);
+        tblStock.packAll();
+        tblStock.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblStock.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
+
         pnlWest.setLayout(new BorderLayout());
         pnlWest.add(sf);
 
         pnlCenter.setLayout(new BorderLayout());
         pnlCenter.add(sp);
-        
+
 
 
 
@@ -116,7 +122,7 @@ public class MainGui extends javax.swing.JFrame {
                 int keyUp = KeyEvent.VK_UP;
                 int keyDown = KeyEvent.VK_DOWN;
                 int keyEnter = KeyEvent.VK_ENTER;
-                
+
                 if (e.getKeyCode() == keyUp) {
                     selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() - 1);
                     setItemDescriptionPane(selectedItem);
