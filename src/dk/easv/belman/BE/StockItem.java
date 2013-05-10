@@ -7,7 +7,7 @@ public class StockItem extends IEntity {
     private int materialId;
     private String materialName;
     private double materialDensity;
-    private double lenght;
+    private double length;
     private double width;
     private double thickness;
     private String batchId;
@@ -25,7 +25,7 @@ public class StockItem extends IEntity {
         this.materialId = now.materialId;
         this.materialName = now.materialName;
         this.materialDensity = now.materialDensity;
-        this.lenght = now.lenght;
+        this.length = now.length;
         this.width = now.width;
         this.thickness = now.thickness;
         this.batchId = now.batchId;
@@ -91,15 +91,15 @@ public class StockItem extends IEntity {
     /**
      * @return the lenght
      */
-    public double getLenght() {
-        return lenght;
+    public double length() {
+        return length;
     }
 
     /**
-     * @param lenght the lenght to set
+     * @param length the lenght to set
      */
-    public void setLenght(double lenght) {
-        this.lenght = lenght;
+    public void setLength(double length) {
+        this.length = length;
     }
 
     /**

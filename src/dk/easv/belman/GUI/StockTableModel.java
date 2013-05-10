@@ -9,7 +9,7 @@ public class StockTableModel extends AbstractTableModel {
 
     private StockItemList stockList;
     // The names of columns
-    private String[] colNames = {"Code", "Mat ID", "Width", "Length", "Thickness", "Batch ID", "Quantity"};
+    private String[] colNames = {"Code", "Mat ID", "Width", "Length", "Thickness", "Batch ID", "Quantity (kg)"};
     // The type of columns
     private Class[] classes = {String.class, Integer.class, Double.class, Double.class, Double.class, String.class, Double.class};
 
@@ -41,7 +41,7 @@ public class StockTableModel extends AbstractTableModel {
             case 2:
                 return item.getWidth();
             case 3:
-                return item.getLenght();
+                return item.getLength();
             case 4:
                 return item.getThickness();
             case 5:

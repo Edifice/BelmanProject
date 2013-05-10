@@ -5,6 +5,7 @@ import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.ProductOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BLL.Filter;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,6 +29,7 @@ public class MainGui extends javax.swing.JFrame {
     private JXTable tblSleeves;
     private JXTable tblStock;
     private Item selectedItem;
+    private StockItem selectedStockItem;
 
     /**
      * Creates new form Belman
@@ -56,63 +58,76 @@ public class MainGui extends javax.swing.JFrame {
                 lblDescriptiontext4,
                 lblDescriptionText5,
                 lblDescriptionText6,
+                lblDescriptionText7,
                 txtDescription1,
                 txtDescription2,
                 txtDescription3,
                 txtDescription4,
                 txtDescription5,
-                txtDescription6);
+                txtDescription6,
+                txtDescription7);
 
         //Sleeve table
         tblSleeves = new JXTable();
-        tblStock = new JXTable();
-
         JScrollPane sp = new JScrollPane(tblSleeves);
-
-        JScrollPane sf = new JScrollPane(tblStock);
-
-
         sleeveModel = new SleeveTableModel(Main.allOrderData);
         tblSleeves.setModel(sleeveModel);
+        tblSleeves.setDragEnabled(false);
         tblSleeves.setColumnControlVisible(true);
         tblSleeves.packAll();
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
 
+        pnlCenter.setLayout(new BorderLayout());
+        pnlCenter.add(sp);
+        addListeners(tblSleeves);
+        
+        
+        //Stock table
+        tblStock = new JXTable();
+        JScrollPane sf = new JScrollPane(tblStock);
         stockModel = new StockTableModel(Main.allStockData);
         tblStock.setModel(stockModel);
         tblStock.setColumnControlVisible(true);
         tblStock.packAll();
         tblStock.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblStock.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
-
+        
         pnlWest.setLayout(new BorderLayout());
         pnlWest.add(sf);
-
-        pnlCenter.setLayout(new BorderLayout());
-        pnlCenter.add(sp);
-
-
-
-
-
-
-        addListeners(tblSleeves);
-
+        addListeners(tblStock);
 
     }
 
-    private void addListeners(Component c) {
+    private void addListeners(final Component c) {
 
-        c.addMouseListener(new MouseAdapter() {
+        c.addMouseListener(new MouseAdapter() {           
+            
             @Override
-            public void mouseClicked(final MouseEvent e) {
-                selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow());
-                if (e.getClickCount() != 2) {
-                    setItemDescriptionPane(selectedItem);
+            public void mouseClicked(MouseEvent e) {
+                if (e.getSource().equals(tblSleeves)) {
+                    tblStock.clearSelection();
+                    selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow());
+                    
                 } else {
-                    txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
-                    txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
+                    tblSleeves.clearSelection();
+                    selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow());
+                    
+                }
+
+                if (e.getClickCount() != 2) {
+                    if (e.getSource().equals(tblSleeves)) {
+                        setItemDescriptionPane(selectedItem);
+                    } else {
+                        setStockDescriptionPane(selectedStockItem);
+                    }
+                } else {
+                    if (e.getSource().equals(tblSleeves)) {
+                        txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
+                        txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
+                    } else {
+                        txtStockItem.setText(selectedStockItem.getCode());
+                    }
                 }
             }
         });
@@ -160,6 +175,8 @@ public class MainGui extends javax.swing.JFrame {
         txtDescription5 = new javax.swing.JTextField();
         lblDescriptionText6 = new javax.swing.JLabel();
         txtDescription6 = new javax.swing.JTextField();
+        txtDescription7 = new javax.swing.JTextField();
+        lblDescriptionText7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -204,6 +221,8 @@ public class MainGui extends javax.swing.JFrame {
 
         lblDescriptionText6.setText("Text");
 
+        lblDescriptionText7.setText("Text");
+
         javax.swing.GroupLayout jpDescriptionLayout = new javax.swing.GroupLayout(jpDescription);
         jpDescription.setLayout(jpDescriptionLayout);
         jpDescriptionLayout.setHorizontalGroup(
@@ -237,7 +256,11 @@ public class MainGui extends javax.swing.JFrame {
                     .addGroup(jpDescriptionLayout.createSequentialGroup()
                         .addComponent(lblDescriptionText6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDescriptionLayout.createSequentialGroup()
+                        .addComponent(lblDescriptionText7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                        .addComponent(txtDescription7, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jpDescriptionLayout.setVerticalGroup(
@@ -245,7 +268,7 @@ public class MainGui extends javax.swing.JFrame {
             .addGroup(jpDescriptionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblDescription)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText1)
                     .addComponent(txtDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -269,7 +292,11 @@ public class MainGui extends javax.swing.JFrame {
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText6)
                     .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescriptionText7)
+                    .addComponent(txtDescription7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pnlEast.setTopComponent(jpDescription);
@@ -519,28 +546,20 @@ public class MainGui extends javax.swing.JFrame {
                 lblDescriptionText3,
                 txtDescription1,
                 txtDescription2,
-                txtDescription3);
+                txtDescription3,
+                lblDescriptiontext4,
+                txtDescription4,
+                lblDescriptionText5,
+                txtDescription5,
+                lblDescriptionText6,
+                txtDescription6,
+                lblDescriptionText7,
+                txtDescription7);
 
         lblDescriptionText1.setText("SO ID / Description: ");
         txtDescription1.setText(item.getSalesOrderId() + " / " + Main.allOrderData.getById(item.getSalesOrderId()).getDescription());
         lblDescriptionText2.setText("PO ID / Description: ");
         txtDescription2.setText(item.getProductOrderId() + " / " + Main.allOrderData.getById(item.getSalesOrderId()).getProductOrderList().getById(item.getProductOrderId()).getDescription());
-
-        setEditableTo(false, txtDescription1,
-                txtDescription2,
-                txtDescription3,
-                txtDescription4,
-                txtDescription5,
-                txtDescription6);
-
-
-        setVisibleTo(true, lblDescriptiontext4,
-                txtDescription4,
-                lblDescriptionText5,
-                txtDescription5,
-                lblDescriptionText6,
-                txtDescription6);
-
         lblDescriptionText3.setText("Material ID: ");
         txtDescription3.setText(String.valueOf(item.getMaterialId()));
         lblDescriptiontext4.setText("Width: ");
@@ -549,7 +568,57 @@ public class MainGui extends javax.swing.JFrame {
         txtDescription5.setText(String.valueOf(item.getCircumference()));
         lblDescriptionText6.setText("Thickness: ");
         txtDescription6.setText(String.valueOf(item.getThickness()));
+        lblDescriptionText7.setText("Quantity: ");
+        txtDescription7.setText(String.valueOf(item.getQuantity()));
 
+        setEditableTo(false, txtDescription1,
+                txtDescription2,
+                txtDescription3,
+                txtDescription4,
+                txtDescription5,
+                txtDescription6,
+                txtDescription7);
+
+    }
+
+    private void setStockDescriptionPane(StockItem item) {
+        setVisibleTo(true, lblDescriptionText1,
+                lblDescriptionText2,
+                lblDescriptionText3,
+                txtDescription1,
+                txtDescription2,
+                txtDescription3,
+                lblDescriptiontext4,
+                txtDescription4,
+                lblDescriptionText5,
+                txtDescription5,
+                lblDescriptionText6,
+                txtDescription6,
+                lblDescriptionText7,
+                txtDescription7);
+
+        lblDescriptionText1.setText("Code:");
+        txtDescription1.setText(item.getCode());
+        lblDescriptionText2.setText("Material: ");
+        txtDescription2.setText(String.valueOf(item.getMaterialId()) + " / " + item.getMaterialName());
+        lblDescriptionText3.setText("Mat. Density");
+        txtDescription3.setText(String.valueOf(item.getMaterialDensity()));
+        lblDescriptiontext4.setText("Width: ");
+        txtDescription4.setText(String.valueOf(item.getWidth()));
+        lblDescriptionText5.setText("Length: ");
+        txtDescription5.setText(String.valueOf(item.getLength()));
+        lblDescriptionText6.setText("Thickness: ");
+        txtDescription6.setText(String.valueOf(item.getThickness()));
+        lblDescriptionText7.setText("Quantity(kg): ");
+        txtDescription7.setText(String.valueOf(item.getQuantity()));
+
+        setEditableTo(false, txtDescription1,
+                txtDescription2,
+                txtDescription3,
+                txtDescription4,
+                txtDescription5,
+                txtDescription6,
+                txtDescription7);
 
     }
 
@@ -595,6 +664,7 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JLabel lblDescriptionText3;
     private javax.swing.JLabel lblDescriptionText5;
     private javax.swing.JLabel lblDescriptionText6;
+    private javax.swing.JLabel lblDescriptionText7;
     private javax.swing.JLabel lblDescriptiontext4;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JSplitPane pnlEast;
@@ -607,6 +677,7 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JTextField txtDescription4;
     private javax.swing.JTextField txtDescription5;
     private javax.swing.JTextField txtDescription6;
+    private javax.swing.JTextField txtDescription7;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtSleeve;

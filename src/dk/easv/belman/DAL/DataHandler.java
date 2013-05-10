@@ -151,7 +151,7 @@ public class DataHandler extends DBConnection {
                 item.setMaterialId(rs.getInt("material_id"));
                 item.setMaterialName(rs.getString("material_name"));
                 item.setMaterialDensity(rs.getDouble("material_density"));
-                item.setLenght(rs.getDouble("length"));
+                item.setLength(rs.getDouble("length"));
                 item.setWidth(rs.getDouble("width"));
                 item.setThickness(rs.getDouble("thickness"));
                 item.setBatchId(rs.getString("batch_id"));
