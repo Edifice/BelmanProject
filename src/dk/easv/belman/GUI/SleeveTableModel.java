@@ -80,6 +80,9 @@ public class SleeveTableModel extends AbstractTableModel {
         this.sList = sList;
         iList = getItemList(sList);
     }
+    public void setItemList(ItemList iList){
+        this.iList = iList;
+    }
 
     public Item getItemByRow(int row) {
         return iList.get(row);
