@@ -2,27 +2,33 @@ package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
-import dk.easv.belman.BE.MyTreeNode;
+import dk.easv.belman.BE.ProductOrder;
+import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.Filter;
-import dk.easv.belman.BLL.ListManager;
+import java.awt.BorderLayout;
 import java.awt.Component;
-import java.sql.Timestamp;
-import java.util.Enumeration;
-import javax.swing.DropMode;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.TableColumn;
+import javax.swing.SingleSelectionModel;
+import javax.swing.SortOrder;
+import org.jdesktop.swingx.JXTable;
+import sun.misc.ASCIICaseInsensitiveComparator;
 
 public class MainGui extends javax.swing.JFrame {
 
-    private boolean isExpanded;
-    private int EXPANDED_SIZE;
-    private int COLLAPSED_SIZE;
-    private OrderListing listing;
-    QueueTableModel queueTableModel;
+    
+    private SleeveTableModel sleeveModel;
     private Filter filter;
+    private JXTable tblSleeves;
+    private Item selectedItem;
 
     /**
      * Creates new form Belman
@@ -43,15 +49,7 @@ public class MainGui extends javax.swing.JFrame {
     private void init() {
         //
         filter = new Filter();
-
-        // 
-        isExpanded = false;
-        EXPANDED_SIZE = (int) this.getHeight() / 2;
-        COLLAPSED_SIZE = this.getHeight();
-
-        // Set objects //
-        listing = new OrderListing(this);
-
+        
         //DescriptionPane
         setVisibleTo(false, lblDescriptionText1,
                 lblDescriptionText2,
@@ -66,27 +64,70 @@ public class MainGui extends javax.swing.JFrame {
                 txtDescription5,
                 txtDescription6);
 
-        //Queue table
-        queueTableModel = new QueueTableModel(new ItemList(), this);
-        tblQueue.setModel(queueTableModel);
-        tblQueue.setDragEnabled(true);
-        tblQueue.setDropMode(DropMode.INSERT_ROWS);
-        tblQueue.setTransferHandler(new TableRowTransferHandler(tblQueue));
-        tblQueue.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //Sleeve table
+        tblSleeves = new JXTable();
+        JXTable table = new JXTable();
 
-        Enumeration<TableColumn> en = tblQueue.getColumnModel().getColumns();
-        while (en.hasMoreElements()) {
-            TableColumn tc = en.nextElement();
-            tc.setCellRenderer(new QueueTableCellRenderer());
-        }
+        JScrollPane sp = new JScrollPane(tblSleeves);        
+        
+        JScrollPane sf = new JScrollPane(table);
+        
 
-        // 
-        isExpanded = true;
-        EXPANDED_SIZE = this.getHeight() - 160;//(int) this.getHeight() / 2;
-        COLLAPSED_SIZE = this.getHeight() + 10;
+        sleeveModel = new SleeveTableModel(Main.allOrderData);
+        table.setModel(sleeveModel);
+        table.packAll();
+        tblSleeves.setModel(sleeveModel);
+        tblSleeves.setColumnControlVisible(true);
+        tblSleeves.packAll();
+        tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
 
-        jspWest.setDividerLocation(COLLAPSED_SIZE);
-        btnFilter.setText("Hide Filter");
+        pnlWest.setLayout(new BorderLayout());
+        pnlWest.add(sf);
+
+        pnlCenter.setLayout(new BorderLayout());
+        pnlCenter.add(sp);
+
+
+
+
+
+        addListeners(tblSleeves);
+
+
+    }
+
+    private void addListeners(Component c) {
+
+        c.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+                selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow());
+                if (e.getClickCount() != 2) {
+                    setItemDescriptionPane(selectedItem);
+                } else {
+                    //TODO
+                }
+            }
+        });
+        c.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyUp = KeyEvent.VK_UP;
+                int keyDown = KeyEvent.VK_DOWN;
+                int keyEnter = KeyEvent.VK_ENTER;
+                
+                if (e.getKeyCode() == keyUp) {
+                    selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() - 1);
+                    setItemDescriptionPane(selectedItem);
+                } else if (e.getKeyCode() == keyDown) {
+                    selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() + 1);
+                    setItemDescriptionPane(selectedItem);
+                } else if (e.getKeyCode() == keyEnter) {
+                    //TODO
+                }
+            }
+        });
     }
 
     /**
@@ -98,32 +139,7 @@ public class MainGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jspWest = new javax.swing.JSplitPane();
-        jpMain = new javax.swing.JPanel();
-        btnFilter = new javax.swing.JButton();
-        btnSubmit = new javax.swing.JButton();
-        jtpFilter = new javax.swing.JTabbedPane();
-        jpSleeve = new javax.swing.JPanel();
-        txtWidthMax = new javax.swing.JTextField();
-        txtCircumferenceMin = new javax.swing.JTextField();
-        txtWidthMin = new javax.swing.JTextField();
-        txtCircumferenceMax = new javax.swing.JTextField();
-        txtThickness = new javax.swing.JTextField();
-        txtMaterialID = new javax.swing.JTextField();
-        lblThickness = new javax.swing.JLabel();
-        lblWidth = new javax.swing.JLabel();
-        lblCircumference = new javax.swing.JLabel();
-        lblMaterialID = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jpOrder = new javax.swing.JPanel();
-        txtProductionOrderID = new javax.swing.JTextField();
-        txtSalesOrderID = new javax.swing.JTextField();
-        lblProductionOrderID = new javax.swing.JLabel();
-        lblSalesOrderID = new javax.swing.JLabel();
-        btnReset = new javax.swing.JButton();
-        jspCenter = new javax.swing.JSplitPane();
-        jspEast = new javax.swing.JSplitPane();
+        pnlEast = new javax.swing.JSplitPane();
         jpDescription = new javax.swing.JPanel();
         lblDescription = new javax.swing.JLabel();
         lblDescriptionText1 = new javax.swing.JLabel();
@@ -138,181 +154,20 @@ public class MainGui extends javax.swing.JFrame {
         txtDescription5 = new javax.swing.JTextField();
         lblDescriptionText6 = new javax.swing.JLabel();
         txtDescription6 = new javax.swing.JTextField();
-        jspQueue = new javax.swing.JScrollPane();
-        tblQueue = new javax.swing.JTable();
+        pnlHeader = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        btnOK = new javax.swing.JButton();
+        pnlCenter = new javax.swing.JPanel();
+        pnlWest = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 650));
 
-        jspWest.setDividerLocation(400);
-        jspWest.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-
-        btnFilter.setText("Show Filters");
-        btnFilter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFilterActionPerformed(evt);
-            }
-        });
-
-        btnSubmit.setText("Submit");
-        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitActionPerformed(evt);
-            }
-        });
-
-        lblThickness.setText("Thickness:");
-
-        lblWidth.setText("Width:");
-
-        lblCircumference.setText("Circumference:");
-
-        lblMaterialID.setText("Material ID:");
-
-        jLabel2.setText("< x <");
-
-        jLabel3.setText("< x <");
-
-        javax.swing.GroupLayout jpSleeveLayout = new javax.swing.GroupLayout(jpSleeve);
-        jpSleeve.setLayout(jpSleeveLayout);
-        jpSleeveLayout.setHorizontalGroup(
-            jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSleeveLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMaterialID)
-                    .addComponent(lblThickness)
-                    .addComponent(lblCircumference)
-                    .addComponent(lblWidth))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtThickness, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(txtMaterialID)
-                    .addComponent(txtCircumferenceMin, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(txtWidthMin))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(17, 17, 17)
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtWidthMax)
-                    .addComponent(txtCircumferenceMax, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(81, Short.MAX_VALUE))
-        );
-
-        jpSleeveLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtCircumferenceMax, txtCircumferenceMin, txtMaterialID, txtThickness, txtWidthMax, txtWidthMin});
-
-        jpSleeveLayout.setVerticalGroup(
-            jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpSleeveLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMaterialID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaterialID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtThickness, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblThickness))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtWidthMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtWidthMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblWidth)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpSleeveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCircumferenceMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCircumferenceMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCircumference)
-                    .addComponent(jLabel3))
-                .addContainerGap())
-        );
-
-        jpSleeveLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtCircumferenceMax, txtCircumferenceMin, txtMaterialID, txtThickness, txtWidthMax, txtWidthMin});
-
-        jtpFilter.addTab("By Sleeve", jpSleeve);
-
-        lblProductionOrderID.setText("Production Order ID:");
-
-        lblSalesOrderID.setText("Sales Order ID:");
-
-        javax.swing.GroupLayout jpOrderLayout = new javax.swing.GroupLayout(jpOrder);
-        jpOrder.setLayout(jpOrderLayout);
-        jpOrderLayout.setHorizontalGroup(
-            jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpOrderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSalesOrderID)
-                    .addComponent(lblProductionOrderID))
-                .addGap(21, 21, 21)
-                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtProductionOrderID, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                    .addComponent(txtSalesOrderID))
-                .addContainerGap(76, Short.MAX_VALUE))
-        );
-        jpOrderLayout.setVerticalGroup(
-            jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpOrderLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSalesOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSalesOrderID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpOrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtProductionOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblProductionOrderID))
-                .addGap(70, 70, 70))
-        );
-
-        jtpFilter.addTab("By Order", jpOrder);
-
-        btnReset.setText("Reset");
-        btnReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jpMainLayout = new javax.swing.GroupLayout(jpMain);
-        jpMain.setLayout(jpMainLayout);
-        jpMainLayout.setHorizontalGroup(
-            jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpMainLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpMainLayout.createSequentialGroup()
-                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jpMainLayout.createSequentialGroup()
-                        .addComponent(jtpFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnSubmit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(8, 8, 8))))
-        );
-        jpMainLayout.setVerticalGroup(
-            jpMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMainLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jtpFilter))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnReset)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSubmit)
-                .addContainerGap())
-        );
-
-        jspWest.setBottomComponent(jpMain);
-
-        jspCenter.setDividerLocation(300);
-
-        jspEast.setDividerLocation(300);
-        jspEast.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        pnlEast.setDividerLocation(325);
+        pnlEast.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        pnlEast.setPreferredSize(new java.awt.Dimension(300, 650));
 
         lblDescription.setText("Description");
 
@@ -341,7 +196,7 @@ public class MainGui extends javax.swing.JFrame {
                         .addComponent(txtDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpDescriptionLayout.createSequentialGroup()
                         .addComponent(lblDescriptionText2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                         .addComponent(txtDescription2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpDescriptionLayout.createSequentialGroup()
                         .addComponent(lblDescriptionText3)
@@ -393,38 +248,159 @@ public class MainGui extends javax.swing.JFrame {
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText6)
                     .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
-        jspEast.setTopComponent(jpDescription);
+        pnlEast.setTopComponent(jpDescription);
 
-        jspCenter.setRightComponent(jspEast);
+        pnlHeader.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tblQueue.setAutoCreateRowSorter(true);
-        jspQueue.setViewportView(tblQueue);
+        jLabel1.setText("Enter ID: ");
 
-        jspCenter.setLeftComponent(jspQueue);
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
+        pnlHeader.setLayout(pnlHeaderLayout);
+        pnlHeaderLayout.setHorizontalGroup(
+            pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHeaderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOK)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlHeaderLayout.setVerticalGroup(
+            pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOK))
+                .addContainerGap())
+        );
+
+        pnlCenter.setPreferredSize(new java.awt.Dimension(400, 0));
+
+        javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
+        pnlCenter.setLayout(pnlCenterLayout);
+        pnlCenterLayout.setHorizontalGroup(
+            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 372, Short.MAX_VALUE)
+        );
+        pnlCenterLayout.setVerticalGroup(
+            pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        pnlWest.setPreferredSize(new java.awt.Dimension(400, 862));
+
+        javax.swing.GroupLayout pnlWestLayout = new javax.swing.GroupLayout(pnlWest);
+        pnlWest.setLayout(pnlWestLayout);
+        pnlWestLayout.setHorizontalGroup(
+            pnlWestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 372, Short.MAX_VALUE)
+        );
+        pnlWestLayout.setVerticalGroup(
+            pnlWestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 862, Short.MAX_VALUE)
+        );
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(50, 0));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jspWest, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+                .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jspCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlEast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspWest, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
-            .addComponent(jspCenter)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlEast, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
+                    .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)
+                    .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 862, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setDescriptionPane(MyTreeNode node) {
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        if (txtID.getText().isEmpty()) {
+            setSleeveTableModel(Main.allOrderData);
+        } else {
+            SalesOrderList sol = new SalesOrderList();
+            boolean hasFound = false;
+
+            while (!hasFound) {
+                ItemList iList = new ItemList();
+                for (SalesOrder s : sleeveModel.getSList().getList()) {
+                    if (s.getDescription().contains(txtID.getText()) || String.valueOf(s.getId()).contains(txtID.getText())) {
+                        if (!sol.hasId(s.getId())) {
+                            sol.add(s);
+                        }
+
+                        hasFound = true;
+                    }
+                    for (ProductOrder p : s.getProductOrderList().getList()) {
+                        if (p.getDescription().contains(txtID.getText()) || String.valueOf(p.getId()).contains(txtID.getText())) {
+                            if (!sol.hasId(s.getId())) {
+                                sol.add(s);
+                            }
+
+                            hasFound = true;
+
+                        }
+                    }
+                }
+                if (!hasFound) {
+                    JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            }
+            if (hasFound) {
+                setSleeveTableModel(sol);
+            }
+        }
+    }//GEN-LAST:event_btnOKActionPerformed
+    private void setSleeveTableModel(SalesOrderList sol) {
+        sleeveModel.setItemList(sol);
+        sleeveModel.fireTableDataChanged();
+    }
+
+    public void setItemDescriptionPane(Item item) {
         setVisibleTo(true, lblDescriptionText1,
                 lblDescriptionText2,
                 lblDescriptionText3,
@@ -432,10 +408,10 @@ public class MainGui extends javax.swing.JFrame {
                 txtDescription2,
                 txtDescription3);
 
-        lblDescriptionText1.setText("Function: ");
-        txtDescription1.setText(node.getFunction());
-        lblDescriptionText2.setText("ID: ");
-        txtDescription2.setText(String.valueOf(node.getId()));
+        lblDescriptionText1.setText("SO ID / Description: ");
+        txtDescription1.setText(item.getSalesOrderId() + " / " + Main.allOrderData.getById(item.getSalesOrderId()).getDescription());
+        lblDescriptionText2.setText("PO ID / Description: ");
+        txtDescription2.setText(item.getProductOrderId() + " / " + Main.allOrderData.getById(item.getSalesOrderId()).getProductOrderList().getById(item.getProductOrderId()).getDescription());
 
         setEditableTo(false, txtDescription1,
                 txtDescription2,
@@ -444,54 +420,24 @@ public class MainGui extends javax.swing.JFrame {
                 txtDescription5,
                 txtDescription6);
 
-        switch (node.getFunction()) {
-            case "SalesOrder":
-                setVisibleTo(false, lblDescriptiontext4,
-                        txtDescription4,
-                        lblDescriptionText5,
-                        txtDescription5,
-                        lblDescriptionText6,
-                        txtDescription6);
 
-                lblDescriptionText3.setText("Description");
-                txtDescription3.setText(node.getDescription());
-                lblDescriptiontext4.setText("Due Date: ");
-                txtDescription4.setText(String.valueOf(new Timestamp(node.getDueDate())));
+        setVisibleTo(true, lblDescriptiontext4,
+                txtDescription4,
+                lblDescriptionText5,
+                txtDescription5,
+                lblDescriptionText6,
+                txtDescription6);
 
-                break;
+        lblDescriptionText3.setText("Material ID: ");
+        txtDescription3.setText(String.valueOf(item.getMaterialId()));
+        lblDescriptiontext4.setText("Width: ");
+        txtDescription4.setText(String.valueOf(item.getWidth()));
+        lblDescriptionText5.setText("Circumference: ");
+        txtDescription5.setText(String.valueOf(item.getCircumference()));
+        lblDescriptionText6.setText("Thickness: ");
+        txtDescription6.setText(String.valueOf(item.getThickness()));
 
-            case "ProductOrder":
-                setVisibleTo(false, lblDescriptiontext4,
-                        txtDescription4,
-                        lblDescriptionText5,
-                        txtDescription5,
-                        lblDescriptionText6,
-                        txtDescription6);
 
-                lblDescriptionText3.setText("Description");
-                txtDescription3.setText(node.getDescription());
-
-                break;
-
-            case "Item":
-                setVisibleTo(true, lblDescriptiontext4,
-                        txtDescription4,
-                        lblDescriptionText5,
-                        txtDescription5,
-                        lblDescriptionText6,
-                        txtDescription6);
-
-                lblDescriptionText3.setText("Material ID: ");
-                txtDescription3.setText(String.valueOf(node.getMatId()));
-                lblDescriptiontext4.setText("Width: ");
-                txtDescription4.setText(String.valueOf(node.getWidth()));
-                lblDescriptionText5.setText("Circumference: ");
-                txtDescription5.setText(String.valueOf(node.getCircumference()));
-                lblDescriptionText6.setText("Thickness: ");
-                txtDescription6.setText(String.valueOf(node.getThickness()));
-
-                break;
-        }
     }
 
     /**
@@ -517,112 +463,11 @@ public class MainGui extends javax.swing.JFrame {
             c.setEditable(visibility);
         }
     }
-
-    public void setQueueTable(Item item) {
-        queueTableModel.addItems(item);
-        queueTableModel.fireTableDataChanged();
-    }
-
-    /**
-     * @return the spnlCenter
-     */
-    public javax.swing.JSplitPane getSpnlCenter() {
-        return jspCenter;
-    }
-
-    /**
-     * @return the spnlWest
-     */
-    public javax.swing.JSplitPane getSpnlWest() {
-        return jspWest;
-    }
-
-    public void updateQueueTable() {
-        queueTableModel.fireTableDataChanged();
-    }
-    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
-        if (!isExpanded) { // If it's not expanded, then expand it.
-            btnFilter.setText("Hide Filter");
-            jspWest.setDividerLocation(EXPANDED_SIZE);
-            isExpanded = true;
-        } else { // If it's already exanded, collapse it!
-            btnFilter.setText("Show Filter");
-            jspWest.setDividerLocation(COLLAPSED_SIZE);
-            isExpanded = false;
-        }
-    }//GEN-LAST:event_btnFilterActionPerformed
-
-    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        // The list of Sales Orders that we're going to set for the tree.
-        SalesOrderList so = null;
-
-        // Initialize local variables
-        int salesOrderID,
-                productionOrderID,
-                materialID;
-        double thickness,
-                width_min,
-                width_max,
-                circumference_min,
-                circumference_max;
-
-        if (jtpFilter.getSelectedIndex() == 0) { // Filter by Sleeve
-            try {
-                // Get the values from the right text fields.
-                materialID = (!txtMaterialID.getText().isEmpty()) ? Integer.parseInt(txtMaterialID.getText()) : 0;
-                thickness = (!txtThickness.getText().isEmpty()) ? Double.parseDouble(txtThickness.getText()) : 0;
-                width_min = (!txtWidthMin.getText().isEmpty()) ? Double.parseDouble(txtWidthMin.getText()) : 0;
-                width_max = (!txtWidthMax.getText().isEmpty()) ? Double.parseDouble(txtWidthMax.getText()) : 0;
-                circumference_min = (!txtCircumferenceMin.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMin.getText()) : 0;
-                circumference_max = (!txtCircumferenceMax.getText().isEmpty()) ? Double.parseDouble(txtCircumferenceMax.getText()) : 0;
-                so = (filter.filterBySleeve(Main.treeData, materialID, thickness, width_min, width_max, circumference_min, circumference_max));
-            } catch (NumberFormatException ex) {
-                // In case of parsing error, create a popup window with the error message.
-                JOptionPane.showMessageDialog(this, "Wrong input " + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else if (jtpFilter.getSelectedIndex() == 1) { // Filter by Order
-            try {
-                // Get the values from the right text fields.
-                salesOrderID = (!txtSalesOrderID.getText().isEmpty()) ? Integer.parseInt(txtSalesOrderID.getText()) : 0;
-                productionOrderID = (!txtProductionOrderID.getText().isEmpty()) ? Integer.parseInt(txtProductionOrderID.getText()) : 0;
-                so = (filter.filterByOrder(Main.treeData, salesOrderID, productionOrderID));
-            } catch (NumberFormatException ex) {
-                // In case of parsing error, create a popup window with the error message.
-                JOptionPane.showMessageDialog(this, "Wrong input " + ex.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-
-        // Re-create the tree
-        listing.setTreeTableModel(so);
-        listing.setOrderListing();
-
-        // Collapse the Filter Menu
-        btnFilterActionPerformed(evt);
-    }//GEN-LAST:event_btnSubmitActionPerformed
-
-    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        listing.setTreeTableModel(new ListManager().getAll());
-        listing.setOrderListing();
-
-        // Collapse the Filter Menu
-        btnFilterActionPerformed(evt);
-    }//GEN-LAST:event_btnResetActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnFilter;
-    private javax.swing.JButton btnReset;
-    private javax.swing.JButton btnSubmit;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btnOK;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jpDescription;
-    private javax.swing.JPanel jpMain;
-    private javax.swing.JPanel jpOrder;
-    private javax.swing.JPanel jpSleeve;
-    private javax.swing.JSplitPane jspCenter;
-    private javax.swing.JSplitPane jspEast;
-    private javax.swing.JScrollPane jspQueue;
-    private javax.swing.JSplitPane jspWest;
-    private javax.swing.JTabbedPane jtpFilter;
-    private javax.swing.JLabel lblCircumference;
     private javax.swing.JLabel lblDescription;
     private javax.swing.JLabel lblDescriptionText1;
     private javax.swing.JLabel lblDescriptionText2;
@@ -630,25 +475,16 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JLabel lblDescriptionText5;
     private javax.swing.JLabel lblDescriptionText6;
     private javax.swing.JLabel lblDescriptiontext4;
-    private javax.swing.JLabel lblMaterialID;
-    private javax.swing.JLabel lblProductionOrderID;
-    private javax.swing.JLabel lblSalesOrderID;
-    private javax.swing.JLabel lblThickness;
-    private javax.swing.JLabel lblWidth;
-    private javax.swing.JTable tblQueue;
-    private javax.swing.JTextField txtCircumferenceMax;
-    private javax.swing.JTextField txtCircumferenceMin;
+    private javax.swing.JPanel pnlCenter;
+    private javax.swing.JSplitPane pnlEast;
+    private javax.swing.JPanel pnlHeader;
+    private javax.swing.JPanel pnlWest;
     private javax.swing.JTextField txtDescription1;
     private javax.swing.JTextField txtDescription2;
     private javax.swing.JTextField txtDescription3;
     private javax.swing.JTextField txtDescription4;
     private javax.swing.JTextField txtDescription5;
     private javax.swing.JTextField txtDescription6;
-    private javax.swing.JTextField txtMaterialID;
-    private javax.swing.JTextField txtProductionOrderID;
-    private javax.swing.JTextField txtSalesOrderID;
-    private javax.swing.JTextField txtThickness;
-    private javax.swing.JTextField txtWidthMax;
-    private javax.swing.JTextField txtWidthMin;
+    private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }

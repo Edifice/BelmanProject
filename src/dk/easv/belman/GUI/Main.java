@@ -17,12 +17,13 @@ public class Main {
     public static ProductOrderList queueData;
     public static SalesOrderList allOrderData;
     private static final int SCHEDULER_PERIOD = 10; // minutes
+    private static MainGui gui;
 
     public static void main(String[] args) {
 
         //Set the look and feel of the program
         //<editor-fold defaultstate="collapsed" desc=" Look and feel settings ">
-        com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green");
+        //com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green");
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -38,10 +39,9 @@ public class Main {
         allOrderData = lists.getAll();
 
         //Program starts from here
-        final MainGui gui = new MainGui();
-
+        gui = new MainGui();        
         gui.setExtendedState(MainGui.MAXIMIZED_BOTH);
-        gui.getSpnlWest().setDividerLocation(gui.getHeight());
+      
         gui.setVisible(true);
 
         Runnable scheduledTask;
@@ -56,6 +56,6 @@ public class Main {
         ScheduledExecutorService scheduler;
         scheduler = Executors.newScheduledThreadPool(1);
         //scheduler.scheduleAtFixedRate(scheduledTask, SCHEDULER_PERIOD, SCHEDULER_PERIOD, TimeUnit.MINUTES);
-        scheduler.scheduleAtFixedRate(scheduledTask, 5, 5, TimeUnit.SECONDS); // for test
+        //scheduler.scheduleAtFixedRate(scheduledTask, 5, 5, TimeUnit.SECONDS); // for test
     }
 }
