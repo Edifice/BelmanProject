@@ -91,7 +91,7 @@ public class StockItem extends IEntity {
     /**
      * @return the lenght
      */
-    public double length() {
+    public double getLength() {
         return length;
     }
 
