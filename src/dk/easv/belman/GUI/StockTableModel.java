@@ -54,7 +54,9 @@ public class StockTableModel extends AbstractTableModel {
     }
 
 
-
+    public StockItemList getStockList() {
+        return stockList;
+    }
     public void setStockList(StockItemList stockList) {
         this.stockList = stockList;
         

@@ -6,6 +6,7 @@ import dk.easv.belman.BE.ProductOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
+import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.BLL.Filter;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -123,18 +124,18 @@ public class MainGui extends javax.swing.JFrame {
                 } else {
                     if (e.getSource().equals(tblSleeves)) {
                         selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow());
-                        
-                        stockModel.setStockList(filter.filterBySleeve(selectedItem));
+
+                        stockModel.setStockList(filter.filterBySleeve(Main.allStockData, selectedItem));
                         stockModel.fireTableDataChanged();
-                        
+
                         txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
                         txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
                     } else {
                         selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow());
-                        
+
                         sleeveModel.setItemList(filter.filterByStock(Main.allOrderData, selectedStockItem));
                         sleeveModel.fireTableDataChanged();
-                        
+
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
                 }
@@ -148,13 +149,28 @@ public class MainGui extends javax.swing.JFrame {
                 int keyEnter = KeyEvent.VK_ENTER;
 
                 if (e.getKeyCode() == keyUp) {
-                    selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() - 1);
-                    setItemDescriptionPane(selectedItem);
+                    if (e.getSource().equals(tblSleeves)) {
+                        selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() - 1);
+                        setItemDescriptionPane(selectedItem);
+                    } else {
+                        selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow() - 1);
+                        setStockDescriptionPane(selectedStockItem);
+                    }
                 } else if (e.getKeyCode() == keyDown) {
-                    selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() + 1);
-                    setItemDescriptionPane(selectedItem);
+                    if (e.getSource().equals(tblSleeves)) {
+                        selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() + 1);
+                        setItemDescriptionPane(selectedItem);
+                    } else {
+                        selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow() + 1);
+                        setStockDescriptionPane(selectedStockItem);
+                    }
                 } else if (e.getKeyCode() == keyEnter) {
-                    //TODO
+                    if (e.getSource().equals(tblSleeves)) {
+                        txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
+                        txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
+                    } else {
+                        txtStockItem.setText(selectedStockItem.getCode());
+                    }
                 }
             }
         });
@@ -509,44 +525,64 @@ public class MainGui extends javax.swing.JFrame {
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         if (txtID.getText().isEmpty()) {
             setSleeveTableModel(Main.allOrderData);
+            setStockTableModel(Main.allStockData);
         } else {
             SalesOrderList sol = new SalesOrderList();
+            StockItemList sil = new StockItemList();
+
             boolean hasFound = false;
 
             while (!hasFound) {
-                ItemList iList = new ItemList();
-                for (SalesOrder s : sleeveModel.getSList().getList()) {
-                    if (s.getDescription().contains(txtID.getText()) || String.valueOf(s.getId()).contains(txtID.getText())) {
-                        if (!sol.hasId(s.getId())) {
-                            sol.add(s);
+                if (txtID.getText().startsWith("RP")) {
+                    for (StockItem s : Main.allStockData.getList()) {
+                        if (s.getCode().contains(txtID.getText())) {
+                            sil.add(s);
                         }
-
                         hasFound = true;
                     }
-                    for (ProductOrder p : s.getProductOrderList().getList()) {
-                        if (p.getDescription().contains(txtID.getText()) || String.valueOf(p.getId()).contains(txtID.getText())) {
+                } else {
+                    for (SalesOrder s : Main.allOrderData.getList()) {
+                        if (s.getDescription().contains(txtID.getText()) || String.valueOf(s.getId()).contains(txtID.getText())) {
                             if (!sol.hasId(s.getId())) {
                                 sol.add(s);
                             }
 
                             hasFound = true;
+                        }
+                        for (ProductOrder p : s.getProductOrderList().getList()) {
+                            if (p.getDescription().contains(txtID.getText()) || String.valueOf(p.getId()).contains(txtID.getText())) {
+                                if (!sol.hasId(s.getId())) {
+                                    sol.add(s);
+                                }
 
+                                hasFound = true;
+
+                            }
                         }
                     }
+                    if (!hasFound) {
+                        JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
                 }
-                if (!hasFound) {
-                    JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
             }
             if (hasFound) {
-                setSleeveTableModel(sol);
+                if (sol.size() > 0) {
+                    setSleeveTableModel(sol);
+                } else {
+                    setStockTableModel(sil);
+                }
             }
         }
     }//GEN-LAST:event_btnOKActionPerformed
     private void setSleeveTableModel(SalesOrderList sol) {
         sleeveModel.setItemList(sol);
         sleeveModel.fireTableDataChanged();
+    }
+
+    private void setStockTableModel(StockItemList sil) {
+        stockModel.setStockList(sil);
+        stockModel.fireTableDataChanged();
     }
 
     public void setItemDescriptionPane(Item item) {

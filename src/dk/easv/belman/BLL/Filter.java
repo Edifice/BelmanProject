@@ -17,15 +17,12 @@ public class Filter {
     /**
      * TODO JavaDoc
      */
-    public StockItemList filterBySleeve(Item sleeve) {
+    public StockItemList filterBySleeve(StockItemList sList, Item item) {
         StockItemList ret = new StockItemList();
-        for (Iterator<StockItem> it = new ArrayList<>(Main.allStockData.getList()).iterator(); it.hasNext();) {
-            StockItem item = it.next();
-            if (item.getMaterialId() == sleeve.getMaterialId()
-                    && item.getThickness() == sleeve.getThickness()
-                    && item.getWidth() >= sleeve.getWidth()
-                    && item.getLength() >= sleeve.getCircumference()) {
-                ret.add(item);
+        for (StockItem s : sList.getList()) {
+            if (item.getMaterialId() == s.getMaterialId() && item.getCircumference() <= s.getLength() 
+                    && item.getThickness() == s.getThickness() && item.getWidth() <= s.getWidth()) {
+                ret.add(s);
             }
         }
         return ret;
@@ -34,20 +31,20 @@ public class Filter {
     /**
      * TODO JavaDoc
      */
-    public ItemList filterByStock(SalesOrderList sList, StockItem sItem) {               
-        ItemList iList = new ItemList();
-        
+    public ItemList filterByStock(SalesOrderList sList, StockItem sItem) {
+        ItemList iList = new ItemList();        
+
         for (SalesOrder s : sList.getList()) {
             for (ProductOrder p : s.getProductOrderList().getList()) {
                 for (Item item : p.getItemList().getList()) {
-                    if(sItem.getMaterialId() == item.getMaterialId() && sItem.getThickness() == item.getThickness() && item.getWidth() <= sItem.getWidth()
-                    && item.getCircumference() <= sItem.getLength()){
-                    iList.add(item);   
+                    if (sItem.getMaterialId() == item.getMaterialId() && sItem.getThickness() == item.getThickness() && item.getWidth() <= sItem.getWidth()
+                            && item.getCircumference() <= sItem.getLength()) {
+                        iList.add(item);
                     }
                 }
             }
         }
-        
+
         return iList;
     }
 }
