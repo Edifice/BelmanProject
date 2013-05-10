@@ -81,8 +81,8 @@ public class MainGui extends javax.swing.JFrame {
         pnlCenter.setLayout(new BorderLayout());
         pnlCenter.add(sp);
         addListeners(tblSleeves);
-        
-        
+
+
         //Stock table
         tblStock = new JXTable();
         JScrollPane sf = new JScrollPane(tblStock);
@@ -92,7 +92,7 @@ public class MainGui extends javax.swing.JFrame {
         tblStock.packAll();
         tblStock.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblStock.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
-        
+
         pnlWest.setLayout(new BorderLayout());
         pnlWest.add(sf);
         addListeners(tblStock);
@@ -101,18 +101,17 @@ public class MainGui extends javax.swing.JFrame {
 
     private void addListeners(final Component c) {
 
-        c.addMouseListener(new MouseAdapter() {           
-            
+        c.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getSource().equals(tblSleeves)) {
                     tblStock.clearSelection();
                     selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow());
-                    
+
                 } else {
                     tblSleeves.clearSelection();
                     selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow());
-                    
+
                 }
 
                 if (e.getClickCount() != 2) {
@@ -123,9 +122,19 @@ public class MainGui extends javax.swing.JFrame {
                     }
                 } else {
                     if (e.getSource().equals(tblSleeves)) {
+                        selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow());
+                        
+                        stockModel.setStockList(filter.filterBySleeve(selectedItem));
+                        stockModel.fireTableDataChanged();
+                        
                         txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
                         txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
                     } else {
+                        selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow());
+                        
+                        sleeveModel.setItemList(filter.filterByStock(Main.allOrderData, selectedStockItem));
+                        sleeveModel.fireTableDataChanged();
+                        
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
                 }
