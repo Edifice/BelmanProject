@@ -45,20 +45,18 @@ public class Filter {
      * @return CURRENTLY An ItemList with the filtered Items.
      */
     public ItemList filterByStock(SalesOrderList sList, StockItem sItem) {
-        ItemList iList = new ItemList();
-
-        for (SalesOrder s : sList.getList()) {
-            for (ProductOrder p : s.getProductOrderList().getList()) {
-                for (Item item : p.getItemList().getList()) {
-                    if (sItem.getMaterialId() == item.getMaterialId() // Check for material id.
-                            && sItem.getThickness() == item.getThickness() // Check for thickness.
-                            && item.getWidth() <= sItem.getWidth() // Check for width.
-                            && item.getCircumference() <= sItem.getLength()) { // Check for circumference.
-                        iList.add(item);
-                    }
-                }
+        ItemList resList = new ItemList();
+        ItemList itemList = new ListManager().getItemList(sList);
+        
+        for (Item item : itemList.getList()) {
+            if (sItem.getMaterialId() == item.getMaterialId() // Check for material id.
+                    && sItem.getThickness() == item.getThickness() // Check for thickness.
+                    && item.getWidth() <= sItem.getWidth() // Check for width.
+                    && item.getCircumference() <= sItem.getLength()) { // Check for circumference.
+                resList.add(item);
             }
         }
-        return iList;
+    
+        return resList;
     }
 }

@@ -2,10 +2,8 @@ package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
-import dk.easv.belman.BE.ProductOrder;
-import dk.easv.belman.BE.ProductOrderList;
-import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BLL.ListManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +12,7 @@ import javax.swing.table.AbstractTableModel;
 public class SleeveTableModel extends AbstractTableModel {
 
     private SalesOrderList sList; // A list of SalesOrders which contains the production orders and items inside it.
+    private ListManager listManager;
     private ItemList iList; // The contents of the table.
     // The names of columns
     private String[] colNames = {"Description", "Due Date", "Mat ID", "Width", "Circumferance", "Thickness", "Quantity"};
@@ -27,7 +26,8 @@ public class SleeveTableModel extends AbstractTableModel {
      */
     public SleeveTableModel(SalesOrderList sList) {
         this.sList = sList;
-        iList = getItemList(sList);
+        listManager = new ListManager();
+        iList = listManager.getItemList(sList);
         fireTableDataChanged();
     }
 
@@ -48,7 +48,7 @@ public class SleeveTableModel extends AbstractTableModel {
 
         switch (col) {
             case 0:
-                return getPList(sList).getById(item.getProductOrderId()).getDescription();
+                return listManager.getProductOrderList(sList).getById(item.getProductOrderId()).getDescription();
             case 1:
                 DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 return df.format(new Date(Main.allOrderData.getById(item.getSalesOrderId()).getDueDate()));
@@ -73,22 +73,7 @@ public class SleeveTableModel extends AbstractTableModel {
         return sList;
     }
 
-    /**
-     * Returns all the Production Orders inside a SalesOrderList.
-     *
-     * @param sList The SalesOrderList in which we look for production orders.
-     * @return A list of all production orders inside that specific
-     * SalesOrderList.
-     */
-    private ProductOrderList getPList(SalesOrderList sList) {
-        ProductOrderList pList = new ProductOrderList();
-        for (SalesOrder s : sList.getList()) {
-            for (ProductOrder p : s.getProductOrderList().getList()) {
-                pList.add(p);
-            }
-        }
-        return pList;
-    }
+    
 
     /**
      * Sets the Item list of a SalesOrderList.
@@ -97,7 +82,7 @@ public class SleeveTableModel extends AbstractTableModel {
      */
     public void setItemList(SalesOrderList sList) {
         this.sList = sList;
-        iList = getItemList(sList);
+        iList = listManager.getItemList(sList);
     }
 
     /**
@@ -129,21 +114,5 @@ public class SleeveTableModel extends AbstractTableModel {
         return classes[col];
     }
 
-    /**
-     * Returns a list of all Items from a specific SalesOrderList.
-     * 
-     * @param sList The SalesOrderList from where we want to get the Item list.
-     * @return An Item List from a specified SalesOrderList.
-     */
-    private ItemList getItemList(SalesOrderList sList) {
-        ItemList iList_l = new ItemList();
-        for (SalesOrder s : sList.getList()) {
-            for (ProductOrder p : s.getProductOrderList().getList()) {
-                for (Item item : p.getItemList().getList()) {
-                    iList_l.add(item);
-                }
-            }
-        }
-        return iList_l;
-    }
+    
 }
