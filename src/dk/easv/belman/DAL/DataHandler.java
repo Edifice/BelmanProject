@@ -13,16 +13,19 @@ import java.sql.Statement;
 
 public class DataHandler extends DBConnection {
 
-    public DataHandler() throws FileNotFoundException, SQLException {
-        super();
+    public DataHandler() throws FileNotFoundException, SQLException { // Throws the errors because the DBConnection class deals with the databse and local files.
+        super(); // Calls the constructor of the DBConnection class.
     }
 
     /**
      * This method returns a list of all sales order from the database.
+     *
+     * @return a SalesOrderList with all the SalesOrders, ProductionOrders and
+     * Items.
      */
     public SalesOrderList getAllSO() throws SQLException {
 
-        int so_i = 0, po_i = 0, i_i = 0;
+//        int so_i = 0, po_i = 0, i_i = 0; // for statistics
 
         SalesOrderList ret = new SalesOrderList();
         connection = dataSource.getConnection();
@@ -100,19 +103,19 @@ public class DataHandler extends DBConnection {
                 if (SO_new) {
                     so.getProductOrderList().add(po);
                     ret.add(so);
-                    so_i++;
-                    po_i++;
-                    i_i++;
+//                    so_i++;
+//                    po_i++;
+//                    i_i++;
                 } else {
                     if (PO_new) {
                         so.getProductOrderList().add(po);
                         ret.set(so);
-                        po_i++;
-                        i_i++;
+//                        po_i++;
+//                        i_i++;
                     } else {
                         so.getProductOrderList().set(po);
                         ret.set(so);
-                        i_i++;
+//                        i_i++;
                     }
                 }
             }
@@ -120,15 +123,15 @@ public class DataHandler extends DBConnection {
         } finally {
             connection.setAutoCommit(true);
             connection.close();
-
         }
-
-        System.out.println("statistics: \n\tSO: " + so_i + ", \n\tPO: " + po_i + ", \n\tItem: " + i_i);
+//        System.out.println("statistics: \n\tSO: " + so_i + ", \n\tPO: " + po_i + ", \n\tItem: " + i_i);
         return ret;
     }
 
     /**
      * This method returns all the Stock items from the database.
+     *
+     * @return a StockItemList with all the StockItems.
      */
     public StockItemList getAllSI() throws SQLException {
 
@@ -162,10 +165,8 @@ public class DataHandler extends DBConnection {
         } finally {
             connection.setAutoCommit(true);
             connection.close();
-
         }
-
-        System.out.println("Statistics: \n\tSI: " + ret.size());
+//        System.out.println("Statistics: \n\tSI: " + ret.size());
         return ret;
     }
 }
