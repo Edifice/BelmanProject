@@ -10,14 +10,12 @@ import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.DAL.DataHandler;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ListManager {
 
-    DataHandler handler; // DAL object.
+    private DataHandler handler; // DAL object.
 
     public ListManager() {
         try {
@@ -56,15 +54,6 @@ public class ListManager {
 //            throw new Exception(ex.getMessage(), ex.getCause());
         }
         return null;
-    }
-    
-    /**
-     * Returns all the sales orders which has a due date within the week limit.
-     * @param weeks is the limit.
-     * @return a list of sales Orders.
-     */
-    public SalesOrderList getSalesOrderList(int weeks){        
-    return null;
     }
     
     /**

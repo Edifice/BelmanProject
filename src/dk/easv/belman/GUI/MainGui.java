@@ -131,14 +131,14 @@ public class MainGui extends javax.swing.JFrame {
                         selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow()); // Set the selected Item/Sleeve.
                         // Filter the table with StockItems, by the currently selected Item/Sleeve.
                         updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem));
-                        
+
                         // Set the selected Item/Sleeve ready-to-cut.
                         txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
                         txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
                     } else {
                         selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow()); // Set the selected StockItem.
                         // Filter the table with Items/Sleeves, by the currently selected StockItem.
-                        updateSleeveTableModel(null, filter.filterByStock(Main.allOrderData, selectedStockItem));                        
+                        updateSleeveTableModel(null, filter.filterByStock(Main.allOrderData, selectedStockItem));
                         // Set the selected StockItem ready-to-cut.
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
@@ -468,7 +468,7 @@ public class MainGui extends javax.swing.JFrame {
         pnlCenter.setLayout(pnlCenterLayout);
         pnlCenterLayout.setHorizontalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 402, Short.MAX_VALUE)
+            .addGap(0, 407, Short.MAX_VALUE)
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -482,7 +482,7 @@ public class MainGui extends javax.swing.JFrame {
         pnlWest.setLayout(pnlWestLayout);
         pnlWestLayout.setHorizontalGroup(
             pnlWestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 328, Short.MAX_VALUE)
+            .addGap(0, 323, Short.MAX_VALUE)
         );
         pnlWestLayout.setVerticalGroup(
             pnlWestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,7 +506,12 @@ public class MainGui extends javax.swing.JFrame {
 
         jLabel8.setText("Stock Item");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Show all", "1 week", "2 week", "3 week", "4 week" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("List all within(weeks)");
 
@@ -519,7 +524,7 @@ public class MainGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                        .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel8))
@@ -527,11 +532,11 @@ public class MainGui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
+                    .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlEast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -560,7 +565,7 @@ public class MainGui extends javax.swing.JFrame {
 
     /**
      * @TODO JavaDOC
-     * @param evt 
+     * @param evt
      */
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         if (txtID.getText().isEmpty()) {
@@ -616,24 +621,53 @@ public class MainGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnOKActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        int weeks;
+        switch (jComboBox1.getSelectedIndex()) {
+            case 0: // In case of 'View all' is selected...
+                updateSleeveTableModel(Main.allOrderData, null); // Set back the original SalesOrderList.
+                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                break;
+            case 1: // In case '1 week' is selected.
+                weeks = 1;
+                updateSleeveTableModel(filter.getSalesOrderList(Main.allOrderData, weeks), null);
+                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                break;
+            case 2: // In case '2 week' is selected.
+                weeks = 2;
+                updateSleeveTableModel(filter.getSalesOrderList(Main.allOrderData, weeks), null);
+                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                break;
+            case 3: // In case '3 week' is selected.
+                weeks = 3;
+                updateSleeveTableModel(filter.getSalesOrderList(Main.allOrderData, weeks), null);
+                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                break;
+            case 4: // In case '4 week' is selected.
+                weeks = 4;
+                updateSleeveTableModel(filter.getSalesOrderList(Main.allOrderData, weeks), null);
+                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                break;
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * Sets a new SalesOrderList to the sleeve table.
-     * 
+     *
      * @param sol The new SalesOrderList.
      */
     private void updateSleeveTableModel(SalesOrderList sol, ItemList iList) {
-        if(sol != null){
-        sleeveModel.setItemList(sol);        
-        }
-        else {
-        sleeveModel.setItemList(iList);
+        if (sol != null) {
+            sleeveModel.setItemList(sol);
+        } else {
+            sleeveModel.setItemList(iList);
         }
         sleeveModel.fireTableDataChanged();
     }
 
     /**
      * Sets a new StockItemList to the stock table.
-     * 
+     *
      * @param sol The new StockItemList.
      */
     private void updateStockTableModel(StockItemList sil) {
