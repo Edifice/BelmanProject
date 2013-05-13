@@ -92,6 +92,13 @@ public class ListManager {
         return list;
     }
 
+    /**
+     * Returns a sales order list containing all sales orders which product
+     * orders are not done
+     *
+     * @param sList
+     * @return a sales order list
+     */
     public SalesOrderList getAllSalesOrderNotDone(SalesOrderList sList) {
         SalesOrderList sol = new SalesOrderList();
         for (Item item : getItemList(sList).getList()) {
@@ -103,6 +110,14 @@ public class ListManager {
         }
         return sol;
     }
+
+    /**
+     * Returns a sales order list containing all sales orders which product
+     * orders are done
+     *
+     * @param sList
+     * @return a sales order list
+     */
     public SalesOrderList getAllDoneSalesOrder(SalesOrderList sList) {
         SalesOrderList sol = new SalesOrderList();
         for (Item item : getItemList(sList).getList()) {
@@ -114,4 +129,16 @@ public class ListManager {
         }
         return sol;
     }
+    
+    //@TODO
+    /*
+    public CutList getAllCuts() {
+        try {
+            return handler.getAllCuts();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+//            throw new Exception(ex.getMessage(), ex.getCause());
+        }
+        return null;
+    }*/
 }

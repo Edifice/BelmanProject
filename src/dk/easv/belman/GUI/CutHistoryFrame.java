@@ -4,8 +4,7 @@
  */
 package dk.easv.belman.GUI;
 
-import dk.easv.belman.BE.Item;
-import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BLL.ListManager;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
@@ -21,10 +20,10 @@ import org.jdesktop.swingx.JXTable;
 public class CutHistoryFrame extends javax.swing.JFrame {
 
     private MainGui parent;
-    private SleeveTableModel sleeveModel;
-    private JXTable tblCutSleeves;
+    private CutTableModel cutModel;
+    private JXTable tblCuts;
     private ListManager listManager;
-    private Item selectedItem;
+    private Cut selectedCut;
 
     /**
      * Creates new form CutHistoryFrame
@@ -45,28 +44,20 @@ public class CutHistoryFrame extends javax.swing.JFrame {
 
         //Initialize the table and sets the model
 
-        tblCutSleeves = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
-        JScrollPane sf = new JScrollPane(tblCutSleeves); // Creates a Scroll Pane where the table will be.
-        sleeveModel = new SleeveTableModel(getAllDoneSalesOrder());     // Initializes the SleeveTableModel.
-        tblCutSleeves.setModel(sleeveModel); // Sets the table model.
-        tblCutSleeves.setDragEnabled(false); // Dragging is disabled.
-        tblCutSleeves.setColumnControlVisible(true); // Column control settings are enabled.
-        tblCutSleeves.packAll(); // Packs the table.
-        tblCutSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
-        tblCutSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sets the sorting order to ASC > DESC > Unsorted.
+        tblCuts = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
+        JScrollPane sf = new JScrollPane(tblCuts); // Creates a Scroll Pane where the table will be.
+        cutModel = new CutTableModel(Main.allCuts);     // Initializes the SleeveTableModel.
+        tblCuts.setModel(cutModel); // Sets the table model.
+        tblCuts.setDragEnabled(false); // Dragging is disabled.
+        tblCuts.setColumnControlVisible(true); // Column control settings are enabled.
+        tblCuts.packAll(); // Packs the table.
+        tblCuts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
+        tblCuts.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sets the sorting order to ASC > DESC > Unsorted.
 
         pnlTable.setLayout(new BorderLayout());
         pnlTable.add(sf);
     }
 
-    /**
-     * Returns a sales order list containing all sales order which is done
-     *
-     * @return
-     */
-    private SalesOrderList getAllDoneSalesOrder() {
-        return listManager.getAllDoneSalesOrder(Main.allOrderData);
-    }
 
     /**
      * This method cancels the done cut, and removes it from the lists, and adds
@@ -74,8 +65,8 @@ public class CutHistoryFrame extends javax.swing.JFrame {
      */
     private void cancelCut() {
         try {
-            selectedItem = sleeveModel.getItemByRow(tblCutSleeves.getSelectedRow());
-            selectedItem.setDone(false);
+            selectedCut = cutModel.getCutByRow(tblCuts.getSelectedRow());
+            selectedCut.getSleeve().setDone(false);
             //TODO
             //Needs the real cancel logic
         } catch (NullPointerException ex) {
@@ -87,8 +78,7 @@ public class CutHistoryFrame extends javax.swing.JFrame {
      * This method updates the table, and gets the updated list
      */
     private void updateSleeveTable() {
-        sleeveModel.setItemList(getAllDoneSalesOrder());
-        sleeveModel.fireTableDataChanged();
+        
     }
 
     /**

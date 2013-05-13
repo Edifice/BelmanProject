@@ -1,5 +1,6 @@
 package dk.easv.belman.GUI;
 
+import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.BLL.ListManager;
@@ -15,6 +16,8 @@ public class Main {
 
     public static StockItemList allStockData; // A global (static) variable where all the initial stock data is stored right from the startup of the program.
     public static SalesOrderList allOrderData; // A global (static) variable where all the initial order data is stored right from the startup of the program.
+    public static CutList allCuts; // A global (static) variable where all the initial cut data is stored right from the startup of the program.
+    
     private static final int SCHEDULER_PERIOD = 10; // Scheduler period in minutes.
     private static MainGui gui; // The main UI component.
 
@@ -33,6 +36,7 @@ public class Main {
         final ListManager lists = new ListManager();
         allOrderData = lists.getAllSO();
         allStockData = lists.getAllSI();
+        //@TODO allCuts = lists.getAllCuts();
 
         // Program starts from here
         gui = new MainGui();        
