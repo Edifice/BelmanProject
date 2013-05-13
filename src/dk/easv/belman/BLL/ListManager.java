@@ -28,8 +28,9 @@ public class ListManager {
 
     /**
      * This method returns a list of all sales orders.
-     * 
-     * @return a SalesOrderList with all the SalesOrders, ProductionOrders and Items.
+     *
+     * @return a SalesOrderList with all the SalesOrders, ProductionOrders and
+     * Items.
      */
     public SalesOrderList getAllSO() {
         try {
@@ -55,7 +56,7 @@ public class ListManager {
         }
         return null;
     }
-    
+
     /**
      * Returns all the Production Orders inside a SalesOrderList.
      *
@@ -72,9 +73,10 @@ public class ListManager {
         }
         return list;
     }
+
     /**
      * Returns a list of all Items from a specific SalesOrderList.
-     * 
+     *
      * @param sList The SalesOrderList from where we want to get the Item list.
      * @return An Item List from a specified SalesOrderList.
      */
@@ -88,5 +90,28 @@ public class ListManager {
             }
         }
         return list;
+    }
+
+    public SalesOrderList getAllSalesOrderNotDone(SalesOrderList sList) {
+        SalesOrderList sol = new SalesOrderList();
+        for (Item item : getItemList(sList).getList()) {
+            if (!item.isDone()) {
+                if (!sol.hasId(item.getSalesOrderId())) {
+                    sol.add(sList.getById(item.getSalesOrderId()));
+                }
+            }
+        }
+        return sol;
+    }
+    public SalesOrderList getAllDoneSalesOrder(SalesOrderList sList) {
+        SalesOrderList sol = new SalesOrderList();
+        for (Item item : getItemList(sList).getList()) {
+            if (item.isDone()) {
+                if (!sol.hasId(item.getSalesOrderId())) {
+                    sol.add(sList.getById(item.getSalesOrderId()));
+                }
+            }
+        }
+        return sol;
     }
 }

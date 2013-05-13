@@ -72,7 +72,20 @@ public class SleeveTableModel extends AbstractTableModel {
     public SalesOrderList getSList() {
         return sList;
     }
-
+    /**
+     * Removes an item from the list
+     * @param item 
+     */
+    public void removeItem(Item item) {
+        iList.remove(item);
+    }
+    /**
+     * Adds an item to the list
+     * @param item 
+     */
+    public void addItem(Item item) {
+        iList.add(item);
+    }
     
 
     /**
