@@ -39,19 +39,4 @@ public class StockItemList extends BList<StockItem> {
         }
         return null;
     }
-
-    /**
-     * Returns the items index in the stored array
-     *
-     * @param so
-     * @return
-     */
-    public int getIndex(SalesOrder so) {
-        for (int i = 0; i < this.size(); ++i) {
-            if (this.get(i).getId() == so.getId()) {
-                return i;
-            }
-        }
-        return 0;
-    }
 }

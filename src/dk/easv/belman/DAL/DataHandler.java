@@ -1,12 +1,16 @@
 package dk.easv.belman.DAL;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.belman.BE.Item;
+import dk.easv.belman.BE.Operator;
+import dk.easv.belman.BE.OperatorList;
 import dk.easv.belman.BE.ProductOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
 import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -124,8 +128,32 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("statistics: \n\tSO: " + so_i + ", \n\tPO: " + po_i + ", \n\tItem: " + i_i);
+//        System.out.println("statistics: \n\tSalesOrderList size: " + so_i + ", \n\tProdcutionOrderList size: " + po_i + ", \n\tItemList size: " + i_i);
         return ret;
+    }
+
+    /**
+     * This method updates a selected Item/Sleeve in the database.
+     *
+     * @param sleeve The selected item.
+     */
+    public void updateItem(Item sleeve) throws SQLException {
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement st = connection.prepareStatement("UPDATE Item "
+                    + " SET is_done = ?"
+                    + "WHERE id = ?");
+            st.setInt(1, sleeve.getQuantity());
+            st.setBoolean(2, sleeve.isDone());
+            st.setInt(3, sleeve.getId());
+            st.executeUpdate();
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+//        System.out.println("Statistics: \n\Item/Sleeve was set to: "+sleeve.isDone());
     }
 
     /**
@@ -166,7 +194,48 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("Statistics: \n\tSI: " + ret.size());
+//        System.out.println("Statistics: \n\tStockItemList size: " + ret.size());
         return ret;
     }
+    
+    /**
+     * This method returns all the Operators in an OperatorList from the database.
+     *
+     * @return OperatorList A list of all operators.
+     */
+    public OperatorList getAllOP() throws SQLException {
+        OperatorList ret = new OperatorList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT "
+                    + "	Operator.*, "
+                    + "	Address.*"
+                    + "	FROM Operator"
+                    + "	INNER JOIN Address"
+                    + " ON Address.id = Operator.address_id");
+            while (rs.next()) {
+                Operator op = new Operator();
+                op.setId(rs.getInt("id"));
+                op.setFirstName(rs.getString("first_name"));
+                op.setLastName(rs.getString("last_name"));
+                op.setSsn(rs.getLong("ssn"));
+                op.setPhoneNo(rs.getString("phone_no"));
+                op.setAddressStreetName(rs.getString("street_name"));
+                op.setAddressStreetNo(rs.getString("street_no"));
+                op.setAddressCity(rs.getString("city"));
+                op.setAddressZipCode(rs.getString("zip_code"));
+                op.setAddressCountry(rs.getString("country"));
+                ret.add(op);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+        System.out.println("Statistics: \n\tOperatorList size: " + ret.size());
+        return ret;
+    }
+    
 }

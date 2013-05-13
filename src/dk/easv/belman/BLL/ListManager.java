@@ -2,6 +2,7 @@ package dk.easv.belman.BLL;
 
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
+import dk.easv.belman.BE.OperatorList;
 import dk.easv.belman.BE.ProductOrder;
 import dk.easv.belman.BE.ProductOrderList;
 import dk.easv.belman.BE.SalesOrder;
@@ -129,16 +130,38 @@ public class ListManager {
         }
         return sol;
     }
-    
-    //@TODO
-    /*
-    public CutList getAllCuts() {
+
+//    @TODO
+//    public CutList getAllCuts() {
+//        try {
+//            return handler.getAllCuts();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+//            throw new Exception(ex.getMessage(), ex.getCause());
+//        }
+//        return null;
+//
+//    }
+    /**
+     * @TODO JavaDOC
+     * @return
+     */
+    public OperatorList getAllOP() {
         try {
-            return handler.getAllCuts();
+            return handler.getAllOP();
         } catch (SQLException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
 //            throw new Exception(ex.getMessage(), ex.getCause());
         }
         return null;
-    }*/
+    }
+
+    public void updateItem(Item sleeve) {
+        try {
+            handler.updateItem(sleeve);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+            //            throw new Exception(ex.getMessage(), ex.getCause());
+        }
+    }
 }
