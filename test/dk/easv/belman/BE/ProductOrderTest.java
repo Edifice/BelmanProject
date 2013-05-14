@@ -1,6 +1,6 @@
 package dk.easv.belman.BE;
 
-import dk.easv.belman.BE.ProductOrder;
+import dk.easv.belman.BE.ProductionOrder;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,7 +38,7 @@ public class ProductOrderTest {
      */
     @Test
     public void testClass() {
-        ProductOrder order = new ProductOrder();
+        ProductionOrder order = new ProductionOrder();
         
         Date now = new Date();
         //long time = now.getTime();
@@ -61,7 +61,7 @@ public class ProductOrderTest {
 
         order.save();
 
-        ProductOrder order2 = new ProductOrder(1);
+        ProductionOrder order2 = new ProductionOrder(1);
 
         assertEquals(1, order2.getId());
         assertEquals(1, order2.getSalesOrderId());

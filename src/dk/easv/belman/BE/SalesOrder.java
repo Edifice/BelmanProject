@@ -6,10 +6,10 @@ public class SalesOrder extends IEntity {
     private String description;
     private long dueDate;
     private boolean done;
-    private ProductOrderList productOrderList;
+    private ProductionOrderList productOrderList;
 
     public SalesOrder() {
-        productOrderList = new ProductOrderList();
+        productOrderList = new ProductionOrderList();
     }
 
     /**
@@ -99,15 +99,15 @@ public class SalesOrder extends IEntity {
     /**
      * @return the productOrder
      */
-    public ProductOrderList getProductOrderList() {
+    public ProductionOrderList getProductOrderList() {
         return productOrderList;
     }
 
     /**
      * @param productOrder the productOrder to set
      */
-    public void setProductOrderList(ProductOrderList productOrderList) {
-        for(ProductOrder po : productOrderList.getList()){
+    public void setProductOrderList(ProductionOrderList productOrderList) {
+        for(ProductionOrder po : productOrderList.getList()){
             po.setSalesOrderId(this.id);
         }
         this.productOrderList = productOrderList;

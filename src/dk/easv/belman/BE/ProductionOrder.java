@@ -1,6 +1,6 @@
 package dk.easv.belman.BE;
 
-public class ProductOrder extends IEntity {
+public class ProductionOrder extends IEntity {
 
     private int id;
     private int salesOrderId;
@@ -9,7 +9,7 @@ public class ProductOrder extends IEntity {
     
     private ItemList itemList;
 
-    public ProductOrder() {
+    public ProductionOrder() {
         itemList = new ItemList();
     }
 
@@ -18,11 +18,11 @@ public class ProductOrder extends IEntity {
      *
      * @param pk
      */
-    public ProductOrder(int id) {
+    public ProductionOrder(int id) {
         this.setPk(id);
 
         // @TODO get by id
-        ProductOrder now = new ProductOrder();
+        ProductionOrder now = new ProductionOrder();
 
         this.id = now.id;
         this.salesOrderId = now.salesOrderId;

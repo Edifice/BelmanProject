@@ -42,7 +42,7 @@ public class CutTableModel extends AbstractTableModel {
         Cut cut = cutList.get(row);
 
         switch (col) {
-            case 0: return listManager.getProductOrderList(Main.allOrderData).getById(cut.getSleeve().getProductOrderId()).getDescription();
+            case 0: return listManager.getProductOrder(Main.allOrderData, cut.getSleeve()).getDescription();
             case 1: return cut.getDate();
             case 2: return cut.getOperator().toString();
             case 3: return cut.getTimeSpent();

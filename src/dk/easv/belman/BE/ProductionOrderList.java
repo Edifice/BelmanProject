@@ -3,16 +3,16 @@ package dk.easv.belman.BE;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ProductOrderList extends BList<ProductOrder> {
+public class ProductionOrderList extends BList<ProductionOrder> {
 
-    public ProductOrderList() {
+    public ProductionOrderList() {
     }
     /**
      * This is where the sorting by ID in an ascending order happens.
      */
-    private static Comparator<ProductOrder> COMPARE_BY_ID = new Comparator<ProductOrder>() {
+    private static Comparator<ProductionOrder> COMPARE_BY_ID = new Comparator<ProductionOrder>() {
         @Override
-        public int compare(ProductOrder o1, ProductOrder o2) {
+        public int compare(ProductionOrder o1, ProductionOrder o2) {
             int codeDifference = o1.getId() - o2.getId();
             return codeDifference;
         }
@@ -34,7 +34,7 @@ public class ProductOrderList extends BList<ProductOrder> {
     public boolean hasItem(int id) {
         boolean ret = false;
 
-        for (ProductOrder po : this.getList()) {
+        for (ProductionOrder po : this.getList()) {
             for (Item item : po.getItemList().getList()) {
                 if (item.getId() == id) {
                     ret = true;
@@ -50,8 +50,8 @@ public class ProductOrderList extends BList<ProductOrder> {
      * @param id
      * @return
      */
-    public ProductOrder getById(int id) {
-        for (ProductOrder po : this.getList()) {
+    public ProductionOrder getById(int id) {
+        for (ProductionOrder po : this.getList()) {
             if (po.getId() == id) {
                 return po;
             }
@@ -60,7 +60,7 @@ public class ProductOrderList extends BList<ProductOrder> {
     }
     
     @Override
-    public void add(ProductOrder po){
+    public void add(ProductionOrder po){
         for(Item it : po.getItemList().getList()){
             it.setProductOrderId(po.getId());
         }

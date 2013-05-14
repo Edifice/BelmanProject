@@ -53,7 +53,7 @@ public class SalesOrderList extends BList<SalesOrder> {
         boolean ret = false;
 
         for (SalesOrder so : this.getList()) {
-            for (ProductOrder po : so.getProductOrderList().getList()) {
+            for (ProductionOrder po : so.getProductOrderList().getList()) {
                 if (po.getId() == id) {
                     ret = true;
                 }
@@ -73,7 +73,7 @@ public class SalesOrderList extends BList<SalesOrder> {
         boolean ret = false;
 
         for (SalesOrder so : this.getList()) {
-            for (ProductOrder po : so.getProductOrderList().getList()) {
+            for (ProductionOrder po : so.getProductOrderList().getList()) {
                 for (Item item : po.getItemList().getList()) {
                     if (item.getId() == id) {
                         ret = true;
@@ -108,7 +108,7 @@ public class SalesOrderList extends BList<SalesOrder> {
      */
     public Item getItemById(int id) {
         for (SalesOrder so : this.getList()) {
-            for (ProductOrder po : so.getProductOrderList().getList()){
+            for (ProductionOrder po : so.getProductOrderList().getList()){
                 for (Item sleeve : po.getItemList().getList()) {
                     if (sleeve.getId() == id)
                         return sleeve;
@@ -135,7 +135,7 @@ public class SalesOrderList extends BList<SalesOrder> {
 
     @Override
     public void add(SalesOrder so) {
-        for (ProductOrder po : so.getProductOrderList().getList()) {
+        for (ProductionOrder po : so.getProductOrderList().getList()) {
             po.setSalesOrderId(so.getId());
         }
         list.add(so);
@@ -149,7 +149,7 @@ public class SalesOrderList extends BList<SalesOrder> {
      */
     public int removeItem(Item item) {
         for (SalesOrder so : this.getList()) {
-            for (ProductOrder po : so.getProductOrderList().getList()) {
+            for (ProductionOrder po : so.getProductOrderList().getList()) {
                 for (Item i : po.getItemList().getList()) {
                     if (item.getId() == i.getId()) {
                         po.getItemList().remove(i);

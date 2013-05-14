@@ -8,9 +8,9 @@ public class StockTableModel extends AbstractTableModel {
 
     private StockItemList stockList; // The contents of the table.
     // The names of columns
-    private String[] colNames = {"Code", "Mat ID", "Width", "Length", "Thickness", "Batch ID", "Quantity (kg)"};
+    private String[] colNames = {"Code", "Batch ID", "Mat ID", "Width", "Length", "Thickness", "Quantity (kg)"};
     // The type of columns
-    private Class[] classes = {String.class, Integer.class, Double.class, Double.class, Double.class, String.class, Double.class};
+    private Class[] classes = {String.class, String.class, Integer.class, Double.class, Double.class, Double.class, Double.class};
 
     /**
      * Constructor for the StockTableModel.
@@ -41,15 +41,15 @@ public class StockTableModel extends AbstractTableModel {
             case 0:
                 return item.getCode();
             case 1:
-                return item.getMaterialId();
-            case 2:
-                return item.getWidth();
-            case 3:
-                return item.getLength();
-            case 4:
-                return item.getThickness();
-            case 5:
                 return item.getBatchId();
+            case 2:
+                return item.getMaterialId();
+            case 3:
+                return item.getWidth();
+            case 4:
+                return item.getLength();
+            case 5:
+                return item.getThickness();
             case 6:
                 return item.getQuantity();
         }
@@ -67,7 +67,7 @@ public class StockTableModel extends AbstractTableModel {
 
     /**
      * Sets the Stock list on the table model.
-     * 
+     *
      * @param stockList The StockItemList that needs to be set.
      */
     public void setStockList(StockItemList stockList) {
@@ -77,7 +77,7 @@ public class StockTableModel extends AbstractTableModel {
 
     /**
      * Gets a StockItem by row.
-     * 
+     *
      * @param row the number of row from where we want to get the StockItem.
      * @return a StockItem from a selected row.
      */

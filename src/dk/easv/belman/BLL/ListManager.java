@@ -5,8 +5,8 @@ import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.OperatorList;
-import dk.easv.belman.BE.ProductOrder;
-import dk.easv.belman.BE.ProductOrderList;
+import dk.easv.belman.BE.ProductionOrder;
+import dk.easv.belman.BE.ProductionOrderList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItemList;
@@ -68,25 +68,27 @@ public class ListManager {
      * @return A list of all production orders inside that specific
      * SalesOrderList.
      */
-    public ProductOrderList getProductOrderList(SalesOrderList sList) {
-        ProductOrderList list = new ProductOrderList();
+    public ProductionOrderList getProductOrderList(SalesOrderList sList) {
+        ProductionOrderList list = new ProductionOrderList();
         for (SalesOrder s : sList.getList()) {
-            for (ProductOrder p : s.getProductOrderList().getList()) {
+            for (ProductionOrder p : s.getProductOrderList().getList()) {
                 list.add(p);
             }
         }
         return list;
     }
-
+    
     /**
      * Gets a given sleeve's product order
      *
+     * @param sList The SalesOrderList in which we look for production orders.
      * @param sleeve
-     * @return
+     * @return A list of all production orders inside that specific
+     * SalesOrderList.
      */
-    public ProductOrder getProductOrderList(SalesOrderList sList, Item sleeve) {
+    public ProductionOrder getProductOrder(SalesOrderList sList, Item sleeve) {
         for (SalesOrder s : sList.getList()) {
-            for (ProductOrder p : s.getProductOrderList().getList()) {
+            for (ProductionOrder p : s.getProductOrderList().getList()) {
                 if (p.getId() == sleeve.getProductOrderId()) {
                     return p;
                 }
@@ -104,7 +106,7 @@ public class ListManager {
     public ItemList getItemList(SalesOrderList sList) {
         ItemList list = new ItemList();
         for (SalesOrder s : sList.getList()) {
-            for (ProductOrder p : s.getProductOrderList().getList()) {
+            for (ProductionOrder p : s.getProductOrderList().getList()) {
                 for (Item item : p.getItemList().getList()) {
                     list.add(item);
                 }
@@ -142,7 +144,7 @@ public class ListManager {
 //    public SalesOrderList getAllDoneSalesOrder(SalesOrderList sList) {
 //        SalesOrderList sol = new SalesOrderList();
 //        for (SalesOrder s : sList.getList()) {
-//            for (ProductOrder p : s.getProductOrderList().getList()) {
+//            for (ProductionOrder p : s.getProductOrderList().getList()) {
 //                boolean isDone = false;
 //                for (Item item : p.getItemList().getList()) {
 //                    

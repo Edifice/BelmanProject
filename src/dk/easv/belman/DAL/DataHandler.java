@@ -5,7 +5,7 @@ import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.Operator;
 import dk.easv.belman.BE.OperatorList;
-import dk.easv.belman.BE.ProductOrder;
+import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
@@ -62,7 +62,7 @@ public class DataHandler extends DBConnection {
                 boolean PO_new = false;
 
                 SalesOrder so = ret.getById(rs.getInt("so_id"));
-                ProductOrder po = null;
+                ProductionOrder po = null;
 
                 if (so == null) {
                     SO_new = true;
@@ -86,7 +86,7 @@ public class DataHandler extends DBConnection {
 
                 // if ther is no PO for this Item
                 if (po == null) {
-                    po = new ProductOrder();
+                    po = new ProductionOrder();
                     po.setId(rs.getInt("po_id"));
                     po.setDescription(rs.getString("po_desc"));
                     po.setQuantity(rs.getInt("po_quantity"));
@@ -97,6 +97,7 @@ public class DataHandler extends DBConnection {
                 item.setMaterialId(rs.getInt("item_material"));
                 item.setThickness(rs.getDouble("item_thickness"));
                 item.setWidth(rs.getDouble("item_width"));
+                item.setQuantity(rs.getInt("po_quantity"));
                 item.setCircumference(rs.getDouble("item_circumference"));
                 item.setDone(rs.getBoolean("item_done"));
                 item.setSalesOrderId(rs.getInt("so_id"));
@@ -168,19 +169,21 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(false);
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery("SELECT "
-                    + " CoilType.*, "
-                    + "	Stock.id, "
-                    + " Stock.batch_id, "
-                    + " Stock.length, "
-                    + " Stock.code, "
-                    + " Stock.quantity, "
-                    + "	Material.material_name,"
-                    + " Material.material_density "
-                    + "	FROM CoilType "
-                    + "	INNER JOIN Material "
-                    + " ON Material.material_id = CoilType.material_id " 
-                    + " INNER JOIN Stock "
-                    + " ON Stock.coil_type = CoilType.id");
+                    + "CoilType.width, "
+                    + "CoilType.thickness, "
+                    + "CoilType.material_id, "
+                    + "Stock.id, "
+                    + "Stock.batch_id, "
+                    + "Stock.[length], "
+                    + "Stock.code, "
+                    + "Stock.quantity, "
+                    + "Material.material_name, "
+                    + "Material.material_density "
+                    + "FROM CoilType "
+                    + "INNER JOIN Material "
+                    + "ON Material.material_id = CoilType.material_id "
+                    + "INNER JOIN Stock "
+                    + "ON Stock.coil_type = CoilType.id");
             while (rs.next()) {
                 StockItem item = new StockItem();
                 item.setId(rs.getInt("id"));

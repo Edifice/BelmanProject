@@ -4,7 +4,7 @@ import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.Operator;
-import dk.easv.belman.BE.ProductOrder;
+import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
@@ -92,7 +92,7 @@ public class MainGui extends javax.swing.JFrame {
         tblSleeves.setColumnControlVisible(true); // Column control settings are enabled.
         tblSleeves.packAll(); // Packs the table.
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
-        tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sets the sorting order to ASC > DESC > Unsorted.
+        tblSleeves.setSortable(false);
 
         pnlCenter.setLayout(new BorderLayout()); // Sets the layout for the center JPanel.
         pnlCenter.add(sp); // Adds the Scroll Pane with the table to the JPanel on the center.
@@ -107,7 +107,7 @@ public class MainGui extends javax.swing.JFrame {
         tblStock.setColumnControlVisible(true); // Column control settings are enabled.
         tblStock.packAll(); // Packs the table.
         tblStock.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
-        tblStock.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sets the sorting order to ASC > DESC > Unsorted.
+        tblStock.setSortable(false);
 
         pnlWest.setLayout(new BorderLayout()); // Sets the layout for the west JPanel.
         pnlWest.add(sf); // Adds the Scroll Pane with the table to the JPanel on the west.
@@ -666,7 +666,7 @@ public class MainGui extends javax.swing.JFrame {
 
                             hasFound = true;
                         }
-                        for (ProductOrder p : s.getProductOrderList().getList()) {
+                        for (ProductionOrder p : s.getProductOrderList().getList()) {
                             if (p.getDescription().contains(txtID.getText()) || String.valueOf(p.getId()).contains(txtID.getText())) {
                                 if (!sol.hasId(s.getId())) {
                                     sol.add(s);
@@ -821,7 +821,7 @@ public class MainGui extends javax.swing.JFrame {
         lblDescriptionText1.setText("SO ID / Description: ");
         txtDescription1.setText(item.getSalesOrderId() + " / " + getAllSalesOrderNotDone().getById(item.getSalesOrderId()).getDescription());
         lblDescriptionText2.setText("PO ID / Description: ");
-        txtDescription2.setText(item.getProductOrderId() + " / " + listManager.getProductOrderList(getAllSalesOrderNotDone(), selectedItem).getDescription());
+        txtDescription2.setText(item.getProductOrderId() + " / " + listManager.getProductOrder(getAllSalesOrderNotDone(), selectedItem).getDescription());
         lblDescriptionText3.setText("Material ID: ");
         txtDescription3.setText(String.valueOf(item.getMaterialId()));
         lblDescriptiontext4.setText("Width: ");

@@ -84,23 +84,23 @@ public class Filter {
 
     }
     
-//    /**
-//     * This method calculates how many sleeves can be cut from the selected stock item
-//     * @param stockItem is the selected stock item
-//     * @param sleeve is the selected sleeve
-//     * @return the number of cuts that can be done
-//     */
-//    public int canCutHowMany(StockItem stockItem, Item sleeve) {
-//        int amount = 0;
-//        double availableAmount = stockItem.getLength();
-//        for(int i = 0; i < sleeve.getQuantity(); i++){
-//            if(availableAmount > sleeve.getCircumference()){
-//                amount++;
-//                availableAmount = availableAmount-sleeve.getCircumference();
-//            }
-//        }
-//        return amount;
-//    }
+    /**
+     * This method calculates how many sleeves can be cut from the selected stock item
+     * @param stockItem is the selected stock item
+     * @param sleeve is the selected sleeve
+     * @return the number of cuts that can be done
+     */
+    public int canCutHowMany(StockItem stockItem, Item sleeve) {
+        int amount = 0;
+        double availableAmount = stockItem.getLength();
+        for(int i = 0; i < sleeve.getQuantity(); i++){
+            if(availableAmount > sleeve.getCircumference()){
+                amount++;
+                availableAmount = availableAmount-sleeve.getCircumference();
+            }
+        }
+        return amount;
+    }
 
     /**
      * Returns all the sales orders which has a due date within the week limit.
