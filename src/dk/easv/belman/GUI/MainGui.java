@@ -755,10 +755,17 @@ public class MainGui extends javax.swing.JFrame {
                 
                 Main.allCuts.add(cut);
                 System.out.println("After: " + Main.allCuts.size());
-
-                txtQuantity.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem)));
+                int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, selectedItem);
+                txtQuantity.setText(String.valueOf(remainingQuantity));
+                
+               // listManager.insertCut(cut);
+                if (remainingQuantity == 0) {
+                    selectedItem.setDone(true);
+                    //listManager.updateItem(selectedItem);
+                    
+                    updateSleeveTableModel(getAllSalesOrderNotDone(), null);
+                }
                 setCutAmount();
-                listManager.insertCut(cut);
 
             }
         } else {

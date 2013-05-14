@@ -11,7 +11,6 @@ import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.DAL.DataHandler;
-import dk.easv.belman.GUI.Main;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -77,7 +76,7 @@ public class ListManager {
         }
         return list;
     }
-    
+
     /**
      * Gets a given sleeve's product order
      *
@@ -155,26 +154,27 @@ public class ListManager {
 //        return sol;
 //    }
 
-
     /**
      * This method gets the remaining cuts of a sleeve
+     *
      * @param cutList a list containing the cuts that have been made
      * @param sleeve is the one we check the remainder of
      * @return the amount left to cut for the given sleeve
      */
-    public int getRemaningCuts(CutList cutList, Item sleeve){
+    public int getRemaningCuts(CutList cutList, Item sleeve) {
         int initialQuantity = sleeve.getQuantity();
-        System.out.println("Initial Quantity: " + initialQuantity);
-        
-        System.out.println("Cuts from that sleeve: " + cutList.size());
-        for(Cut cut : cutList.getCutsBySleeve(sleeve).getList()){
+//        System.out.println("Initial Quantity: " + initialQuantity);
+
+//        System.out.println("Cuts from that sleeve: " + cutList.size());
+        for (Cut cut : cutList.getCutsBySleeve(sleeve).getList()) {
             initialQuantity = initialQuantity - cut.getQuantity();
         }
-        
-        System.out.println("Final Quantity: " + initialQuantity);
+
+//        System.out.println("Final Quantity: " + initialQuantity);
         return initialQuantity;
-        
+
     }
+
     /**
      * This method returns all the cuts that was executed before, with the Item,
      * StockItem and Operator connected to that given cut.
@@ -190,6 +190,25 @@ public class ListManager {
         }
         return null;
 
+    }
+
+    /**
+     * This method takes in a SalesOrderList, extracts the Items from it, and
+     * only returns the ones that are not done in an ItemList.
+     *
+     * @param sol
+     * @return itemList
+     */
+    public ItemList getAllItemsNotDone(SalesOrderList sol) {
+        ItemList itemList = new ItemList();
+        for (Item item : getItemList(sol).getList()) {
+            if (!item.isDone()) {
+                if (!itemList.hasId(item.getSalesOrderId())) {
+                    itemList.add(item);
+                }
+            }
+        }
+        return itemList;
     }
 
     /**

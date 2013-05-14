@@ -143,9 +143,9 @@ public class DataHandler extends DBConnection {
         try {
             connection.setAutoCommit(false);
             PreparedStatement st = connection.prepareStatement("UPDATE Item "
-                    + " SET is_done = ?"
+                    + "SET is_done = ? "
                     + "WHERE id = ?");
-            st.setBoolean(1, sleeve.isDone());
+            st.setInt(1, sleeve.isDone() ? 1 : 0);
             st.setInt(2, sleeve.getId());
             st.executeUpdate();
             connection.commit();

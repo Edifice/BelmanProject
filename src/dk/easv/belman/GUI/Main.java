@@ -39,7 +39,7 @@ public class Main {
         allOrderData = lists.getAllSO();
         allStockData = lists.getAllSI();       
         allOperatorData = lists.getAllOP();
-         allCuts = lists.getAllCuts();
+        allCuts = lists.getAllCuts();
 
 
         // Program starts from here
