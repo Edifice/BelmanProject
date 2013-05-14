@@ -32,9 +32,9 @@ public class StockItemList extends BList<StockItem> {
      * @return
      */
     public StockItem getById(int id) {
-        for (StockItem so : this.getList()) {
-            if (so.getId() == id) {
-                return so;
+        for (StockItem si : this.getList()) {
+            if (si.getId() == id) {
+                return si;
             }
         }
         return null;

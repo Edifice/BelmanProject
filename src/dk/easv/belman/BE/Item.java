@@ -5,7 +5,6 @@ public class Item extends IEntity {
     private int id;
     private int productOrderId;
     private int salesOrderId;
-    private int quantity;
     private int materialId;
     private double thickness;
     private double width;
@@ -23,7 +22,6 @@ public class Item extends IEntity {
 
         this.id = now.id;
         this.productOrderId = now.productOrderId;
-        this.quantity = now.quantity;
         this.materialId = now.materialId;
         this.thickness = now.thickness;
         this.width = now.width;
@@ -58,20 +56,6 @@ public class Item extends IEntity {
      */
     public void setProductOrderId(int productOrderId) {
         this.productOrderId = productOrderId;
-    }
-
-    /**
-     * @return the quantity
-     */
-    public int getQuantity() {
-        return quantity;
-    }
-
-    /**
-     * @param quantity the quantity to set
-     */
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     /**

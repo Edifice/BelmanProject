@@ -152,38 +152,48 @@ public class ListManager {
 //
 //        return sol;
 //    }
-    /**
-     * This method gets the remaining cuts of a sleeve
-     * @param cutList a list containing the cuts that have been made
-     * @param sleeve is the one we check the remainder of
-     * @return the amount left to cut for the given sleeve
-     */
-    public int getRemaningCuts(CutList cutList, Item sleeve){
-        int initialQuantity = sleeve.getQuantity();
-        System.out.println("Initial Quantity: " + initialQuantity);
-        
-        System.out.println("Cuts from that sleeve: " + cutList.size());
-        for(Cut cut : cutList.getCutsBySleeve(sleeve).getList()){
-            initialQuantity = initialQuantity - cut.getQuantity();
-        }
-        System.out.println("Final Quantity: " + initialQuantity);
-        return initialQuantity;
-        
-    }
-//    @TODO
-//    public CutList getAllCuts() {
-//        try {
-//            return handler.getAllCuts();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
+
+
+//    /**
+//     * This method gets the remaining cuts of a sleeve
+//     * @param cutList a list containing the cuts that have been made
+//     * @param sleeve is the one we check the remainder of
+//     * @return the amount left to cut for the given sleeve
+//     */
+//    public int getRemaningCuts(CutList cutList, Item sleeve){
+//        int initialQuantity = sleeve.getQuantity();
+//        System.out.println("Initial Quantity: " + initialQuantity);
+//        
+//        System.out.println("Cuts from that sleeve: " + cutList.size());
+//        for(Cut cut : cutList.getCutsBySleeve(sleeve).getList()){
+//            initialQuantity = initialQuantity - cut.getQuantity();
 //        }
-//        return null;
-//
+//        
+//        System.out.println("Final Quantity: " + initialQuantity);
+//        return initialQuantity;
+//        
 //    }
     /**
-     * @TODO JavaDOC
-     * @return
+     * This method returns all the cuts that was executed before, with the Item,
+     * StockItem and Operator connected to that given cut.
+     *
+     * @return CutList A list of all cuts.
+     */
+    public CutList getAllCuts() {
+        try {
+            return handler.getAllCuts();
+        } catch (SQLException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+//            throw new Exception(ex.getMessage(), ex.getCause());
+        }
+        return null;
+
+    }
+
+    /**
+     * This method returns all the Operators in an OperatorList.
+     *
+     * @return OperatorList A list of all operators.
      */
     public OperatorList getAllOP() {
         try {
@@ -195,12 +205,32 @@ public class ListManager {
         return null;
     }
 
+    /**
+     * This method updates a selected Item/Sleeve.
+     *
+     * @param sleeve The selected item.
+     */
     public void updateItem(Item sleeve) {
         try {
             handler.updateItem(sleeve);
         } catch (SQLException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-            //            throw new Exception(ex.getMessage(), ex.getCause());
+//            throw new Exception(ex.getMessage(), ex.getCause());
+        }
+    }
+
+    /**
+     * This method inserts a new cut into the database table ItemStock, with the
+     * Sleeve id, StockItem id, Operator id, time spent and the time of the cut.
+     *
+     * @param cut The cut entity that needs to be inserted.
+     */
+    public void insertCut(Cut cut) {
+        try {
+            handler.insertCut(cut);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+//            throw new Exception(ex.getMessage(), ex.getCause());
         }
     }
 }

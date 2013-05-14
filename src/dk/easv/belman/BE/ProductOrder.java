@@ -5,7 +5,7 @@ public class ProductOrder extends IEntity {
     private int id;
     private int salesOrderId;
     private String description;
-    private boolean done;
+    private int quantity;
     
     private ItemList itemList;
 
@@ -27,7 +27,7 @@ public class ProductOrder extends IEntity {
         this.id = now.id;
         this.salesOrderId = now.salesOrderId;
         this.description = now.description;
-        this.done = now.done;
+        this.quantity = now.quantity;
     }
 
     @Override
@@ -70,20 +70,6 @@ public class ProductOrder extends IEntity {
     }
 
     /**
-     * @return the done
-     */
-    public boolean isDone() {
-        return done;
-    }
-
-    /**
-     * @param done the done to set
-     */
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
-    /**
      * @return the salesOrderId
      */
     public int getSalesOrderId() {
@@ -112,5 +98,19 @@ public class ProductOrder extends IEntity {
             i.setProductOrderId(this.id);
         }
         this.itemList = itemList;
+    }
+
+    /**
+     * @return the quantity
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

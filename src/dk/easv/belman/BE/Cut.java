@@ -1,6 +1,8 @@
 package dk.easv.belman.BE;
 
 public class Cut extends IEntity {
+
+    private int id;
     private Item sleeve;
     private StockItem stockItem;
     private Operator operator;
@@ -61,10 +63,12 @@ public class Cut extends IEntity {
     public void setTimeSpent(long timeSpent) {
         this.timeSpent = timeSpent;
     }
-    
+
+   
     public Operator getOperator() {
         return operator;
     }
+
     
     public void setOperator(Operator operator) {
         this.operator = operator;
@@ -96,5 +100,18 @@ public class Cut extends IEntity {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        }
+	/**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 }

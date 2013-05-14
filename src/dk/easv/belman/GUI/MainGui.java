@@ -166,9 +166,7 @@ public class MainGui extends javax.swing.JFrame {
 
                         // Set the selected Item/Sleeve ready-to-cut.
                         txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
-                        
-                        txtQuantity.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem)));
-
+//                        txtQuantity.setText(String.valueOf(selectedItem.getQuantity())); @TODO
                     } else {
                         selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow()); // Set the selected StockItem.
                         // Filter the table with Items/Sleeves, by the currently selected StockItem.
@@ -176,7 +174,7 @@ public class MainGui extends javax.swing.JFrame {
                         // Set the selected StockItem ready-to-cut.
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
-                    setCutAmount();
+//                    setCutAmount();
                 }
                 
             }
@@ -209,7 +207,7 @@ public class MainGui extends javax.swing.JFrame {
                 } else if (e.getKeyCode() == keyEnter) { // If the ENTER key is pressed...
                     if (e.getSource().equals(tblSleeves)) { // Set the selected Item/Sleeve ready-to-cut.
                         txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
-                        txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
+//                        txtQuantity.setText(String.valueOf(selectedItem.getQuantity())); @TODO
                     } else { // Set the selected StockItem ready-to-cut.
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
@@ -217,21 +215,22 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
     }
-    /**
-     * @TODO JAVADOC!!!!!!!!!!
-     */
-    private void setCutAmount(){
-    if (selectedItem != null && selectedStockItem != null) {
-                    if (filter.canCut(selectedStockItem, selectedItem)) {
-                        int cutAmount = filter.canCutHowMany(selectedStockItem, selectedItem); // Gets the actual amount possible to cut
-                        if (cutAmount > selectedItem.getQuantity()) { // Checks if the possible amount is greater than the quantity needed
-                            txtCutAmount.setText(String.valueOf(selectedItem.getQuantity())); // In case possible amount is greater, set the amount to the needed amount
-                        } else {
-                            txtCutAmount.setText(String.valueOf(cutAmount)); // In case possible amount is less, set the amount to the possible amount
-                        }
-                    }
-                }
-    }
+    
+//    /**
+//     * @TODO JAVADOC!!!!!!!!!!
+//     */
+//    private void setCutAmount(){
+//    if (selectedItem != null && selectedStockItem != null) {
+//                    if (filter.canCut(selectedStockItem, selectedItem)) {
+//                        int cutAmount = filter.canCutHowMany(selectedStockItem, selectedItem); // Gets the actual amount possible to cut
+//                        if (cutAmount > selectedItem.getQuantity()) { // Checks if the possible amount is greater than the quantity needed
+//                            txtCutAmount.setText(String.valueOf(selectedItem.getQuantity())); // In case possible amount is greater, set the amount to the needed amount
+//                        } else {
+//                            txtCutAmount.setText(String.valueOf(cutAmount)); // In case possible amount is less, set the amount to the possible amount
+//                        }
+//                    }
+//                }
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -832,7 +831,7 @@ public class MainGui extends javax.swing.JFrame {
         lblDescriptionText6.setText("Thickness: ");
         txtDescription6.setText(String.valueOf(item.getThickness()));
         lblDescriptionText7.setText("Quantity: ");
-        txtDescription7.setText(String.valueOf(item.getQuantity()));
+//        txtDescription7.setText(String.valueOf(item.getQuantity())); @TODO
 
         // Set the DescriptionPane NOT editable.
         setEditableTo(false, txtDescription1, txtDescription2, txtDescription3,

@@ -61,7 +61,7 @@ public class SleeveTableModel extends AbstractTableModel {
             case 5:
                 return item.getThickness();
             case 6:
-                return item.getQuantity();
+//                return item.getQuantity(); @TODO
         }
         return null;
     }

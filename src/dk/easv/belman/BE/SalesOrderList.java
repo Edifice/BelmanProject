@@ -86,15 +86,33 @@ public class SalesOrderList extends BList<SalesOrder> {
     }
 
     /**
-     * Search the list for 1 item by id
+     * Search the list for 1 item by id and return it.
      *
-     * @param id
-     * @return
+     * @param id The id of the SalesOrder that we are looking for.
+     * @return SalesOrder
      */
     public SalesOrder getById(int id) {
         for (SalesOrder so : this.getList()) {
             if (so.getId() == id) {
                 return so;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Search the list for 1 item by id and return it.
+     *
+     * @param id The id of the Item/Sleeve we are looking for.
+     * @return Item
+     */
+    public Item getItemById(int id) {
+        for (SalesOrder so : this.getList()) {
+            for (ProductOrder po : so.getProductOrderList().getList()){
+                for (Item sleeve : po.getItemList().getList()) {
+                    if (sleeve.getId() == id)
+                        return sleeve;
+                }
             }
         }
         return null;

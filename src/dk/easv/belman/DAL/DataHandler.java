@@ -1,6 +1,7 @@
 package dk.easv.belman.DAL;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
+import dk.easv.belman.BE.Cut;
+import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.Operator;
 import dk.easv.belman.BE.OperatorList;
@@ -9,11 +10,14 @@ import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
+import dk.easv.belman.GUI.Main;
 import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class DataHandler extends DBConnection {
 
@@ -38,7 +42,6 @@ public class DataHandler extends DBConnection {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery("SELECT "
                     + "	i.id as item_id, "
-                    + "	i.quantity as item_quantity, "
                     + "	i.material_id as item_material,"
                     + "	i.thickness as item_thickness,"
                     + "	i.width as item_width,"
@@ -46,10 +49,9 @@ public class DataHandler extends DBConnection {
                     + "	i.is_done as item_done,"
                     + "	i.production_order as po_id, "
                     + "	po.order_desc as po_desc,"
-                    + "	po.is_done as po_done,"
+                    + "	po.quantity as po_quantity,"
                     + "	po.sales_order as so_id,"
                     + "	so.order_desc as so_desc,"
-                    + "	so.is_done as so_done,"
                     + "	so.due_date AS so_due_date "
                     + "FROM Item AS i "
                     + "RIGHT JOIN ProductionOrder AS po ON po.order_id = i.production_order "
@@ -76,7 +78,6 @@ public class DataHandler extends DBConnection {
                     so = new SalesOrder();
                     so.setId(rs.getInt("so_id"));
                     so.setDescription(rs.getString("so_desc"));
-                    so.setDone(rs.getBoolean("so_done"));
                     so.setDueDate(rs.getTimestamp("so_due_date").getTime());
                 }
                 if (!PO_new) {
@@ -88,12 +89,11 @@ public class DataHandler extends DBConnection {
                     po = new ProductOrder();
                     po.setId(rs.getInt("po_id"));
                     po.setDescription(rs.getString("po_desc"));
-                    po.setDone(rs.getBoolean("po_done"));
+                    po.setQuantity(rs.getInt("po_quantity"));
                 }
 
                 Item item = new Item();
                 item.setId(rs.getInt("item_id"));
-                item.setQuantity(rs.getInt("item_quantity"));
                 item.setMaterialId(rs.getInt("item_material"));
                 item.setThickness(rs.getDouble("item_thickness"));
                 item.setWidth(rs.getDouble("item_width"));
@@ -144,9 +144,8 @@ public class DataHandler extends DBConnection {
             PreparedStatement st = connection.prepareStatement("UPDATE Item "
                     + " SET is_done = ?"
                     + "WHERE id = ?");
-            st.setInt(1, sleeve.getQuantity());
-            st.setBoolean(2, sleeve.isDone());
-            st.setInt(3, sleeve.getId());
+            st.setBoolean(1, sleeve.isDone());
+            st.setInt(2, sleeve.getId());
             st.executeUpdate();
             connection.commit();
         } finally {
@@ -169,12 +168,19 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(false);
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery("SELECT "
-                    + "	StockItem.*, "
+                    + " CoilType.*, "
+                    + "	Stock.id, "
+                    + " Stock.batch_id, "
+                    + " Stock.length, "
+                    + " Stock.code, "
+                    + " Stock.quantity, "
                     + "	Material.material_name,"
                     + " Material.material_density "
-                    + "	FROM StockItem"
-                    + "	INNER JOIN Material"
-                    + " ON Material.material_id = StockItem.material_id");
+                    + "	FROM CoilType "
+                    + "	INNER JOIN Material "
+                    + " ON Material.material_id = CoilType.material_id " 
+                    + " INNER JOIN Stock "
+                    + " ON Stock.coil_type = CoilType.id");
             while (rs.next()) {
                 StockItem item = new StockItem();
                 item.setId(rs.getInt("id"));
@@ -197,9 +203,10 @@ public class DataHandler extends DBConnection {
 //        System.out.println("Statistics: \n\tStockItemList size: " + ret.size());
         return ret;
     }
-    
+
     /**
-     * This method returns all the Operators in an OperatorList from the database.
+     * This method returns all the Operators in an OperatorList from the
+     * database.
      *
      * @return OperatorList A list of all operators.
      */
@@ -234,8 +241,75 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-        System.out.println("Statistics: \n\tOperatorList size: " + ret.size());
+//        System.out.println("Statistics: \n\tOperatorList size: " + ret.size());
         return ret;
     }
-    
+
+    /**
+     * This method returns all the cuts that was executed before and was stored
+     * in the ItemStock table in the database, with the Item, StockItem and
+     * Operator connected to that given cut.
+     *
+     * @return CutList A list of all cuts.
+     */
+    public CutList getAllCuts() throws SQLException {
+        CutList ret = new CutList();
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT ItemStock.* FROM ItemStock");
+            while (rs.next()) {
+                Item sleeve = Main.allOrderData.getItemById(rs.getInt("item_id"));
+                Operator op = Main.allOperatorData.getById(rs.getInt("operator_id"));
+                StockItem stockItem = Main.allStockData.getById(rs.getInt("stockitem_id"));
+
+                Cut cut = new Cut();
+                cut.setSleeve(sleeve);
+                cut.setStockItem(stockItem);
+                cut.setOperator(op);
+                cut.setTimeSpent(rs.getTime("time_spent").getTime());
+                cut.setDate(rs.getTimestamp("date").getTime());
+                ret.add(cut);
+            }
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+//        System.out.println("Statistics: \n\tCutList size: " + ret.size());
+        return ret;
+    }
+
+    /**
+     * This method inserts a new cut into the database table ItemStock, with the
+     * Sleeve id, StockItem id, Operator id, time spent and the time of the cut.
+     *
+     * @param cut The cut entity that needs to be inserted.
+     */
+    public void insertCut(Cut cut) throws SQLException {
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement st = connection.prepareStatement("INSERT "
+                    + "INTO ItemStock "
+                    + "(ItemStock.item_id, "
+                    + "ItemStock.stockitem_id, "
+                    + "ItemStock.operator_id, "
+                    + "ItemStock.time_spent, "
+                    + "ItemStock.[date]) "
+                    + "VALUES (?, ?, ?, ?, ?)");
+            st.setInt(1, cut.getSleeve().getId());
+            st.setInt(2, cut.getStockItem().getId());
+            st.setInt(3, cut.getOperator().getId());
+            st.setTime(4, new Time(cut.getTimeSpent()));
+            st.setTimestamp(5, new Timestamp(cut.getDate()));
+            st.executeUpdate();
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+//        System.out.println("Statistics: \n\The following cut was inserted: "+cut.getId());
+    }
 }
