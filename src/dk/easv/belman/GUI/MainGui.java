@@ -1,5 +1,6 @@
 package dk.easv.belman.GUI;
 
+import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.Operator;
@@ -16,6 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -31,6 +33,10 @@ public class MainGui extends javax.swing.JFrame {
     private SleeveTableModel sleeveModel;
     // Currently selected Item/Sleeve from the table.
     private Item selectedItem;
+    // A cut that will be added to the history after pressing done
+    private Cut cut;
+    // Currently selected operator
+    private Operator operator;
     // Stock table and it's model.
     private JXTable tblStock;
     private StockTableModel stockModel;
@@ -39,6 +45,9 @@ public class MainGui extends javax.swing.JFrame {
     // BLL object.
     private Filter filter;
     private ListManager listManager;
+    // Timers for calculating time for each cut;
+    private Date startTime;
+    private Date endTime;
 
     /**
      * Constructor for the Main Form.
@@ -103,13 +112,16 @@ public class MainGui extends javax.swing.JFrame {
         pnlWest.setLayout(new BorderLayout()); // Sets the layout for the west JPanel.
         pnlWest.add(sf); // Adds the Scroll Pane with the table to the JPanel on the west.
         addListeners(tblStock); // Add key and click listeners.
-        
+
         // Populate OperatorComboBox on the jpCut
         pupulateOperatorComboBox();
+
+
     }
-    
+
     /**
-     * This method populates the cmbbxOperator with the Operators that do exist in the database.
+     * This method populates the cmbbxOperator with the Operators that do exist
+     * in the database.
      */
     private void pupulateOperatorComboBox() {
         DefaultComboBoxModel operatorModel = new DefaultComboBoxModel();
@@ -146,6 +158,7 @@ public class MainGui extends javax.swing.JFrame {
                         setStockDescriptionPane(selectedStockItem); // Show information about the selected StockItem in the DescriptionPane.
                     }
                 } else { // In case of a double click...
+                    
                     if (e.getSource().equals(tblSleeves)) {
                         selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow()); // Set the selected Item/Sleeve.
                         // Filter the table with StockItems, by the currently selected Item/Sleeve.
@@ -153,7 +166,9 @@ public class MainGui extends javax.swing.JFrame {
 
                         // Set the selected Item/Sleeve ready-to-cut.
                         txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
-                        txtQuantity.setText(String.valueOf(selectedItem.getQuantity()));
+                        
+                        txtQuantity.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem)));
+
                     } else {
                         selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow()); // Set the selected StockItem.
                         // Filter the table with Items/Sleeves, by the currently selected StockItem.
@@ -161,7 +176,9 @@ public class MainGui extends javax.swing.JFrame {
                         // Set the selected StockItem ready-to-cut.
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
+                    setCutAmount();
                 }
+                
             }
         });
         // End of the MouseListener.
@@ -200,7 +217,21 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
     }
-
+    /**
+     * @TODO JAVADOC!!!!!!!!!!
+     */
+    private void setCutAmount(){
+    if (selectedItem != null && selectedStockItem != null) {
+                    if (filter.canCut(selectedStockItem, selectedItem)) {
+                        int cutAmount = filter.canCutHowMany(selectedStockItem, selectedItem); // Gets the actual amount possible to cut
+                        if (cutAmount > selectedItem.getQuantity()) { // Checks if the possible amount is greater than the quantity needed
+                            txtCutAmount.setText(String.valueOf(selectedItem.getQuantity())); // In case possible amount is greater, set the amount to the needed amount
+                        } else {
+                            txtCutAmount.setText(String.valueOf(cutAmount)); // In case possible amount is less, set the amount to the possible amount
+                        }
+                    }
+                }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,14 +263,14 @@ public class MainGui extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtSleeve = new javax.swing.JTextField();
         txtStockItem = new javax.swing.JTextField();
-        txtQuantity = new javax.swing.JTextField();
-        txtAmount = new javax.swing.JTextField();
         cmbbxOperator = new javax.swing.JComboBox();
         btnCutAction = new javax.swing.JButton();
+        txtCutAmount = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtQuantity = new javax.swing.JTextField();
         pnlHeader = new javax.swing.JPanel();
         txtID = new javax.swing.JTextField();
         btnOK = new javax.swing.JButton();
@@ -327,31 +358,31 @@ public class MainGui extends javax.swing.JFrame {
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText1)
                     .addComponent(txtDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText2)
                     .addComponent(txtDescription2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText3)
                     .addComponent(txtDescription3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptiontext4)
                     .addComponent(txtDescription4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText5)
                     .addComponent(txtDescription5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText6)
                     .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescriptionText7)
                     .addComponent(txtDescription7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pnlEast.setTopComponent(jpDescription);
@@ -365,9 +396,7 @@ public class MainGui extends javax.swing.JFrame {
 
         jLabel4.setText("Selected Stock Item: ");
 
-        jLabel5.setText("Quantity");
-
-        jLabel6.setText("Amount to cut");
+        jLabel5.setText("Amount to cut");
 
         jLabel7.setText("Cutting handler");
 
@@ -375,14 +404,18 @@ public class MainGui extends javax.swing.JFrame {
 
         txtStockItem.setEditable(false);
 
-        txtQuantity.setEditable(false);
-
         btnCutAction.setText("Start");
         btnCutAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCutActionActionPerformed(evt);
             }
         });
+
+        txtCutAmount.setEditable(false);
+
+        jLabel6.setText("Actual cut amount");
+
+        txtQuantity.setEditable(false);
 
         javax.swing.GroupLayout jpCutLayout = new javax.swing.GroupLayout(jpCut);
         jpCut.setLayout(jpCutLayout);
@@ -396,10 +429,6 @@ public class MainGui extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(jpCutLayout.createSequentialGroup()
                         .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpCutLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jpCutLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
@@ -419,36 +448,41 @@ public class MainGui extends javax.swing.JFrame {
                         .addGap(10, 10, 10))
                     .addGroup(jpCutLayout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCutLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCutAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jpCutLayout.setVerticalGroup(
             jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCutLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cmbbxOperator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtSleeve, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtStockItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCutAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addComponent(btnCutAction, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addContainerGap(273, Short.MAX_VALUE))
         );
 
         pnlEast.setRightComponent(jpCut);
@@ -691,20 +725,26 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbbxWeekLimitActionPerformed
 
     private void btnCutActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCutActionActionPerformed
-        if (txtAmount.getText().length() > 0 && // Makes sure that amount has been set                
-                txtStockItem.getText().length() > 0 &&// Makes sure stock item has been set
+        if (txtStockItem.getText().length() > 0 &&// Makes sure stock item has been set
                 txtSleeve.getText().length() > 0)// Makes sure that sleeve has been set
         {
+
             if (btnCutAction.getText().equals("Start")) {
+                startTime = new Date(); // Sets a start time for tracking the time for the cut
                 System.out.println("You started cutting");
                 btnCutAction.setText("Stop");
-                System.out.println("SOL SIZE: " + getAllDoneSalesOrder().size());
+                //System.out.println("SOL SIZE: " + getAllDoneSalesOrder().size());
 
 
             } else {
+                endTime = new Date(); // Sets a end time for tracking the time for the cut
+                long time = endTime.getTime() - startTime.getTime(); // Is the time it took for the cut to finish
                 System.out.println("You stopped cutting");
                 btnCutAction.setText("Start");
-                selectedItem.setDone(true);
+
+                System.out.println("Before: " + Main.allCuts.size());
+                Main.allCuts.add(new Cut(selectedItem, selectedStockItem, (Operator) cmbbxOperator.getSelectedItem(), time, 1, Integer.valueOf(txtCutAmount.getText())));
+                System.out.println("After: " + Main.allCuts.size());
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please make sure that values are set", "Error", JOptionPane.ERROR_MESSAGE);
@@ -723,14 +763,14 @@ public class MainGui extends javax.swing.JFrame {
         return listManager.getAllSalesOrderNotDone(Main.allOrderData);
     }
 
-    /**
-     * Returns a sales order list containing all sales order which is done
-     *
-     * @return
-     */
-    private SalesOrderList getAllDoneSalesOrder() {
-        return listManager.getAllDoneSalesOrder(Main.allOrderData);
-    }
+//    /**
+//     * Returns a sales order list containing all sales order which is done
+//     *
+//     * @return
+//     */
+//    private SalesOrderList getAllDoneSalesOrder() {
+//        //return listManager.getAllDoneSalesOrder(Main.allOrderData);
+//    }
 
     /**
      * Sets a new SalesOrderList or ItemList to the sleeve table. Incase sol is
@@ -782,7 +822,7 @@ public class MainGui extends javax.swing.JFrame {
         lblDescriptionText1.setText("SO ID / Description: ");
         txtDescription1.setText(item.getSalesOrderId() + " / " + getAllSalesOrderNotDone().getById(item.getSalesOrderId()).getDescription());
         lblDescriptionText2.setText("PO ID / Description: ");
-        txtDescription2.setText(item.getProductOrderId() + " / " + getAllSalesOrderNotDone().getById(item.getSalesOrderId()).getProductOrderList().getById(item.getProductOrderId()).getDescription());
+        txtDescription2.setText(item.getProductOrderId() + " / " + listManager.getProductOrderList(getAllSalesOrderNotDone(), selectedItem).getDescription());
         lblDescriptionText3.setText("Material ID: ");
         txtDescription3.setText(String.valueOf(item.getMaterialId()));
         lblDescriptiontext4.setText("Width: ");
@@ -886,7 +926,7 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JSplitPane pnlEast;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlWest;
-    private javax.swing.JTextField txtAmount;
+    private javax.swing.JTextField txtCutAmount;
     private javax.swing.JTextField txtDescription1;
     private javax.swing.JTextField txtDescription2;
     private javax.swing.JTextField txtDescription3;

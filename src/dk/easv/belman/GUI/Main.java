@@ -38,7 +38,7 @@ public class Main {
         final ListManager lists = new ListManager();
         allOrderData = lists.getAllSO();
         allStockData = lists.getAllSI();
-        //@TODO allCuts = lists.getAllCuts();
+        allCuts = new CutList();//lists.getAllCuts();
         allOperatorData = lists.getAllOP();
 
 

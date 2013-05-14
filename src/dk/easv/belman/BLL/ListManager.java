@@ -1,5 +1,7 @@
 package dk.easv.belman.BLL;
 
+import dk.easv.belman.BE.Cut;
+import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.OperatorList;
@@ -9,6 +11,7 @@ import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.DAL.DataHandler;
+import dk.easv.belman.GUI.Main;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -76,6 +79,23 @@ public class ListManager {
     }
 
     /**
+     * Gets a given sleeve's product order
+     *
+     * @param sleeve
+     * @return
+     */
+    public ProductOrder getProductOrderList(SalesOrderList sList, Item sleeve) {
+        for (SalesOrder s : sList.getList()) {
+            for (ProductOrder p : s.getProductOrderList().getList()) {
+                if (p.getId() == sleeve.getProductOrderId()) {
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Returns a list of all Items from a specific SalesOrderList.
      *
      * @param sList The SalesOrderList from where we want to get the Item list.
@@ -111,26 +131,45 @@ public class ListManager {
         }
         return sol;
     }
-
+// @TODO - Need to think about which logic to use
+//    /**
+//     * Returns a sales order list containing all sales orders which product
+//     * orders are done
+//     *
+//     * @param sList
+//     * @return a sales order list
+//     */
+//    public SalesOrderList getAllDoneSalesOrder(SalesOrderList sList) {
+//        SalesOrderList sol = new SalesOrderList();
+//        for (SalesOrder s : sList.getList()) {
+//            for (ProductOrder p : s.getProductOrderList().getList()) {
+//                boolean isDone = false;
+//                for (Item item : p.getItemList().getList()) {
+//                    
+//                }
+//            }
+//        }
+//
+//        return sol;
+//    }
     /**
-     * Returns a sales order list containing all sales orders which product
-     * orders are done
-     *
-     * @param sList
-     * @return a sales order list
+     * This method gets the remaining cuts of a sleeve
+     * @param cutList a list containing the cuts that have been made
+     * @param sleeve is the one we check the remainder of
+     * @return the amount left to cut for the given sleeve
      */
-    public SalesOrderList getAllDoneSalesOrder(SalesOrderList sList) {
-        SalesOrderList sol = new SalesOrderList();
-        for (Item item : getItemList(sList).getList()) {
-            if (item.isDone()) {
-                if (!sol.hasId(item.getSalesOrderId())) {
-                    sol.add(sList.getById(item.getSalesOrderId()));
-                }
-            }
+    public int getRemaningCuts(CutList cutList, Item sleeve){
+        int initialQuantity = sleeve.getQuantity();
+        System.out.println("Initial Quantity: " + initialQuantity);
+        
+        System.out.println("Cuts from that sleeve: " + cutList.size());
+        for(Cut cut : cutList.getCutsBySleeve(sleeve).getList()){
+            initialQuantity = initialQuantity - cut.getQuantity();
         }
-        return sol;
+        System.out.println("Final Quantity: " + initialQuantity);
+        return initialQuantity;
+        
     }
-
 //    @TODO
 //    public CutList getAllCuts() {
 //        try {

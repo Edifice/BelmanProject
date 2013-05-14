@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Cut;
+import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BLL.ListManager;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
@@ -13,10 +10,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import org.jdesktop.swingx.JXTable;
 
-/**
- *
- * @author Martin
- */
 public class CutHistoryFrame extends javax.swing.JFrame {
 
     private MainGui parent;

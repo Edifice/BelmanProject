@@ -2,13 +2,7 @@ package dk.easv.belman.GUI;
 
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.CutList;
-import dk.easv.belman.BE.Item;
-import dk.easv.belman.BE.ItemList;
-import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BLL.ListManager;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 public class CutTableModel extends AbstractTableModel {
@@ -16,9 +10,9 @@ public class CutTableModel extends AbstractTableModel {
     private CutList cutList; // A list of cuts 
     private ListManager listManager;
     // The names of columns
-    private String[] colNames = {"PO Description", "Date", "Operator", "Time"};
+    private String[] colNames = {"PO Description", "Date", "Operator", "Time", "Quantity"};
     // The type of columns
-    private Class[] classes = {String.class, Long.class, String.class, Long.class};
+    private Class[] classes = {String.class, Long.class, String.class, Long.class, Integer.class};
 
     /**
      * Constructor for the SleeveTableModel.
@@ -48,10 +42,11 @@ public class CutTableModel extends AbstractTableModel {
         Cut cut = cutList.get(row);
 
         switch (col) {
-            case 0: listManager.getProductOrderList(Main.allOrderData).getById(cut.getSleeve().getProductOrderId()).getDescription();
-            case 1: cut.getDate();
-            //@TODO case 2: cut.getOperator();
-            case 3: cut.getTimeSpent();
+            case 0: return listManager.getProductOrderList(Main.allOrderData).getById(cut.getSleeve().getProductOrderId()).getDescription();
+            case 1: return cut.getDate();
+            case 2: return cut.getOperator().toString();
+            case 3: return cut.getTimeSpent();
+            case 4: return cut.getQuantity();
         }
         return null;
     }

@@ -6,16 +6,18 @@ public class Cut extends IEntity {
     private Operator operator;
     private long timeSpent;
     private long date;
+    private int quantity;
     
     public Cut() {   
     }
 
-    public Cut(Item sleeve, StockItem stockItem, Operator operator, long timeSpent, long date) {
+    public Cut(Item sleeve, StockItem stockItem, Operator operator, long timeSpent, long date, int quantity) {
         this.sleeve = sleeve;
         this.stockItem = stockItem;
         this.operator = operator;
         this.timeSpent = timeSpent;
         this.date = date;
+        this.quantity = quantity;
     }
 
     /**
@@ -80,5 +82,19 @@ public class Cut extends IEntity {
      */
     public void setDate(long date) {
         this.date = date;
+    }
+
+    /**
+     * @return the quantity
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
