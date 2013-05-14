@@ -265,7 +265,7 @@ public class DataHandler extends DBConnection {
             while (rs.next()) {
                 Item sleeve = Main.allOrderData.getItemById(rs.getInt("item_id"));
                 Operator op = Main.allOperatorData.getById(rs.getInt("operator_id"));
-                StockItem stockItem = Main.allStockData.getById(rs.getInt("stockitem_id"));
+                StockItem stockItem = Main.allStockData.getById(rs.getInt("stock_id"));
 
                 Cut cut = new Cut();
                 cut.setSleeve(sleeve);
@@ -273,6 +273,7 @@ public class DataHandler extends DBConnection {
                 cut.setOperator(op);
                 cut.setTimeSpent(rs.getTime("time_spent").getTime());
                 cut.setDate(rs.getTimestamp("date").getTime());
+                cut.setQuantity(rs.getInt("quantity"));
                 ret.add(cut);
             }
             connection.commit();
@@ -297,16 +298,18 @@ public class DataHandler extends DBConnection {
             PreparedStatement st = connection.prepareStatement("INSERT "
                     + "INTO ItemStock "
                     + "(ItemStock.item_id, "
-                    + "ItemStock.stockitem_id, "
+                    + "ItemStock.stock_id, "
                     + "ItemStock.operator_id, "
                     + "ItemStock.time_spent, "
-                    + "ItemStock.[date]) "
-                    + "VALUES (?, ?, ?, ?, ?)");
+                    + "ItemStock.[date],"
+                    + "ItemStock.quantity) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)");
             st.setInt(1, cut.getSleeve().getId());
             st.setInt(2, cut.getStockItem().getId());
             st.setInt(3, cut.getOperator().getId());
             st.setTime(4, new Time(cut.getTimeSpent()));
             st.setTimestamp(5, new Timestamp(cut.getDate()));
+            st.setInt(6, cut.getQuantity());
             st.executeUpdate();
             connection.commit();
         } finally {

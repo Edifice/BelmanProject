@@ -37,9 +37,9 @@ public class Main {
         // Initialized the allOrderData, allStockData and allOperatorData with data from the database.
         final ListManager lists = new ListManager();
         allOrderData = lists.getAllSO();
-        allStockData = lists.getAllSI();
-        allCuts = new CutList();//lists.getAllCuts();
+        allStockData = lists.getAllSI();       
         allOperatorData = lists.getAllOP();
+         allCuts = lists.getAllCuts();
 
 
         // Program starts from here

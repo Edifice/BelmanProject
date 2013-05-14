@@ -3,6 +3,9 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BLL.ListManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 public class CutTableModel extends AbstractTableModel {
@@ -42,11 +45,17 @@ public class CutTableModel extends AbstractTableModel {
         Cut cut = cutList.get(row);
 
         switch (col) {
-            case 0: return listManager.getProductOrder(Main.allOrderData, cut.getSleeve()).getDescription();
-            case 1: return cut.getDate();
-            case 2: return cut.getOperator().toString();
-            case 3: return cut.getTimeSpent();
-            case 4: return cut.getQuantity();
+            case 0:
+                return listManager.getProductOrder(Main.allOrderData, cut.getSleeve()).getDescription();
+            case 1:
+                DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                return df.format(new Date(cut.getDate()));
+            case 2:
+                return cut.getOperator().toString();
+            case 3:
+                return cut.getTimeSpent();
+            case 4:
+                return cut.getQuantity();
         }
         return null;
     }

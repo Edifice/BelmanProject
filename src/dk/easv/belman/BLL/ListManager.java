@@ -156,25 +156,25 @@ public class ListManager {
 //    }
 
 
-//    /**
-//     * This method gets the remaining cuts of a sleeve
-//     * @param cutList a list containing the cuts that have been made
-//     * @param sleeve is the one we check the remainder of
-//     * @return the amount left to cut for the given sleeve
-//     */
-//    public int getRemaningCuts(CutList cutList, Item sleeve){
-//        int initialQuantity = sleeve.getQuantity();
-//        System.out.println("Initial Quantity: " + initialQuantity);
-//        
-//        System.out.println("Cuts from that sleeve: " + cutList.size());
-//        for(Cut cut : cutList.getCutsBySleeve(sleeve).getList()){
-//            initialQuantity = initialQuantity - cut.getQuantity();
-//        }
-//        
-//        System.out.println("Final Quantity: " + initialQuantity);
-//        return initialQuantity;
-//        
-//    }
+    /**
+     * This method gets the remaining cuts of a sleeve
+     * @param cutList a list containing the cuts that have been made
+     * @param sleeve is the one we check the remainder of
+     * @return the amount left to cut for the given sleeve
+     */
+    public int getRemaningCuts(CutList cutList, Item sleeve){
+        int initialQuantity = sleeve.getQuantity();
+        System.out.println("Initial Quantity: " + initialQuantity);
+        
+        System.out.println("Cuts from that sleeve: " + cutList.size());
+        for(Cut cut : cutList.getCutsBySleeve(sleeve).getList()){
+            initialQuantity = initialQuantity - cut.getQuantity();
+        }
+        
+        System.out.println("Final Quantity: " + initialQuantity);
+        return initialQuantity;
+        
+    }
     /**
      * This method returns all the cuts that was executed before, with the Item,
      * StockItem and Operator connected to that given cut.
