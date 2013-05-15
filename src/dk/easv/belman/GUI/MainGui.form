@@ -320,8 +320,8 @@
                                       </Group>
                                       <EmptySpace min="53" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtCutAmount" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="txtQuantity" alignment="1" pref="161" max="32767" attributes="0"/>
+                                          <Component id="txtQuantity" pref="161" max="32767" attributes="0"/>
+                                          <Component id="txtCutAmount" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -362,8 +362,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtCutAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCutAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnCutAction" min="-2" pref="52" max="-2" attributes="0"/>
@@ -423,11 +423,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCutActionActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtCutAmount">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Actual cut amount"/>
@@ -437,6 +432,8 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtCutAmount">
             </Component>
           </SubComponents>
         </Container>
@@ -497,7 +494,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnHistory">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cut history"/>
+            <Property name="text" type="java.lang.String" value="History"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistoryActionPerformed"/>

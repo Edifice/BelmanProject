@@ -132,6 +132,33 @@ public class ListManager {
         }
         return sol;
     }
+
+    /**
+     * This method gets all done production orders. It takes in a sales order
+     * list, and loops through each element and gets its production order, then
+     * loops through the production orders items, and checks whether they are
+     * done or not. We make a local storage for the items, that will contain the
+     * production orders not done items, if the lists.size is greater than 0,
+     * the production order is not done.
+     *
+     * @param sList
+     * @return a ProductionOrderList containing all done production orders
+     */
+    public ProductionOrderList getAllDoneProductionOrders(SalesOrderList sList) {
+        ProductionOrderList poList = new ProductionOrderList();
+        for (ProductionOrder po : getProductOrderList(sList).getList()) {
+            ItemList poItems = new ItemList();
+            for (Item item : po.getItemList().getList()) {
+                if (!item.isDone()) {
+                    poItems.add(item);
+                }
+            }
+            if (poItems.size() == 0) {
+                poList.add(po);
+            }
+        }
+        return poList;
+    }
 // @TODO - Need to think about which logic to use
 //    /**
 //     * Returns a sales order list containing all sales orders which product
