@@ -13,21 +13,20 @@ import dk.easv.belman.BLL.Calculation;
 import dk.easv.belman.BLL.Filter;
 import dk.easv.belman.BLL.ListManager;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.SortOrder;
 import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.decorator.ColorHighlighter;
+import org.jdesktop.swingx.decorator.ComponentAdapter;
+import org.jdesktop.swingx.decorator.HighlightPredicate;
 
 public class MainGui extends javax.swing.JFrame {
 
@@ -60,12 +59,15 @@ public class MainGui extends javax.swing.JFrame {
     }
 
     /**
-     * @TODO JavaDOC
-     * @param showUrgentPopup
+     *
+     * @param showNewPopup
      */
-    public void scheduledUpdate(boolean showUrgentPopup) {
-        if (showUrgentPopup) {
-            JOptionPane.showMessageDialog(null, "There is a new Ugent order!", "Ugent order", JOptionPane.WARNING_MESSAGE);
+    public void scheduledUpdate(boolean newOrders) {
+        if (newOrders) {
+            //int response = JOptionPane.showConfirmDialog(null, "There are new orders! Do you want to refresh the list?", "New orders", JOptionPane.YES_NO_OPTION);
+            //if (response == 0) {
+            updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem));
+            //}
         }
     }
 
@@ -89,6 +91,15 @@ public class MainGui extends javax.swing.JFrame {
         tblSleeves.packAll(); // Packs the table.
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
         tblSleeves.setSortable(false);
+
+        final HighlightPredicate myPredicate = new HighlightPredicate() {
+            @Override
+            public boolean isHighlighted(Component renderer, ComponentAdapter adapter) {
+                return ListManager.isUrgent(adapter.getString(0));
+            }
+        };
+        ColorHighlighter highlighter = new ColorHighlighter(myPredicate, Color.RED, null);
+        tblSleeves.addHighlighter(highlighter);
 
         pnlCenter.setLayout(new BorderLayout()); // Sets the layout for the center JPanel.
         pnlCenter.add(sp); // Adds the Scroll Pane with the table to the JPanel on the center.
@@ -170,11 +181,11 @@ public class MainGui extends javax.swing.JFrame {
         });
         // End of the MouseListener.
     }
- 
+
     /**
      * This method sets the txtCutAmount to the possible available cut amount.
      * If te possible amount is greater than the needed amount, the cut amount
-     
+     *
      * is set to the needed amount, if less it's set to the possible cut amount.
      */
     private void setCutAmount() {
@@ -701,7 +712,8 @@ public class MainGui extends javax.swing.JFrame {
                 Date currentDate = new Date();
                 cut.setDate(currentDate.getTime());
                 cut.setQuantity(Integer.valueOf(txtCutAmount.getText()));
-                cut.setWaste(cut.getStockItem().getWidth()-cut.getSleeve().getWidth());
+
+                cut.setWaste(cut.getStockItem().getWidth() - cut.getSleeve().getWidth());
                 cut.setArchived(false);
 
                 Main.allCuts.add(cut);
@@ -709,6 +721,15 @@ public class MainGui extends javax.swing.JFrame {
                 int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, cut.getSleeve());
                 txtQuantity.setText(String.valueOf(remainingQuantity));
                 setCutAmount();
+                // listManager.insertCut(cut);
+                if (remainingQuantity == 0) {
+                    selectedItem.setDone(true);
+                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
+                    //listManager.updateItem(selectedItem);
+
+                    updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
+
+                }
 
                 listManager.insertCut(cut);
                 if (remainingQuantity == 0) { // If there are no more cuts to do for that Sleeve.
@@ -728,6 +749,7 @@ public class MainGui extends javax.swing.JFrame {
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
         HistoryFrame chf = new HistoryFrame(this);
     }//GEN-LAST:event_btnHistoryActionPerformed
+
     /**
      * Returns a sales order list containing all sales order which is not done
      *

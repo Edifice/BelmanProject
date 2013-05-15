@@ -2,12 +2,12 @@ package dk.easv.belman.BE;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 public class SalesOrderList extends BList<SalesOrder> {
 
     public SalesOrderList() {
     }
-    
     /**
      * This is where the sorting by ID in an ascending order happens.
      */
@@ -28,7 +28,7 @@ public class SalesOrderList extends BList<SalesOrder> {
             return codeDifference;
         }
     };
-    
+
     /**
      * Basic sort by ID in ascending order.
      */
@@ -99,7 +99,7 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return null;
     }
-    
+
     /**
      * Search the list for 1 item by id and return it.
      *
@@ -108,10 +108,11 @@ public class SalesOrderList extends BList<SalesOrder> {
      */
     public Item getItemById(int id) {
         for (SalesOrder so : this.getList()) {
-            for (ProductionOrder po : so.getProductOrderList().getList()){
+            for (ProductionOrder po : so.getProductOrderList().getList()) {
                 for (Item sleeve : po.getItemList().getList()) {
-                    if (sleeve.getId() == id)
+                    if (sleeve.getId() == id) {
                         return sleeve;
+                    }
                 }
             }
         }
@@ -157,7 +158,7 @@ public class SalesOrderList extends BList<SalesOrder> {
                         // if there is no more item in the list, delete the POL.
                         if (po.getItemList().size() == 0) {
                             so.getProductOrderList().remove(po);
-                            
+
                             // if there is no more PO in the SO, then remove it.
                             if (so.getProductOrderList().size() == 0) {
                                 this.remove(so);
@@ -171,5 +172,27 @@ public class SalesOrderList extends BList<SalesOrder> {
             }
         }
         return 0;
+    }
+
+    /**
+     * Search the list for 1 PO and ch
+     *
+     * @param POdesc
+     * @param urgentDays
+     * @return boolean isUrgent or not
+     */
+    public boolean isSleeveIsUrgent(String POdesc, int urgentDays) {
+        long oneDay = 1000L * 60 * 60 * 24;
+        Date d = new Date();
+        long now = d.getTime();
+
+        for (SalesOrder so : this.getList()) {
+            for (ProductionOrder po : so.getProductOrderList().getList()) {
+                if (po.getDescription().equalsIgnoreCase(POdesc)) {
+                    return (so.getDueDate() - (oneDay * urgentDays)) <= now;
+                }
+            }
+        }
+        return false;
     }
 }

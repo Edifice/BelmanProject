@@ -19,3 +19,4 @@ nb-configuration.xml
 *.swp
 *.out
 /README-MarkdownPadPreview.html
+nbproject/phpcsmd.properties

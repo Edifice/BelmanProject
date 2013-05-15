@@ -12,6 +12,7 @@ import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.DAL.DataHandler;
+import dk.easv.belman.GUI.Main;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -28,6 +29,16 @@ public class ListManager {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
 //            throw new Exception(ex.getMessage(), ex.getCause());
         }
+    }
+
+    /**
+     * Checks if the given Product order is urgent or not.
+     *
+     * @param string Product Order description
+     * @return
+     */
+    public static boolean isUrgent(String description) {
+        return Main.allOrderData.isSleeveIsUrgent(description, Main.URGENT_DAYS);
     }
 
     /**
@@ -174,7 +185,7 @@ public class ListManager {
 //            for (ProductionOrder p : s.getProductOrderList().getList()) {
 //                boolean isDone = false;
 //                for (Item item : p.getItemList().getList()) {
-//                    
+//
 //                }
 //            }
 //        }
