@@ -8,9 +8,9 @@ public class StockTableModel extends AbstractTableModel {
 
     private StockItemList stockList; // The contents of the table.
     // The names of columns
-    private String[] colNames = {"Code", "Batch ID", "Mat ID", "Width", "Length", "Thickness", "Quantity (kg)"};
+    private String[] colNames = {"Code", "Batch ID", "Mat ID", "Width", "Length", "Thickness"};
     // The type of columns
-    private Class[] classes = {String.class, String.class, Integer.class, Double.class, Double.class, Double.class, Double.class};
+    private Class[] classes = {String.class, String.class, Integer.class, Double.class, Double.class, Double.class};
 
     /**
      * Constructor for the StockTableModel.
@@ -50,8 +50,6 @@ public class StockTableModel extends AbstractTableModel {
                 return item.getLength();
             case 5:
                 return item.getThickness();
-            case 6:
-                return item.getQuantity();
         }
         return null;
     }

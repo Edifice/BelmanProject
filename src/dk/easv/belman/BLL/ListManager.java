@@ -9,6 +9,7 @@ import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.ProductionOrderList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
 import dk.easv.belman.DAL.DataHandler;
 import java.io.FileNotFoundException;
@@ -276,6 +277,15 @@ public class ListManager {
     public void insertCut(Cut cut) {
         try {
             handler.insertCut(cut);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+//            throw new Exception(ex.getMessage(), ex.getCause());
+        }
+    }
+
+    public void updateStock(StockItem stockItem) {
+        try {
+            handler.updateStock(stockItem);
         } catch (SQLException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
 //            throw new Exception(ex.getMessage(), ex.getCause());

@@ -274,6 +274,7 @@ public class DataHandler extends DBConnection {
                 cut.setTimeSpent(rs.getTime("time_spent").getTime());
                 cut.setDate(rs.getTimestamp("date").getTime());
                 cut.setQuantity(rs.getInt("quantity"));
+                cut.setWaste(rs.getDouble("waste"));
                 ret.add(cut);
             }
             connection.commit();
@@ -302,14 +303,16 @@ public class DataHandler extends DBConnection {
                     + "ItemStock.operator_id, "
                     + "ItemStock.time_spent, "
                     + "ItemStock.[date],"
-                    + "ItemStock.quantity) "
-                    + "VALUES (?, ?, ?, ?, ?, ?)");
+                    + "ItemStock.quantity, "
+                    + "ItemStock.waste) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
             st.setInt(1, cut.getSleeve().getId());
             st.setInt(2, cut.getStockItem().getId());
             st.setInt(3, cut.getOperator().getId());
             st.setTime(4, new Time(cut.getTimeSpent()));
             st.setTimestamp(5, new Timestamp(cut.getDate()));
             st.setInt(6, cut.getQuantity());
+            st.setDouble(7, cut.getWaste());
             st.executeUpdate();
             connection.commit();
         } finally {
@@ -317,5 +320,28 @@ public class DataHandler extends DBConnection {
             connection.close();
         }
 //        System.out.println("Statistics: \n\The following cut was inserted: "+cut.getId());
+    }
+
+    /**
+     * 
+     * @param stockItem
+     * @throws SQLException 
+     */
+    public void updateStock(StockItem stockItem) throws SQLException {
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement st = connection.prepareStatement("UPDATE Stock "
+                    + "SET length = ? "
+                    + "WHERE id = ?");
+            st.setDouble(1, stockItem.getLength());
+            st.setInt(2, stockItem.getId());
+            st.executeUpdate();
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+//        System.out.println("Statistics: \n\The length of StockItem #"+"stockItem.getId()"+" was updated to: "+stockItem.getLength());
     }
 }

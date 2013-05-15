@@ -1,7 +1,7 @@
 package dk.easv.belman.BE;
 
 public class Cut extends IEntity {
-
+    
     private int id;
     private Item sleeve;
     private StockItem stockItem;
@@ -9,17 +9,21 @@ public class Cut extends IEntity {
     private long timeSpent;
     private long date;
     private int quantity;
+    private double waste;
+    private boolean archived;
     
     public Cut() {   
     }
 
-    public Cut(Item sleeve, StockItem stockItem, Operator operator, long timeSpent, long date, int quantity) {
+    public Cut(Item sleeve, StockItem stockItem, Operator operator, long timeSpent, long date, int quantity, double waste, boolean archived) {
         this.sleeve = sleeve;
         this.stockItem = stockItem;
         this.operator = operator;
         this.timeSpent = timeSpent;
         this.date = date;
         this.quantity = quantity;
+        this.waste = waste;
+        this.archived = archived;
     }
 
     /**
@@ -113,5 +117,33 @@ public class Cut extends IEntity {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return the waste
+     */
+    public double getWaste() {
+        return waste;
+    }
+
+    /**
+     * @param waste the waste to set
+     */
+    public void setWaste(double waste) {
+        this.waste = waste;
+    }
+
+    /**
+     * @return the archived
+     */
+    public boolean isArchived() {
+        return archived;
+    }
+
+    /**
+     * @param archived the archived to set
+     */
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }

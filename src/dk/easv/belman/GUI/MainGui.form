@@ -12,6 +12,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -35,16 +36,16 @@
                   <Group type="102" attributes="0">
                       <Component id="pnlWest" pref="328" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="pnlSpacing" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblStockTable" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblSleeveTable" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="212" max="32767" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblWeekLimit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cmbbxWeekLimit" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -64,14 +65,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSleeveTable" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStockTable" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cmbbxWeekLimit" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblWeekLimit" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel1" alignment="0" pref="815" max="32767" attributes="0"/>
+                          <Component id="pnlSpacing" alignment="0" pref="815" max="32767" attributes="0"/>
                           <Component id="pnlWest" alignment="0" pref="815" max="32767" attributes="0"/>
                           <Component id="pnlCenter" alignment="0" pref="815" max="32767" attributes="0"/>
                       </Group>
@@ -556,7 +557,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="pnlSpacing">
       <Properties>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[25, 0]"/>
@@ -576,12 +577,12 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblSleeveTable">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sleeve"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
+    <Component class="javax.swing.JLabel" name="lblStockTable">
       <Properties>
         <Property name="text" type="java.lang.String" value="Stock Item"/>
       </Properties>
@@ -602,7 +603,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbbxWeekLimitActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
+    <Component class="javax.swing.JLabel" name="lblWeekLimit">
       <Properties>
         <Property name="text" type="java.lang.String" value="List all within(weeks)"/>
       </Properties>

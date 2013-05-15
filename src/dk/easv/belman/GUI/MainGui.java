@@ -9,6 +9,7 @@ import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
+import dk.easv.belman.BLL.Calculation;
 import dk.easv.belman.BLL.Filter;
 import dk.easv.belman.BLL.ListManager;
 import java.awt.BorderLayout;
@@ -44,6 +45,7 @@ public class MainGui extends javax.swing.JFrame {
     private StockItem selectedStockItem;
     // BLL object.
     private Filter filter;
+    private Calculation calc;
     private ListManager listManager;
     // Timers for calculating time for each cut;
     private Date startTime;
@@ -75,14 +77,7 @@ public class MainGui extends javax.swing.JFrame {
         // BLL object for the filtering.
         filter = new Filter();
         listManager = new ListManager();
-
-        // Initializes the DescriptionPane and hides the components by default.
-        setVisibleTo(false, lblDescriptionText1, lblDescriptionText2,
-                lblDescriptionText3, lblDescriptiontext4, lblDescriptionText5,
-                lblDescriptionText6, lblDescriptionText7, txtDescription1,
-                txtDescription2, txtDescription3, txtDescription4,
-                txtDescription5, txtDescription6, txtDescription7);
-        
+        calc = new Calculation();
 
         // Sleeve table
         tblSleeves = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
@@ -152,14 +147,7 @@ public class MainGui extends javax.swing.JFrame {
 
                 }
 
-                if (e.getClickCount() != 2) { // In case of a single click...
-                    if (e.getSource().equals(tblSleeves)) {
-                        setItemDescriptionPane(selectedItem); // Show information about the selected Item/Sleeve in the DescriptionPane.
-                    } else {
-                        setStockDescriptionPane(selectedStockItem); // Show information about the selected StockItem in the DescriptionPane.
-                    }
-                } else { // In case of a double click...
-
+                if (e.getClickCount() == 2) {  // In case of a double click...
                     if (e.getSource().equals(tblSleeves)) {
                         selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow()); // Set the selected Item/Sleeve.
                         // Filter the table with StockItems, by the currently selected Item/Sleeve.
@@ -181,51 +169,18 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
         // End of the MouseListener.
-        // Start of the KeyListener.
-        c.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int keyUp = KeyEvent.VK_UP; // UP (arrow) key code.
-                int keyDown = KeyEvent.VK_DOWN; // DOWN (arrow) key code.
-                int keyEnter = KeyEvent.VK_ENTER; // ENTER key code.
-
-                if (e.getKeyCode() == keyUp) { // If the UP key is pressed...
-                    if (e.getSource().equals(tblSleeves)) {
-                        selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() - 1); // Move the selection up.
-                        setItemDescriptionPane(selectedItem); // Show information about the selected Item/Sleeve in the DescriptionPane.
-                    } else {
-                        selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow() - 1); // Move the selection up.
-                        setStockDescriptionPane(selectedStockItem); // Show information about the selected StockItem in the DescriptionPane.
-                    }
-                } else if (e.getKeyCode() == keyDown) { // If the DOWN key is pressed...
-                    if (e.getSource().equals(tblSleeves)) {
-                        selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow() + 1); // Move the selection down.
-                        setItemDescriptionPane(selectedItem); // Show information about the selected Item/Sleeve in the DescriptionPane.
-                    } else {
-                        selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow() + 1); // Move the selection down.
-                        setStockDescriptionPane(selectedStockItem); // Show information about the selected StockItem in the DescriptionPane.
-                    }
-                } else if (e.getKeyCode() == keyEnter) { // If the ENTER key is pressed...
-                    if (e.getSource().equals(tblSleeves)) { // Set the selected Item/Sleeve ready-to-cut.
-                        txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
-                        txtQuantity.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem)));
-                    } else { // Set the selected StockItem ready-to-cut.
-                        txtStockItem.setText(selectedStockItem.getCode());
-                    }
-                }
-            }
-        });
     }
-
+ 
     /**
      * This method sets the txtCutAmount to the possible available cut amount.
-     * If the possible amount is greater than the needed amount, the cut amount
+     * If te possible amount is greater than the needed amount, the cut amount
+     
      * is set to the needed amount, if less it's set to the possible cut amount.
      */
     private void setCutAmount() {
         if (selectedItem != null && selectedStockItem != null) {
-            if (filter.canCut(selectedStockItem, selectedItem)) {
-                int cutAmount = filter.canCutHowMany(selectedStockItem, selectedItem); // Gets the actual amount possible to cut
+            if (calc.canCut(selectedStockItem, selectedItem)) {
+                int cutAmount = calc.canCutHowMany(selectedStockItem, selectedItem); // Gets the actual amount possible to cut
                 if (cutAmount > listManager.getRemaningCuts(Main.allCuts, selectedItem)) { // Checks if the possible amount is greater than the quantity needed
                     txtCutAmount.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem))); // In case possible amount is greater, set the amount to the needed amount
                 } else {
@@ -280,11 +235,11 @@ public class MainGui extends javax.swing.JFrame {
         btnHistory = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         pnlWest = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        pnlSpacing = new javax.swing.JPanel();
+        lblSleeveTable = new javax.swing.JLabel();
+        lblStockTable = new javax.swing.JLabel();
         cmbbxWeekLimit = new javax.swing.JComboBox();
-        jLabel9 = new javax.swing.JLabel();
+        lblWeekLimit = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 1000, 650));
@@ -557,22 +512,22 @@ public class MainGui extends javax.swing.JFrame {
             .addGap(0, 813, Short.MAX_VALUE)
         );
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(25, 0));
+        pnlSpacing.setPreferredSize(new java.awt.Dimension(25, 0));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlSpacingLayout = new javax.swing.GroupLayout(pnlSpacing);
+        pnlSpacing.setLayout(pnlSpacingLayout);
+        pnlSpacingLayout.setHorizontalGroup(
+            pnlSpacingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 25, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlSpacingLayout.setVerticalGroup(
+            pnlSpacingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("Sleeve");
+        lblSleeveTable.setText("Sleeve");
 
-        jLabel8.setText("Stock Item");
+        lblStockTable.setText("Stock Item");
 
         cmbbxWeekLimit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Show all", "1 week", "2 week", "3 week", "4 week" }));
         cmbbxWeekLimit.addActionListener(new java.awt.event.ActionListener() {
@@ -581,7 +536,7 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("List all within(weeks)");
+        lblWeekLimit.setText("List all within(weeks)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -594,14 +549,14 @@ public class MainGui extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel8))
+                        .addComponent(pnlSpacing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStockTable))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lblSleeveTable)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
+                        .addComponent(lblWeekLimit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbbxWeekLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
@@ -617,13 +572,13 @@ public class MainGui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel8)
+                            .addComponent(lblSleeveTable)
+                            .addComponent(lblStockTable)
                             .addComponent(cmbbxWeekLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
+                            .addComponent(lblWeekLimit))
                         .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                            .addComponent(pnlSpacing, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
                             .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
                             .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
                         .addGap(30, 30, 30))
@@ -635,10 +590,6 @@ public class MainGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @TODO JavaDOC
-     * @param evt
-     */
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         if (txtID.getText().isEmpty()) {
             updateSleeveTableModel(null, getAllSleevesNotDone());
@@ -730,19 +681,18 @@ public class MainGui extends javax.swing.JFrame {
 
             if (btnCutAction.getText().equals("Start")) {
                 startTime = new Date(); // Sets a start time for tracking the time for the cut
-                System.out.println("You started cutting");
+//                System.out.println("You started cutting");
                 btnCutAction.setText("Stop");
                 //System.out.println("SOL SIZE: " + getAllDoneSalesOrder().size());
-
-
             } else {
                 endTime = new Date(); // Sets a end time for tracking the time for the cut
                 long time = endTime.getTime() - startTime.getTime(); // Is the time it took for the cut to finish
-                System.out.println("You stopped cutting");
+//                System.out.println("You stopped cutting");
                 btnCutAction.setText("Start");
 
                 System.out.println("Before: " + Main.allCuts.size());
 
+                // Create cut entity based on the information we know.
                 Cut cut = new Cut();
                 cut.setSleeve(selectedItem);
                 cut.setStockItem(selectedStockItem);
@@ -751,23 +701,24 @@ public class MainGui extends javax.swing.JFrame {
                 Date currentDate = new Date();
                 cut.setDate(currentDate.getTime());
                 cut.setQuantity(Integer.valueOf(txtCutAmount.getText()));
+                cut.setWaste(cut.getStockItem().getWidth()-cut.getSleeve().getWidth());
+                cut.setArchived(false);
 
                 Main.allCuts.add(cut);
-                System.out.println("After: " + Main.allCuts.size());
+//                System.out.println("After: " + Main.allCuts.size());
                 int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, cut.getSleeve());
                 txtQuantity.setText(String.valueOf(remainingQuantity));
                 setCutAmount();
-                // listManager.insertCut(cut);
-                if (remainingQuantity == 0) {
-                    selectedItem.setDone(true);
-                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
-                    //listManager.updateItem(selectedItem);
 
-                    updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
-
+                listManager.insertCut(cut);
+                if (remainingQuantity == 0) { // If there are no more cuts to do for that Sleeve.
+                    selectedItem.setDone(true); // Sets the selected sleeve entity to done.
+//                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
+                    listManager.updateItem(selectedItem); // Updates the selected sleeve (sets it to done) in the database.
+                    listManager.updateStock(calc.updateStockEntity(cut)); // Updates a StockItem entity and the database as well.
+                    updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem)); // Refreshes the Stock table.
+                    updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem)); // Refreshes the Sleeve table.
                 }
-                System.out.println("DONE SALESORDERS: " + listManager.getAllDoneProductionOrders(Main.allOrderData).size());
-
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please make sure that values are set", "Error", JOptionPane.ERROR_MESSAGE);
@@ -794,7 +745,7 @@ public class MainGui extends javax.swing.JFrame {
     }
 
     /**
-     * Sets a new SalesOrderList or ItemList to the sleeve table. Incase sol is
+     * Sets a new SalesOrderList or ItemList to the sleeve table. In case sol is
      * null, it will set a new ItemList and vice versa.
      *
      * @param sol The new SalesOrderList, iList The new ItemList
@@ -811,7 +762,7 @@ public class MainGui extends javax.swing.JFrame {
     /**
      * Sets a new StockItemList to the stock table.
      *
-     * @param sol The new StockItemList.
+     * @param sil The new SalesOrderList, iList The new ItemList
      */
     private void updateStockTableModel(StockItemList sil) {
         stockModel.setStockList(sil);
@@ -824,74 +775,6 @@ public class MainGui extends javax.swing.JFrame {
      */
     public void fireSleeveTableChanges() {
         sleeveModel.fireTableDataChanged();
-    }
-
-    /**
-     * Sets up the DescriptionPane for a specified Item/Sleeve.
-     *
-     * @param item The selected Item/Sleeve.
-     */
-    public void setItemDescriptionPane(Item item) {
-        // Un-hide the DescriptionPane's components.
-        setVisibleTo(true, lblDescriptionText1, lblDescriptionText2,
-                lblDescriptionText3, txtDescription1, txtDescription2,
-                txtDescription3, lblDescriptiontext4, txtDescription4,
-                lblDescriptionText5, txtDescription5, lblDescriptionText6,
-                txtDescription6, lblDescriptionText7, txtDescription7);
-
-        // Set the information.
-        lblDescriptionText1.setText("SO ID / Description: ");
-        //txtDescription1.setText(item.getSalesOrderId() + " / " + getAllSalesOrderNotDone().getById(item.getSalesOrderId()).getDescription());
-        lblDescriptionText2.setText("PO ID / Description: ");
-        //txtDescription2.setText(item.getProductOrderId() + " / " + listManager.getProductOrder(getAllSalesOrderNotDone(), selectedItem).getDescription());
-        lblDescriptionText3.setText("Material ID: ");
-        txtDescription3.setText(String.valueOf(item.getMaterialId()));
-        lblDescriptiontext4.setText("Width: ");
-        txtDescription4.setText(String.valueOf(item.getWidth()));
-        lblDescriptionText5.setText("Circumference: ");
-        txtDescription5.setText(String.valueOf(item.getCircumference()));
-        lblDescriptionText6.setText("Thickness: ");
-        txtDescription6.setText(String.valueOf(item.getThickness()));
-        lblDescriptionText7.setText("Quantity: ");
-//        txtDescription7.setText(String.valueOf(item.getQuantity())); @TODO
-
-        // Set the DescriptionPane NOT editable.
-        setEditableTo(false, txtDescription1, txtDescription2, txtDescription3,
-                txtDescription4, txtDescription5, txtDescription6, txtDescription7);
-    }
-
-    /**
-     * Sets up the DescriptionPane for a specified StockItem.
-     *
-     * @param item The selected StockItem.
-     */
-    private void setStockDescriptionPane(StockItem item) {
-        // Un-hide the DescriptionPane's components.
-        setVisibleTo(true, lblDescriptionText1, lblDescriptionText2,
-                lblDescriptionText3, txtDescription1, txtDescription2,
-                txtDescription3, lblDescriptiontext4, txtDescription4,
-                lblDescriptionText5, txtDescription5, lblDescriptionText6,
-                txtDescription6, lblDescriptionText7, txtDescription7);
-
-        // Set the information.
-        lblDescriptionText1.setText("Code:");
-        txtDescription1.setText(item.getCode());
-        lblDescriptionText2.setText("Material: ");
-        txtDescription2.setText(String.valueOf(item.getMaterialId()) + " / " + item.getMaterialName());
-        lblDescriptionText3.setText("Mat. Density");
-        txtDescription3.setText(String.valueOf(item.getMaterialDensity()));
-        lblDescriptiontext4.setText("Width: ");
-        txtDescription4.setText(String.valueOf(item.getWidth()));
-        lblDescriptionText5.setText("Length: ");
-        txtDescription5.setText(String.valueOf(item.getLength()));
-        lblDescriptionText6.setText("Thickness: ");
-        txtDescription6.setText(String.valueOf(item.getThickness()));
-        lblDescriptionText7.setText("Quantity(kg): ");
-        txtDescription7.setText(String.valueOf(item.getQuantity()));
-
-        // Set the DescriptionPane NOT editable.
-        setEditableTo(false, txtDescription1, txtDescription2, txtDescription3,
-                txtDescription4, txtDescription5, txtDescription6, txtDescription7);
     }
 
     /**
@@ -923,16 +806,12 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JButton btnOK;
     private javax.swing.JComboBox cmbbxOperator;
     private javax.swing.JComboBox cmbbxWeekLimit;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jpCut;
     private javax.swing.JPanel jpDescription;
     private javax.swing.JLabel lblDescription;
@@ -943,9 +822,13 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JLabel lblDescriptionText6;
     private javax.swing.JLabel lblDescriptionText7;
     private javax.swing.JLabel lblDescriptiontext4;
+    private javax.swing.JLabel lblSleeveTable;
+    private javax.swing.JLabel lblStockTable;
+    private javax.swing.JLabel lblWeekLimit;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JSplitPane pnlEast;
     private javax.swing.JPanel pnlHeader;
+    private javax.swing.JPanel pnlSpacing;
     private javax.swing.JPanel pnlWest;
     private javax.swing.JTextField txtCutAmount;
     private javax.swing.JTextField txtDescription1;

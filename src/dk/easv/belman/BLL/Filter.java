@@ -63,45 +63,6 @@ public class Filter {
     }
 
     /**
-     * This method makes sure that a selected sleeve can be cut from a selected
-     * stock item
-     *
-     * @param stockItem is the selected stock item
-     * @param sleeve is the selected sleeve
-     * @return true if the sleeve can be cut from the stock item, false
-     * otherwise
-     */
-    public boolean canCut(StockItem stockItem, Item sleeve) {
-        if (stockItem.getMaterialId() == sleeve.getMaterialId() // Check for material id.
-                && stockItem.getThickness() == sleeve.getThickness() // Check for thickness.
-                && sleeve.getWidth() <= stockItem.getWidth() // Check for width.
-                && sleeve.getCircumference() <= stockItem.getLength()) { // Check for circumference.
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-    
-    /**
-     * This method calculates how many sleeves can be cut from the selected stock item
-     * @param stockItem is the selected stock item
-     * @param sleeve is the selected sleeve
-     * @return the number of cuts that can be done
-     */
-    public int canCutHowMany(StockItem stockItem, Item sleeve) {
-        int amount = 0;
-        double availableAmount = stockItem.getLength();
-        for(int i = 0; i < sleeve.getQuantity(); i++){
-            if(availableAmount > sleeve.getCircumference()){
-                amount++;
-                availableAmount = availableAmount-sleeve.getCircumference();
-            }
-        }
-        return amount;
-    }
-
-    /**
      * Returns all the sales orders which has a due date within the week limit.
      *
      * @param weeks is the limit.
