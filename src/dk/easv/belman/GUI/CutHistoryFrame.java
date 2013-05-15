@@ -17,12 +17,14 @@ public class CutHistoryFrame extends javax.swing.JFrame {
     private JXTable tblCuts;
     private ListManager listManager;
     private Cut selectedCut;
+    private CutList cutList;
 
     /**
      * Creates new form CutHistoryFrame
      */
-    public CutHistoryFrame(MainGui parent) {
+    public CutHistoryFrame(MainGui parent, CutList cutList) {
         this.parent = parent;
+        this.cutList = cutList;
         initComponents();
         init();
         this.setVisible(true);
@@ -39,7 +41,7 @@ public class CutHistoryFrame extends javax.swing.JFrame {
 
         tblCuts = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sf = new JScrollPane(tblCuts); // Creates a Scroll Pane where the table will be.
-        cutModel = new CutTableModel(Main.allCuts);     // Initializes the SleeveTableModel.
+        cutModel = new CutTableModel(cutList);     // Initializes the SleeveTableModel.
         tblCuts.setModel(cutModel); // Sets the table model.
         tblCuts.setDragEnabled(false); // Dragging is disabled.
         tblCuts.setColumnControlVisible(true); // Column control settings are enabled.

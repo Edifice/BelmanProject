@@ -47,9 +47,8 @@ public class Filter {
      *
      * @return CURRENTLY An ItemList with the filtered Items.
      */
-    public ItemList filterByStock(SalesOrderList sList, StockItem stockItem) {
-        ItemList resList = new ItemList();
-        ItemList itemList = new ListManager().getItemList(sList);
+    public ItemList filterByStock(ItemList itemList, StockItem stockItem) {
+        ItemList resList = new ItemList();        
 
         for (Item sleeve : itemList.getList()) {
             if (stockItem.getMaterialId() == sleeve.getMaterialId() // Check for material id.

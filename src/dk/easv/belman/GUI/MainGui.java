@@ -35,8 +35,7 @@ public class MainGui extends javax.swing.JFrame {
     private SleeveTableModel sleeveModel;
     // Currently selected Item/Sleeve from the table.
     private Item selectedItem;
-    // A cut that will be added to the history after pressing done
-    private Cut cut;
+    
     // Currently selected operator
     private Operator operator;
     // Stock table and it's model.
@@ -88,7 +87,7 @@ public class MainGui extends javax.swing.JFrame {
         // Sleeve table
         tblSleeves = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sp = new JScrollPane(tblSleeves); // Creates a Scroll Pane where the table will be.
-        sleeveModel = new SleeveTableModel(getAllSalesOrderNotDone()); // Initializes the SleeveTableModel.
+        sleeveModel = new SleeveTableModel(getAllSleevesNotDone()); // Initializes the SleeveTableModel.
         tblSleeves.setModel(sleeveModel); // Sets the table model.
         tblSleeves.setDragEnabled(false); // Dragging is disabled.
         tblSleeves.setColumnControlVisible(true); // Column control settings are enabled.
@@ -172,7 +171,7 @@ public class MainGui extends javax.swing.JFrame {
                     } else {
                         selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow()); // Set the selected StockItem.
                         // Filter the table with Items/Sleeves, by the currently selected StockItem.
-                        updateSleeveTableModel(null, filter.filterByStock(getAllSalesOrderNotDone(), selectedStockItem));
+                        updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
                         // Set the selected StockItem ready-to-cut.
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
@@ -642,7 +641,7 @@ public class MainGui extends javax.swing.JFrame {
      */
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         if (txtID.getText().isEmpty()) {
-            updateSleeveTableModel(getAllSalesOrderNotDone(), null);
+            updateSleeveTableModel(null, getAllSleevesNotDone());
             updateStockTableModel(Main.allStockData);
         } else {
             SalesOrderList sol = new SalesOrderList();
@@ -659,7 +658,7 @@ public class MainGui extends javax.swing.JFrame {
                         hasFound = true;
                     }
                 } else {
-                    for (SalesOrder s : getAllSalesOrderNotDone().getList()) {
+                    for (SalesOrder s : Main.allOrderData.getList()) {
                         if (s.getDescription().contains(txtID.getText()) || String.valueOf(s.getId()).contains(txtID.getText())) {
                             if (!sol.hasId(s.getId())) {
                                 sol.add(s);
@@ -695,40 +694,40 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void cmbbxWeekLimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbbxWeekLimitActionPerformed
-        int weeks;
-        switch (cmbbxWeekLimit.getSelectedIndex()) {
-            case 0: // In case of 'View all' is selected...
-                updateSleeveTableModel(getAllSalesOrderNotDone(), null); // Set back the original SalesOrderList.
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
-                break;
-            case 1: // In case '1 week' is selected.
-                weeks = 1;
-                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
-                break;
-            case 2: // In case '2 week' is selected.
-                weeks = 2;
-                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
-                break;
-            case 3: // In case '3 week' is selected.
-                weeks = 3;
-                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
-                break;
-            case 4: // In case '4 week' is selected.
-                weeks = 4;
-                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
-                break;
-        }
+//        int weeks;
+//        switch (cmbbxWeekLimit.getSelectedIndex()) {
+//            case 0: // In case of 'View all' is selected...
+//                updateSleeveTableModel(getAllSalesOrderNotDone(), null); // Set back the original SalesOrderList.
+//                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+//                break;
+//            case 1: // In case '1 week' is selected.
+//                weeks = 1;
+//                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
+//                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+//                break;
+//            case 2: // In case '2 week' is selected.
+//                weeks = 2;
+//                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
+//                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+//                break;
+//            case 3: // In case '3 week' is selected.
+//                weeks = 3;
+//                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
+//                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+//                break;
+//            case 4: // In case '4 week' is selected.
+//                weeks = 4;
+//                updateSleeveTableModel(filter.getSalesOrderList(getAllSalesOrderNotDone(), weeks), null);
+//                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+//                break;
+//        }
     }//GEN-LAST:event_cmbbxWeekLimitActionPerformed
 
     private void btnCutActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCutActionActionPerformed
         if (txtStockItem.getText().length() > 0 &&// Makes sure stock item has been set
                 txtSleeve.getText().length() > 0)// Makes sure that sleeve has been set
         {
-
+            
             if (btnCutAction.getText().equals("Start")) {
                 startTime = new Date(); // Sets a start time for tracking the time for the cut
                 System.out.println("You started cutting");
@@ -755,17 +754,19 @@ public class MainGui extends javax.swing.JFrame {
                 
                 Main.allCuts.add(cut);
                 System.out.println("After: " + Main.allCuts.size());
-                int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, selectedItem);
+                int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, cut.getSleeve());
                 txtQuantity.setText(String.valueOf(remainingQuantity));
-                
+                setCutAmount();
                // listManager.insertCut(cut);
                 if (remainingQuantity == 0) {
                     selectedItem.setDone(true);
+                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
                     //listManager.updateItem(selectedItem);
                     
-                    updateSleeveTableModel(getAllSalesOrderNotDone(), null);
+                    updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
+                    
                 }
-                setCutAmount();
+                
 
             }
         } else {
@@ -774,15 +775,22 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCutActionActionPerformed
 
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
-        CutHistoryFrame chf = new CutHistoryFrame(this);
+        CutHistoryFrame chf = new CutHistoryFrame(this, Main.allCuts);
     }//GEN-LAST:event_btnHistoryActionPerformed
     /**
      * Returns a sales order list containing all sales order which is not done
      *
      * @return
      */
-    private SalesOrderList getAllSalesOrderNotDone() {
-        return listManager.getAllSalesOrderNotDone(Main.allOrderData);
+    private ItemList getAllSleevesNotDone() {
+        ItemList iList = new ItemList();
+        for(Item item : listManager.getItemList(Main.allOrderData).getList()){
+            if(!item.isDone()){
+                iList.add(item);
+            }
+        }
+        return iList;
+        
     }
 
 //    /**
@@ -841,9 +849,9 @@ public class MainGui extends javax.swing.JFrame {
 
         // Set the information.
         lblDescriptionText1.setText("SO ID / Description: ");
-        txtDescription1.setText(item.getSalesOrderId() + " / " + getAllSalesOrderNotDone().getById(item.getSalesOrderId()).getDescription());
+        //txtDescription1.setText(item.getSalesOrderId() + " / " + getAllSalesOrderNotDone().getById(item.getSalesOrderId()).getDescription());
         lblDescriptionText2.setText("PO ID / Description: ");
-        txtDescription2.setText(item.getProductOrderId() + " / " + listManager.getProductOrder(getAllSalesOrderNotDone(), selectedItem).getDescription());
+        //txtDescription2.setText(item.getProductOrderId() + " / " + listManager.getProductOrder(getAllSalesOrderNotDone(), selectedItem).getDescription());
         lblDescriptionText3.setText("Material ID: ");
         txtDescription3.setText(String.valueOf(item.getMaterialId()));
         lblDescriptiontext4.setText("Width: ");
