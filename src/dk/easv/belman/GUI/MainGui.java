@@ -15,9 +15,15 @@ import dk.easv.belman.BLL.ListManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -49,6 +55,7 @@ public class MainGui extends javax.swing.JFrame {
     // Timers for calculating time for each cut;
     private Date startTime;
     private Date endTime;
+    private Timer timer;
 
     /**
      * Constructor for the Main Form.
@@ -122,8 +129,35 @@ public class MainGui extends javax.swing.JFrame {
 
         // Populate OperatorComboBox on the jpCut
         pupulateOperatorComboBox();
+    }
 
+    private class UpdateUITask extends TimerTask {
 
+        long time = System.currentTimeMillis() + (1000 * 60 * 60);
+        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+        @Override
+        public void run() {
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    lblTimer.setText(String.valueOf(df.format(new Date(System.currentTimeMillis() - time))));
+                }
+            });
+        }
+    }
+
+    private void timerStart() {
+        timer = new Timer();
+        lblTimer.setForeground(Color.green);
+        timer.schedule(new UpdateUITask(), 0, 200);
+    }
+
+    private void timerStop() {
+        timer.cancel();
+        timer.purge();
+        lblTimer.setForeground(Color.black);
+        //lblTimer.setText("00:00:00");
     }
 
     /**
@@ -190,8 +224,8 @@ public class MainGui extends javax.swing.JFrame {
      */
     private void setCutAmount() {
         if (selectedItem != null && selectedStockItem != null) {
-            if (calc.canCut(selectedStockItem, selectedItem)) {
-                int cutAmount = calc.canCutHowMany(selectedStockItem, selectedItem); // Gets the actual amount possible to cut
+            if (selectedStockItem.canCut(selectedItem)) {
+                int cutAmount = selectedStockItem.canCutHowMany(selectedItem); // Gets the actual amount possible to cut
                 if (cutAmount > listManager.getRemaningCuts(Main.allCuts, selectedItem)) { // Checks if the possible amount is greater than the quantity needed
                     txtCutAmount.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem))); // In case possible amount is greater, set the amount to the needed amount
                 } else {
@@ -240,10 +274,13 @@ public class MainGui extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtQuantity = new javax.swing.JTextField();
         txtCutAmount = new javax.swing.JTextField();
+        lblTimer = new javax.swing.JLabel();
         pnlHeader = new javax.swing.JPanel();
-        txtID = new javax.swing.JTextField();
-        btnOK = new javax.swing.JButton();
+        txtStockItemSearch = new javax.swing.JTextField();
+        btnStockItemSearch = new javax.swing.JButton();
         btnHistory = new javax.swing.JButton();
+        txtSleeveSearch = new javax.swing.JTextField();
+        btnSleeveSearch = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         pnlWest = new javax.swing.JPanel();
         pnlSpacing = new javax.swing.JPanel();
@@ -384,6 +421,10 @@ public class MainGui extends javax.swing.JFrame {
 
         txtQuantity.setEditable(false);
 
+        lblTimer.setFont(new java.awt.Font("Courier New", 0, 48)); // NOI18N
+        lblTimer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTimer.setText("00:00:00");
+
         javax.swing.GroupLayout jpCutLayout = new javax.swing.GroupLayout(jpCut);
         jpCut.setLayout(jpCutLayout);
         jpCutLayout.setHorizontalGroup(
@@ -391,9 +432,6 @@ public class MainGui extends javax.swing.JFrame {
             .addGroup(jpCutLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpCutLayout.createSequentialGroup()
-                        .addComponent(btnCutAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
                     .addGroup(jpCutLayout.createSequentialGroup()
                         .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpCutLayout.createSequentialGroup()
@@ -419,7 +457,12 @@ public class MainGui extends javax.swing.JFrame {
                         .addGap(10, 10, 10))
                     .addGroup(jpCutLayout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCutLayout.createSequentialGroup()
+                        .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblTimer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCutAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jpCutLayout.setVerticalGroup(
             jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,19 +491,21 @@ public class MainGui extends javax.swing.JFrame {
                     .addComponent(txtCutAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnCutAction, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTimer)
+                .addContainerGap(212, Short.MAX_VALUE))
         );
 
         pnlEast.setRightComponent(jpCut);
 
         pnlHeader.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
-        txtID.setToolTipText("Enter RP-Code / SO or PO's ID or Description");
+        txtStockItemSearch.setToolTipText("Enter RP-Code / SO or PO's ID or Description");
 
-        btnOK.setText("OK");
-        btnOK.addActionListener(new java.awt.event.ActionListener() {
+        btnStockItemSearch.setText("OK");
+        btnStockItemSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOKActionPerformed(evt);
+                btnStockItemSearchActionPerformed(evt);
             }
         });
 
@@ -471,16 +516,27 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
 
+        btnSleeveSearch.setText("OK");
+        btnSleeveSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSleeveSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtStockItemSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOK)
+                .addComponent(btnStockItemSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSleeveSearch)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(269, 269, 269)
                 .addComponent(btnHistory)
                 .addContainerGap())
         );
@@ -489,9 +545,11 @@ public class MainGui extends javax.swing.JFrame {
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOK)
-                    .addComponent(btnHistory))
+                    .addComponent(txtStockItemSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStockItemSearch)
+                    .addComponent(btnHistory)
+                    .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSleeveSearch))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -502,7 +560,7 @@ public class MainGui extends javax.swing.JFrame {
         pnlCenter.setLayout(pnlCenterLayout);
         pnlCenterLayout.setHorizontalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -601,59 +659,26 @@ public class MainGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        if (txtID.getText().isEmpty()) {
-            updateSleeveTableModel(null, getAllSleevesNotDone());
+    private void btnStockItemSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStockItemSearchActionPerformed
+        // StockItem search
+        String search = txtStockItemSearch.getText();
+        if (search.isEmpty()) {
             updateStockTableModel(Main.allStockData);
         } else {
-            SalesOrderList sol = new SalesOrderList();
             StockItemList sil = new StockItemList();
 
-            boolean hasFound = false;
-
-            while (!hasFound) {
-                if (txtID.getText().startsWith("RP")) {
-                    for (StockItem s : Main.allStockData.getList()) {
-                        if (s.getCode().contains(txtID.getText())) {
-                            sil.add(s);
-                        }
-                        hasFound = true;
-                    }
-                } else {
-                    for (SalesOrder s : Main.allOrderData.getList()) {
-                        if (s.getDescription().contains(txtID.getText()) || String.valueOf(s.getId()).contains(txtID.getText())) {
-                            if (!sol.hasId(s.getId())) {
-                                sol.add(s);
-                            }
-
-                            hasFound = true;
-                        }
-                        for (ProductionOrder p : s.getProductOrderList().getList()) {
-                            if (p.getDescription().contains(txtID.getText()) || String.valueOf(p.getId()).contains(txtID.getText())) {
-                                if (!sol.hasId(s.getId())) {
-                                    sol.add(s);
-                                }
-
-                                hasFound = true;
-
-                            }
-                        }
-                    }
-                    if (!hasFound) {
-                        JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
-                    }
-                    break;
+            for (StockItem s : Main.allStockData.getList()) {
+                if (s.getCode().contains(search) || s.getBatchId().contains(search)) {
+                    sil.add(s);
                 }
             }
-            if (hasFound) {
-                if (sol.size() > 0) {
-                    updateSleeveTableModel(sol, null);
-                } else {
-                    updateStockTableModel(sil);
-                }
+            if (sil.size() > 0) {
+                updateStockTableModel(sil);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_btnOKActionPerformed
+    }//GEN-LAST:event_btnStockItemSearchActionPerformed
 
     private void cmbbxWeekLimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbbxWeekLimitActionPerformed
         int weeks;
@@ -692,11 +717,13 @@ public class MainGui extends javax.swing.JFrame {
 
             if (btnCutAction.getText().equals("Start")) {
                 startTime = new Date(); // Sets a start time for tracking the time for the cut
+                timerStart();
 //                System.out.println("You started cutting");
                 btnCutAction.setText("Stop");
                 //System.out.println("SOL SIZE: " + getAllDoneSalesOrder().size());
             } else {
                 endTime = new Date(); // Sets a end time for tracking the time for the cut
+                timerStop();
                 long time = endTime.getTime() - startTime.getTime(); // Is the time it took for the cut to finish
 //                System.out.println("You stopped cutting");
                 btnCutAction.setText("Start");
@@ -749,6 +776,36 @@ public class MainGui extends javax.swing.JFrame {
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
         HistoryFrame chf = new HistoryFrame(this);
     }//GEN-LAST:event_btnHistoryActionPerformed
+
+    private void btnSleeveSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSleeveSearchActionPerformed
+        // Sleeve search
+        String search = txtSleeveSearch.getText();
+        if (search.isEmpty()) {
+            updateSleeveTableModel(null, getAllSleevesNotDone());
+        } else {
+            SalesOrderList sol = new SalesOrderList();
+
+            for (SalesOrder s : Main.allOrderData.getList()) {
+                if (s.getDescription().contains(search) || String.valueOf(s.getId()).contains(search)) {
+                    if (!sol.hasId(s.getId())) {
+                        sol.add(s);
+                    }
+                }
+                for (ProductionOrder p : s.getProductOrderList().getList()) {
+                    if (p.getDescription().contains(search) || String.valueOf(p.getId()).contains(search)) {
+                        if (!sol.hasId(s.getId())) {
+                            sol.add(s);
+                        }
+                    }
+                }
+            }
+            if (sol.size() > 0) {
+                updateSleeveTableModel(sol, null);
+            } else {
+                JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnSleeveSearchActionPerformed
 
     /**
      * Returns a sales order list containing all sales order which is not done
@@ -825,7 +882,8 @@ public class MainGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutAction;
     private javax.swing.JButton btnHistory;
-    private javax.swing.JButton btnOK;
+    private javax.swing.JButton btnSleeveSearch;
+    private javax.swing.JButton btnStockItemSearch;
     private javax.swing.JComboBox cmbbxOperator;
     private javax.swing.JComboBox cmbbxWeekLimit;
     private javax.swing.JLabel jLabel2;
@@ -846,6 +904,7 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JLabel lblDescriptiontext4;
     private javax.swing.JLabel lblSleeveTable;
     private javax.swing.JLabel lblStockTable;
+    private javax.swing.JLabel lblTimer;
     private javax.swing.JLabel lblWeekLimit;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JSplitPane pnlEast;
@@ -860,9 +919,10 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JTextField txtDescription5;
     private javax.swing.JTextField txtDescription6;
     private javax.swing.JTextField txtDescription7;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtSleeve;
+    private javax.swing.JTextField txtSleeveSearch;
     private javax.swing.JTextField txtStockItem;
+    private javax.swing.JTextField txtStockItemSearch;
     // End of variables declaration//GEN-END:variables
 }

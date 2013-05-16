@@ -1,16 +1,20 @@
 package dk.easv.belman.GUI;
 
+import dk.easv.belman.BE.Item;
+import dk.easv.belman.BE.ProductionOrder;
+import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
+import dk.easv.belman.BLL.Filter;
 import javax.swing.table.AbstractTableModel;
 
 public class StockTableModel extends AbstractTableModel {
 
     private StockItemList stockList; // The contents of the table.
     // The names of columns
-    private String[] colNames = {"Code", "Batch ID", "Mat ID", "Width", "Length", "Thickness"};
+    private String[] colNames = {"Code", "Batch ID", "Mat ID", "Width", "Length", "Thickness", "Orders"};
     // The type of columns
-    private Class[] classes = {String.class, String.class, Integer.class, Double.class, Double.class, Double.class};
+    private Class[] classes = {String.class, String.class, Integer.class, Double.class, Double.class, Double.class, Integer.class};
 
     /**
      * Constructor for the StockTableModel.
@@ -18,7 +22,7 @@ public class StockTableModel extends AbstractTableModel {
      * @param stockList Constructs a table model based on a StockList.
      */
     public StockTableModel(StockItemList stockList) {
-        this.stockList = stockList;
+        this.setStockList(stockList);
         fireTableDataChanged();
     }
 
@@ -50,6 +54,8 @@ public class StockTableModel extends AbstractTableModel {
                 return item.getLength();
             case 5:
                 return item.getThickness();
+            case 6:
+                return this.stockItemOrderCount(item);
         }
         return null;
     }
@@ -64,13 +70,29 @@ public class StockTableModel extends AbstractTableModel {
     }
 
     /**
-     * Sets the Stock list on the table model.
+     * Sets the Stock list on the table model. Only with the stockItems, that
+     * have Order to cut.
      *
      * @param stockList The StockItemList that needs to be set.
      */
     public void setStockList(StockItemList stockList) {
-        this.stockList = stockList;
+        this.stockList = new StockItemList();
 
+        for (StockItem si : stockList.getList()) {
+            boolean hasItemToCut = false;
+            for (SalesOrder so : Main.allOrderData.getList()) {
+                for (ProductionOrder po : so.getProductOrderList().getList()) {
+                    for (Item item : po.getItemList().getList()) {
+                        if (si.canCut(item)) {
+                            hasItemToCut = true;
+                        }
+                    }
+                }
+            }
+            if (hasItemToCut) {
+                this.stockList.add(si);
+            }
+        }
     }
 
     /**
@@ -91,5 +113,16 @@ public class StockTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int col) {
         return classes[col];
+    }
+
+    private int stockItemOrderCount(StockItem si) {
+        Filter filter = new Filter();
+        int ret = 0;
+        for (SalesOrder so : Main.allOrderData.getList()) {
+            for (ProductionOrder po : so.getProductOrderList().getList()) {
+                ret += filter.filterByStock(po.getItemList(), si).size();
+            }
+        }
+        return ret;
     }
 }

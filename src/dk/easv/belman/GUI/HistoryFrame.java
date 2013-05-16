@@ -1,10 +1,8 @@
 package dk.easv.belman.GUI;
 
-import dk.easv.belman.BE.Cut;
-import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BLL.ListManager;
+import dk.easv.belman.BLL.XMLWriter;
 import java.awt.BorderLayout;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
@@ -12,22 +10,19 @@ import org.jdesktop.swingx.JXTable;
 
 public class HistoryFrame extends javax.swing.JFrame {
 
-    private MainGui parent;    
+    private MainGui parent;
     private JXTable table;
     private ListManager listManager;
-    
 
     /**
      * Creates new form CutHistoryFrame
      */
     public HistoryFrame(MainGui parent) {
-        this.parent = parent;        
+        this.parent = parent;
         initComponents();
         init();
         this.setVisible(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-
     }
 
     /**
@@ -54,16 +49,18 @@ public class HistoryFrame extends javax.swing.JFrame {
 
         //Initialize the table and sets the model
         table = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
-        JScrollPane sf = new JScrollPane(table); // Creates a Scroll Pane where the table will be.       
+        JScrollPane sf = new JScrollPane(table); // Creates a Scroll Pane where the table will be.
         setCutTable();// Sets the table model.
         setTableProperties(table);
 
         pnlTable.setLayout(new BorderLayout());
         pnlTable.add(sf);
     }
+
     /**
      * Set different properties for the given table.
-     * @param table 
+     *
+     * @param table
      */
     public void setTableProperties(JXTable table) {
         table.setDragEnabled(false); // Dragging is disabled.
@@ -83,9 +80,11 @@ public class HistoryFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         pnlTable = new javax.swing.JPanel();
         btnCuts = new javax.swing.JButton();
         btnPO = new javax.swing.JButton();
+        btnXMLExport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,6 +115,13 @@ public class HistoryFrame extends javax.swing.JFrame {
             }
         });
 
+        btnXMLExport.setText("Export to XML");
+        btnXMLExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXMLExportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,10 +129,11 @@ public class HistoryFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCuts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnPO, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
+                    .addComponent(btnPO, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCuts, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXMLExport, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,8 +144,10 @@ public class HistoryFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCuts, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPO, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPO, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnXMLExport, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -152,9 +161,16 @@ public class HistoryFrame extends javax.swing.JFrame {
     private void btnPOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPOActionPerformed
         setPOTable();
     }//GEN-LAST:event_btnPOActionPerformed
+
+    private void btnXMLExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXMLExportActionPerformed
+        XMLWriter xml = new XMLWriter();
+        xml.write(Main.allCuts);
+    }//GEN-LAST:event_btnXMLExportActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCuts;
     private javax.swing.JButton btnPO;
+    private javax.swing.JButton btnXMLExport;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel pnlTable;
     // End of variables declaration//GEN-END:variables
 }

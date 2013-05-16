@@ -22,7 +22,7 @@ public class Main {
     public static SalesOrderList allOrderData; // A global (static) variable where all the initial order data is stored right from the startup of the program.
     public static CutList allCuts; // A global (static) variable where all the initial cut data is stored right from the startup of the program.
     public static OperatorList allOperatorData; // A global (static variable where all the initial operators are stored right from the statup of the program.
-    public static final int URGENT_DAYS = 7; // The number of days to set a SalesOrder to Urgent if that is within.
+    public static final int URGENT_DAYS = 3; // The number of days to set a SalesOrder to Urgent if that is within.
     private static final int SCHEDULER_PERIOD = 10; // Scheduler period in minutes.
     private static final String pathToIcon = "img/logo.jpg"; // Path to the icon. @TODO Convert it to .ico and rename it from logo to icon
     private static MainGui gui; // The main UI component.
@@ -80,7 +80,6 @@ public class Main {
         // @TODO JavaDOC
         ScheduledExecutorService scheduler;
         scheduler = Executors.newScheduledThreadPool(1);
-        //scheduler.scheduleAtFixedRate(scheduledTask, SCHEDULER_PERIOD, SCHEDULER_PERIOD, TimeUnit.MINUTES);
-        scheduler.scheduleAtFixedRate(scheduledTask, 5, 5, TimeUnit.SECONDS); // for test
+        scheduler.scheduleAtFixedRate(scheduledTask, SCHEDULER_PERIOD, SCHEDULER_PERIOD, TimeUnit.MINUTES);
     }
 }
