@@ -3,6 +3,7 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BLL.ListManager;
 import dk.easv.belman.BLL.XMLWriter;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
@@ -165,7 +166,11 @@ public class HistoryFrame extends javax.swing.JFrame {
 
     private void btnXMLExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXMLExportActionPerformed
         XMLWriter xml = new XMLWriter();
-        xml.write(Main.allCuts);
+        if (xml.write(Main.allCuts)) {
+            JOptionPane.showMessageDialog(null, "You successfully saved the cutting history to an XML file!", "Successfull XML save", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "The program couldn't save your XML file!", "Error in XML save", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnXMLExportActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCuts;

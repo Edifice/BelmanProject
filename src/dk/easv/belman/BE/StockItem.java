@@ -16,22 +16,6 @@ public class StockItem extends IEntity {
     public StockItem() {
     }
 
-    public StockItem(int id) {
-        // @TODO get by id
-        StockItem now = new StockItem();
-
-        this.id = now.id;
-        this.code = now.code;
-        this.materialId = now.materialId;
-        this.materialName = now.materialName;
-        this.materialDensity = now.materialDensity;
-        this.length = now.length;
-        this.width = now.width;
-        this.thickness = now.thickness;
-        this.batchId = now.batchId;
-        this.quantity = now.quantity;
-    }
-
     /**
      * @return the id
      */

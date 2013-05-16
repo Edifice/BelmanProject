@@ -21,7 +21,6 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.DefaultComboBoxModel;
@@ -75,10 +74,8 @@ public class MainGui extends javax.swing.JFrame {
      */
     public void scheduledUpdate(boolean newOrders) {
         if (newOrders) {
-            //int response = JOptionPane.showConfirmDialog(null, "There are new orders! Do you want to refresh the list?", "New orders", JOptionPane.YES_NO_OPTION);
-            //if (response == 0) {
             updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem));
-            //}
+            updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
         }
     }
 
@@ -103,15 +100,22 @@ public class MainGui extends javax.swing.JFrame {
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
         tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
 
-
-        final HighlightPredicate myPredicate = new HighlightPredicate() {
+        final HighlightPredicate highlightUgent = new HighlightPredicate() {
             @Override
             public boolean isHighlighted(Component renderer, ComponentAdapter adapter) {
-                return ListManager.isUrgent(adapter.getString(0));
+                return ListManager.isUrgent(adapter.getString(0)) == 1;
             }
         };
-        ColorHighlighter highlighter = new ColorHighlighter(myPredicate, Color.RED, null);
-        tblSleeves.addHighlighter(highlighter);
+        final HighlightPredicate highlightPast = new HighlightPredicate() {
+            @Override
+            public boolean isHighlighted(Component renderer, ComponentAdapter adapter) {
+                return ListManager.isUrgent(adapter.getString(0)) == -1;
+            }
+        };
+        ColorHighlighter highlighter1 = new ColorHighlighter(highlightUgent, Color.RED, null);
+        ColorHighlighter highlighter2 = new ColorHighlighter(highlightPast, Color.MAGENTA, null);
+        tblSleeves.addHighlighter(highlighter1);
+        tblSleeves.addHighlighter(highlighter2);
 
         pnlCenter.setLayout(new BorderLayout()); // Sets the layout for the center JPanel.
         pnlCenter.add(sp); // Adds the Scroll Pane with the table to the JPanel on the center.
@@ -249,23 +253,6 @@ public class MainGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlEast = new javax.swing.JSplitPane();
-        jpDescription = new javax.swing.JPanel();
-        lblDescription = new javax.swing.JLabel();
-        lblDescriptionText1 = new javax.swing.JLabel();
-        lblDescriptionText2 = new javax.swing.JLabel();
-        lblDescriptionText3 = new javax.swing.JLabel();
-        lblDescriptiontext4 = new javax.swing.JLabel();
-        txtDescription1 = new javax.swing.JTextField();
-        txtDescription2 = new javax.swing.JTextField();
-        txtDescription3 = new javax.swing.JTextField();
-        txtDescription4 = new javax.swing.JTextField();
-        lblDescriptionText5 = new javax.swing.JLabel();
-        txtDescription5 = new javax.swing.JTextField();
-        lblDescriptionText6 = new javax.swing.JLabel();
-        txtDescription6 = new javax.swing.JTextField();
-        txtDescription7 = new javax.swing.JTextField();
-        lblDescriptionText7 = new javax.swing.JLabel();
         jpCut = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -297,106 +284,6 @@ public class MainGui extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 1000, 650));
         setPreferredSize(new java.awt.Dimension(1000, 650));
-
-        pnlEast.setDividerLocation(325);
-        pnlEast.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        pnlEast.setPreferredSize(new java.awt.Dimension(325, 650));
-
-        jpDescription.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-
-        lblDescription.setText("Description");
-
-        lblDescriptionText1.setText("Text");
-
-        lblDescriptionText2.setText("Text");
-
-        lblDescriptionText3.setText("Text");
-
-        lblDescriptiontext4.setText("Text");
-
-        lblDescriptionText5.setText("Text");
-
-        lblDescriptionText6.setText("Text");
-
-        lblDescriptionText7.setText("Text");
-
-        javax.swing.GroupLayout jpDescriptionLayout = new javax.swing.GroupLayout(jpDescription);
-        jpDescription.setLayout(jpDescriptionLayout);
-        jpDescriptionLayout.setHorizontalGroup(
-            jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDescriptionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescriptionText1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescriptionText2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                        .addComponent(txtDescription2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescriptionText3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDescription3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescriptiontext4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDescription4, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescriptionText5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDescription5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescription)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescriptionText6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpDescriptionLayout.createSequentialGroup()
-                        .addComponent(lblDescriptionText7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                        .addComponent(txtDescription7, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jpDescriptionLayout.setVerticalGroup(
-            jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDescriptionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblDescription)
-                .addGap(18, 18, 18)
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescriptionText1)
-                    .addComponent(txtDescription1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescriptionText2)
-                    .addComponent(txtDescription2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescriptionText3)
-                    .addComponent(txtDescription3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescriptiontext4)
-                    .addComponent(txtDescription4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescriptionText5)
-                    .addComponent(txtDescription5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescriptionText6)
-                    .addComponent(txtDescription6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jpDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescriptionText7)
-                    .addComponent(txtDescription7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
-        );
-
-        pnlEast.setTopComponent(jpDescription);
 
         jpCut.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         jpCut.setForeground(new java.awt.Color(204, 204, 204));
@@ -441,7 +328,7 @@ public class MainGui extends javax.swing.JFrame {
                         .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpCutLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                                 .addComponent(txtStockItem, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCutLayout.createSequentialGroup()
                                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,8 +336,8 @@ public class MainGui extends javax.swing.JFrame {
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtSleeve, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                                    .addComponent(cmbbxOperator, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(txtSleeve)
+                                    .addComponent(cmbbxOperator, 0, 161, Short.MAX_VALUE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCutLayout.createSequentialGroup()
                                 .addGroup(jpCutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
@@ -498,10 +385,8 @@ public class MainGui extends javax.swing.JFrame {
                 .addComponent(btnCutAction, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTimer)
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        pnlEast.setRightComponent(jpCut);
 
         pnlHeader.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 
@@ -565,7 +450,7 @@ public class MainGui extends javax.swing.JFrame {
         pnlCenter.setLayout(pnlCenterLayout);
         pnlCenterLayout.setHorizontalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 348, Short.MAX_VALUE)
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -579,11 +464,11 @@ public class MainGui extends javax.swing.JFrame {
         pnlWest.setLayout(pnlWestLayout);
         pnlWestLayout.setHorizontalGroup(
             pnlWestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 326, Short.MAX_VALUE)
+            .addGap(0, 266, Short.MAX_VALUE)
         );
         pnlWestLayout.setVerticalGroup(
             pnlWestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 813, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         pnlSpacing.setPreferredSize(new java.awt.Dimension(25, 0));
@@ -596,7 +481,7 @@ public class MainGui extends javax.swing.JFrame {
         );
         pnlSpacingLayout.setVerticalGroup(
             pnlSpacingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 539, Short.MAX_VALUE)
         );
 
         lblSleeveTable.setText("Sleeve");
@@ -621,7 +506,7 @@ public class MainGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                        .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlSpacing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblStockTable))
@@ -629,13 +514,14 @@ public class MainGui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblSleeveTable)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                         .addComponent(lblWeekLimit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbbxWeekLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addComponent(pnlEast, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jpCut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -643,22 +529,24 @@ public class MainGui extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSleeveTable)
+                    .addComponent(lblStockTable)
+                    .addComponent(cmbbxWeekLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWeekLimit))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblSleeveTable)
-                            .addComponent(lblStockTable)
-                            .addComponent(cmbbxWeekLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblWeekLimit))
-                        .addGap(7, 7, 7)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlSpacing, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
-                            .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
-                            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
+                        .addComponent(pnlSpacing, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                         .addGap(30, 30, 30))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlEast, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnlWest, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+                            .addComponent(pnlCenter, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jpCut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -889,32 +777,15 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jpCut;
-    private javax.swing.JPanel jpDescription;
-    private javax.swing.JLabel lblDescription;
-    private javax.swing.JLabel lblDescriptionText1;
-    private javax.swing.JLabel lblDescriptionText2;
-    private javax.swing.JLabel lblDescriptionText3;
-    private javax.swing.JLabel lblDescriptionText5;
-    private javax.swing.JLabel lblDescriptionText6;
-    private javax.swing.JLabel lblDescriptionText7;
-    private javax.swing.JLabel lblDescriptiontext4;
     private javax.swing.JLabel lblSleeveTable;
     private javax.swing.JLabel lblStockTable;
     private javax.swing.JLabel lblTimer;
     private javax.swing.JLabel lblWeekLimit;
     private javax.swing.JPanel pnlCenter;
-    private javax.swing.JSplitPane pnlEast;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlSpacing;
     private javax.swing.JPanel pnlWest;
     private javax.swing.JTextField txtCutAmount;
-    private javax.swing.JTextField txtDescription1;
-    private javax.swing.JTextField txtDescription2;
-    private javax.swing.JTextField txtDescription3;
-    private javax.swing.JTextField txtDescription4;
-    private javax.swing.JTextField txtDescription5;
-    private javax.swing.JTextField txtDescription6;
-    private javax.swing.JTextField txtDescription7;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtSleeve;
     private javax.swing.JTextField txtSleeveSearch;

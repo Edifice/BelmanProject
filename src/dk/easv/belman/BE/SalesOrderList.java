@@ -179,9 +179,9 @@ public class SalesOrderList extends BList<SalesOrder> {
      *
      * @param POdesc
      * @param urgentDays
-     * @return boolean isUrgent or not
+     * @return int -1 -> dueDate is in the past; 0 -> not urgent; 1 -> urgent
      */
-    public boolean isSleeveIsUrgent(String POdesc, int urgentDays) {
+    public int isSleeveIsUrgent(String POdesc, int urgentDays) {
         long oneDay = 1000L * 60 * 60 * 24;
         Date d = new Date();
         long now = d.getTime();
@@ -189,10 +189,13 @@ public class SalesOrderList extends BList<SalesOrder> {
         for (SalesOrder so : this.getList()) {
             for (ProductionOrder po : so.getProductOrderList().getList()) {
                 if (po.getDescription().equalsIgnoreCase(POdesc)) {
-                    return (so.getDueDate() - (oneDay * urgentDays)) <= now;
+                    if (so.getDueDate() <= now) {
+                        return -1;
+                    }
+                    return ((so.getDueDate() - (oneDay * urgentDays)) <= now) ? 1 : 0;
                 }
             }
         }
-        return false;
+        return 0;
     }
 }

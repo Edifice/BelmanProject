@@ -1,18 +1,13 @@
 package dk.easv.belman.GUI;
 
-import dk.easv.belman.BE.Cut;
-import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.ProductionOrderList;
 import dk.easv.belman.BLL.ListManager;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 public class POTableModel extends AbstractTableModel {
 
-    private ProductionOrderList poList; // A list of cuts 
+    private ProductionOrderList poList; // A list of cuts
     private ListManager listManager;
     // The names of columns
     private String[] colNames = {"PO Description", "Date"};
@@ -48,13 +43,12 @@ public class POTableModel extends AbstractTableModel {
 
         switch (col) {
             case 0:
-                return po.getDescription();           
+                return po.getDescription();
             case 1:
-                return "READY";           
+                return "READY";
         }
         return null;
     }
-
 
     /**
      * Gets a PO by row.

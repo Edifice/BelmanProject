@@ -18,19 +18,20 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main {
 
-    public static StockItemList allStockData; // A global (static) variable where all the initial stock data is stored right from the startup of the program.
-    public static SalesOrderList allOrderData; // A global (static) variable where all the initial order data is stored right from the startup of the program.
-    public static CutList allCuts; // A global (static) variable where all the initial cut data is stored right from the startup of the program.
-    public static OperatorList allOperatorData; // A global (static variable where all the initial operators are stored right from the statup of the program.
+    //<editor-fold defaultstate="collapsed" desc=" Global storage and settings variables ">
+    public static StockItemList allStockData; // Initial stock data is stored right from the startup of the program.
+    public static SalesOrderList allOrderData; // Initial order data is stored right from the startup of the program.
+    public static CutList allCuts; // Initial cut data is stored right from the startup of the program.
+    public static OperatorList allOperatorData; // Initial operators are stored right from the statup of the program.
     public static final int URGENT_DAYS = 3; // The number of days to set a SalesOrder to Urgent if that is within.
     private static final int SCHEDULER_PERIOD = 10; // Scheduler period in minutes.
     private static final String pathToIcon = "img/logo.jpg"; // Path to the icon. @TODO Convert it to .ico and rename it from logo to icon
     private static MainGui gui; // The main UI component.
+    private static ListManager lists = new ListManager();
+    //</editor-fold>
 
     public static void main(String[] args) {
-        // Set the look and feel of the program
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel settings ">
-        //com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Green");
+        //<editor-fold defaultstate="collapsed" desc=" Set the look and feel of the program ">
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -38,22 +39,30 @@ public class Main {
         }
         //</editor-fold>
 
-        // Initialized the allOrderData, allStockData and allOperatorData with data from the database.
-        final ListManager lists = new ListManager();
+        //<editor-fold defaultstate="collapsed" desc=" Initialized the allOrderData, allStockData and allOperatorData with data from the database. ">
         allOrderData = lists.getAllSO();
         allStockData = lists.getAllSI();
         allOperatorData = lists.getAllOP();
         allCuts = lists.getAllCuts();
+        //</editor-fold>
 
-
+        //<editor-fold defaultstate="collapsed" desc=" Start the GUI ">
         // Program starts from here
         gui = new MainGui();
         gui.setExtendedState(MainGui.MAXIMIZED_BOTH); // Starts the program in full screen mode.
         ImageIcon icon = new ImageIcon(pathToIcon);
         gui.setIconImage(icon.getImage());
         gui.setVisible(true);
+        initScheduler();
+        //</editor-fold>
+    }
 
-        // @TODO JavaDOC
+    //<editor-fold defaultstate="collapsed" desc=" Initialize scheduled task ">
+    /**
+     * Initializing scheduled task to update the stored data in a given period
+     * of time.
+     */
+    private static void initScheduler() {
         Runnable scheduledTask;
         scheduledTask = new Runnable() {
             @Override
@@ -63,9 +72,6 @@ public class Main {
                     old_ids.add(so_old.getId());
                 }
                 allOrderData = lists.getAllSO();
-//                SalesOrder a = new SalesOrder();
-//                a.setId(9999999);
-//                allOrderData.add(a);
                 allStockData = lists.getAllSI();
                 boolean alert = false;
                 for (SalesOrder so_new : allOrderData.getList()) {
@@ -77,9 +83,9 @@ public class Main {
             }
         };
 
-        // @TODO JavaDOC
         ScheduledExecutorService scheduler;
         scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(scheduledTask, SCHEDULER_PERIOD, SCHEDULER_PERIOD, TimeUnit.MINUTES);
     }
+    //</editor-fold>
 }

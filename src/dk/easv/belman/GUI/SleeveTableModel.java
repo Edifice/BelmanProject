@@ -27,7 +27,7 @@ public class SleeveTableModel extends AbstractTableModel {
     public SleeveTableModel(ItemList itemList) {
         this.iList = itemList;
         listManager = new ListManager();
-        
+
         fireTableDataChanged();
     }
 
@@ -50,7 +50,7 @@ public class SleeveTableModel extends AbstractTableModel {
             case 0:
                 return listManager.getProductOrderList(Main.allOrderData).getById(item.getProductOrderId()).getDescription();
             case 1:
-                DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                 return df.format(new Date(Main.allOrderData.getById(item.getSalesOrderId()).getDueDate()));
             case 2:
                 return item.getMaterialId();
@@ -74,21 +74,24 @@ public class SleeveTableModel extends AbstractTableModel {
     public SalesOrderList getSList() {
         return sList;
     }
+
     /**
      * Removes an item from the list
-     * @param item 
+     *
+     * @param item
      */
     public void removeItem(Item item) {
         iList.remove(item);
     }
+
     /**
      * Adds an item to the list
-     * @param item 
+     *
+     * @param item
      */
     public void addItem(Item item) {
         iList.add(item);
     }
-    
 
     /**
      * Sets the Item list of a SalesOrderList.
@@ -102,16 +105,24 @@ public class SleeveTableModel extends AbstractTableModel {
 
     /**
      * Sets the Item list.
-     * 
+     *
      * @param iList the Item list.
      */
     public void setItemList(ItemList iList) {
-        this.iList = iList;
+        ItemList ret = new ItemList();
+
+        for (Item item : iList.getList()) {
+            if (!item.isDone()) {
+                ret.add(item);
+            }
+        }
+        this.iList = ret;
+
     }
 
     /**
      * Gets an Item by row.
-     * 
+     *
      * @param row the number of row from where we want to get the Item.
      * @return an Item from a selected row.
      */
@@ -128,6 +139,4 @@ public class SleeveTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int col) {
         return classes[col];
     }
-
-    
 }

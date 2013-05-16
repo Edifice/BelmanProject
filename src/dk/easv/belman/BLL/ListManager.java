@@ -37,7 +37,7 @@ public class ListManager {
      * @param string Product Order description
      * @return
      */
-    public static boolean isUrgent(String description) {
+    public static int isUrgent(String description) {
         return Main.allOrderData.isSleeveIsUrgent(description, Main.URGENT_DAYS);
     }
 
