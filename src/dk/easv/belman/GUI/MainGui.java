@@ -29,6 +29,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SortOrder;
+import javax.swing.table.TableRowSorter;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.ComponentAdapter;
@@ -39,6 +41,7 @@ public class MainGui extends javax.swing.JFrame {
     // Sleeve/Item table and it's model.
     private JXTable tblSleeves;
     private SleeveTableModel sleeveModel;
+    private TableRowSorter sleeveSorter;
     // Currently selected Item/Sleeve from the table.
     private Item selectedItem;
     // Currently selected operator
@@ -46,6 +49,7 @@ public class MainGui extends javax.swing.JFrame {
     // Stock table and it's model.
     private JXTable tblStock;
     private StockTableModel stockModel;
+    private TableRowSorter stockSorter;
     // Currently selected StockItem from the table.
     private StockItem selectedStockItem;
     // BLL object.
@@ -97,7 +101,8 @@ public class MainGui extends javax.swing.JFrame {
         tblSleeves.setColumnControlVisible(true); // Column control settings are enabled.
         tblSleeves.packAll(); // Packs the table.
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
-        tblSleeves.setSortable(false);
+        tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
+
 
         final HighlightPredicate myPredicate = new HighlightPredicate() {
             @Override
@@ -121,7 +126,7 @@ public class MainGui extends javax.swing.JFrame {
         tblStock.setColumnControlVisible(true); // Column control settings are enabled.
         tblStock.packAll(); // Packs the table.
         tblStock.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
-        tblStock.setSortable(false);
+        tblStock.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
 
         pnlWest.setLayout(new BorderLayout()); // Sets the layout for the west JPanel.
         pnlWest.add(sf); // Adds the Scroll Pane with the table to the JPanel on the west.
@@ -185,24 +190,24 @@ public class MainGui extends javax.swing.JFrame {
                 // In case of any clicks...
                 if (e.getSource().equals(tblSleeves)) {
                     tblStock.clearSelection(); // Clear the selection.
-                    selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow()); // Set the new selection.
+                    selectedItem = sleeveModel.getItemByRow(tblSleeves.convertRowIndexToModel(tblSleeves.getSelectedRow())); // Set the new selection.
                 } else {
                     tblSleeves.clearSelection(); // Clear the selection.
-                    selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow()); // Set the new selection.
+                    selectedStockItem = stockModel.getStockByRow(tblStock.convertRowIndexToModel(tblStock.getSelectedRow())); // Set the new selection.
 
                 }
 
                 if (e.getClickCount() == 2) {  // In case of a double click...
                     if (e.getSource().equals(tblSleeves)) {
-                        selectedItem = sleeveModel.getItemByRow(tblSleeves.getSelectedRow()); // Set the selected Item/Sleeve.
+                        selectedItem = sleeveModel.getItemByRow(tblSleeves.convertRowIndexToModel(tblSleeves.getSelectedRow())); // Set the selected Item/Sleeve.
                         // Filter the table with StockItems, by the currently selected Item/Sleeve.
                         updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem));
 
                         // Set the selected Item/Sleeve ready-to-cut.
-                        txtSleeve.setText(sleeveModel.getValueAt(tblSleeves.getSelectedRow(), 0).toString());
+                        txtSleeve.setText(listManager.getProductOrderList(Main.allOrderData).getById(selectedItem.getProductOrderId()).getDescription());
                         txtQuantity.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem)));
                     } else {
-                        selectedStockItem = stockModel.getStockByRow(tblStock.getSelectedRow()); // Set the selected StockItem.
+                        selectedStockItem = stockModel.getStockByRow(tblStock.convertRowIndexToModel(tblStock.getSelectedRow())); // Set the selected StockItem.
                         // Filter the table with Items/Sleeves, by the currently selected StockItem.
                         updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
                         // Set the selected StockItem ready-to-cut.
@@ -685,27 +690,22 @@ public class MainGui extends javax.swing.JFrame {
         switch (cmbbxWeekLimit.getSelectedIndex()) {
             case 0: // In case of 'View all' is selected...
                 updateSleeveTableModel(null, getAllSleevesNotDone()); // Set back the original SalesOrderList.
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
                 break;
             case 1: // In case '1 week' is selected.
                 weeks = 1;
-                updateSleeveTableModel(null, listManager.getAllItemsNotDone(filter.getSalesOrderList(Main.allOrderData, weeks)));
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
                 break;
             case 2: // In case '2 week' is selected.
                 weeks = 2;
-                updateSleeveTableModel(null, listManager.getAllItemsNotDone(filter.getSalesOrderList(Main.allOrderData, weeks)));
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
                 break;
             case 3: // In case '3 week' is selected.
                 weeks = 3;
-                updateSleeveTableModel(null, listManager.getAllItemsNotDone(filter.getSalesOrderList(Main.allOrderData, weeks)));
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
                 break;
             case 4: // In case '4 week' is selected.
                 weeks = 4;
-                updateSleeveTableModel(null, listManager.getAllItemsNotDone(filter.getSalesOrderList(Main.allOrderData, weeks)));
-                System.out.println("current size: " + sleeveModel.getSList().size() + "\n\n");
+                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
                 break;
         }
     }//GEN-LAST:event_cmbbxWeekLimitActionPerformed
@@ -728,7 +728,7 @@ public class MainGui extends javax.swing.JFrame {
 //                System.out.println("You stopped cutting");
                 btnCutAction.setText("Start");
 
-                System.out.println("Before: " + Main.allCuts.size());
+//                System.out.println("Before: " + Main.allCuts.size());
 
                 // Create cut entity based on the information we know.
                 Cut cut = new Cut();
@@ -739,34 +739,30 @@ public class MainGui extends javax.swing.JFrame {
                 Date currentDate = new Date();
                 cut.setDate(currentDate.getTime());
                 cut.setQuantity(Integer.valueOf(txtCutAmount.getText()));
-
                 cut.setWaste(cut.getStockItem().getWidth() - cut.getSleeve().getWidth());
                 cut.setArchived(false);
-
-                Main.allCuts.add(cut);
 //                System.out.println("After: " + Main.allCuts.size());
                 int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, cut.getSleeve());
                 txtQuantity.setText(String.valueOf(remainingQuantity));
                 setCutAmount();
-                // listManager.insertCut(cut);
                 if (remainingQuantity == 0) {
                     selectedItem.setDone(true);
-                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
-                    //listManager.updateItem(selectedItem);
-
-                    updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
+//                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
+                    listManager.updateItem(selectedItem);
 
                 }
-
+                updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
                 listManager.insertCut(cut);
                 if (remainingQuantity == 0) { // If there are no more cuts to do for that Sleeve.
                     selectedItem.setDone(true); // Sets the selected sleeve entity to done.
 //                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
                     listManager.updateItem(selectedItem); // Updates the selected sleeve (sets it to done) in the database.
-                    listManager.updateStock(calc.updateStockEntity(cut)); // Updates a StockItem entity and the database as well.
-                    updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem)); // Refreshes the Stock table.
-                    updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem)); // Refreshes the Sleeve table.
+
                 }
+                listManager.updateStock(calc.updateStockEntity(cut)); // Updates a StockItem entity and the database as well.
+                updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem)); // Refreshes the Stock table.
+                updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem)); // Refreshes the Sleeve table.
+
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please make sure that values are set", "Error", JOptionPane.ERROR_MESSAGE);

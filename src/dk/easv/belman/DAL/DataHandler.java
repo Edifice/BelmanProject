@@ -268,6 +268,7 @@ public class DataHandler extends DBConnection {
                 StockItem stockItem = Main.allStockData.getById(rs.getInt("stock_id"));
 
                 Cut cut = new Cut();
+                cut.setId(rs.getInt("id"));
                 cut.setSleeve(sleeve);
                 cut.setStockItem(stockItem);
                 cut.setOperator(op);

@@ -30,6 +30,7 @@ public class HistoryFrame extends javax.swing.JFrame {
      * table properties method
      */
     private void setCutTable() {
+        Main.allCuts = listManager.getAllCuts();
         table.setModel(new CutTableModel(Main.allCuts));
         setTableProperties(table);
     }

@@ -6,6 +6,7 @@ import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
+import dk.easv.belman.GUI.Main;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -69,20 +70,20 @@ public class Filter {
      * @param so The SalesOrderList we filter by week.
      * @return a list of sales Orders.
      */
-    public SalesOrderList getSalesOrderList(SalesOrderList so, int weeks) {
-        SalesOrderList newSo = new SalesOrderList(); // The original list shouldn't be changed, so we create an empty one.
+    public ItemList getSalesOrderList(ItemList il, int weeks) {
+        ItemList newIl = new ItemList(); // The original list shouldn't be changed, so we create an empty one.
         Date currentDate = new Date(); // We get the current Date.
         long currentDateLong = currentDate.getTime(); // Get the current time in long.
         long range = weeks * WEEK_IN_LONG; // We get our range in long, knowing how much a week in in long, we multiply it by the number of weeks entered as parameter.
         long limit = currentDateLong + range; // We get the limit-date, by deducting the range from the current time.
-        for (SalesOrder order : so.getList()) { // We loop through the SalesOrderList...
-            if (order.getDueDate() < limit) { // And check if it's in the range we specified or not.
-                newSo.add(order); // If it is, we add it to the SalesOrderList.
+        for (Item item : il.getList()) { // We loop through the SalesOrderList...
+            if (Main.allOrderData.getById(item.getSalesOrderId()).getDueDate() < limit) { // And check if it's in the range we specified or not.
+                newIl.add(item); // If it is, we add it to the SalesOrderList.
             }
         }
         System.out.println("range: " + range + " / " + new Timestamp(0) + " - " + new Timestamp(range));
         System.out.println("current time: " + currentDateLong + " / " + currentDate);
         System.out.println("limit: " + limit + " / " + new Timestamp(limit));
-        return newSo; // Finally, we return it.
+        return newIl; // Finally, we return it.
     }
 }

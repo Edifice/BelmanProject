@@ -15,9 +15,9 @@ public class SleeveTableModel extends AbstractTableModel {
     private ListManager listManager;
     private ItemList iList; // The contents of the table.
     // The names of columns
-    private String[] colNames = {"Description", "Due Date", "Mat ID", "Width", "Circumferance", "Thickness", "Quantity"};
+    private String[] colNames = {"Description", "Due Date", "Mat ID", "Width", "Circumferance", "Thickness", "Quantity", "Left"};
     // The type of columns
-    private Class[] classes = {String.class, Long.class, Integer.class, Double.class, Double.class, Double.class, Integer.class};
+    private Class[] classes = {String.class, Long.class, Integer.class, Double.class, Double.class, Double.class, Integer.class, Integer.class};
 
     /**
      * Constructor for the SleeveTableModel.
@@ -62,6 +62,8 @@ public class SleeveTableModel extends AbstractTableModel {
                 return item.getThickness();
             case 6:
                 return item.getQuantity();
+            case 7:
+                return item.getRemaningCuts();
         }
         return null;
     }

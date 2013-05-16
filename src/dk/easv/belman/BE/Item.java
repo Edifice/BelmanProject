@@ -1,5 +1,7 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.GUI.Main;
+
 public class Item extends IEntity {
 
     private int id;
@@ -156,5 +158,26 @@ public class Item extends IEntity {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+    
+    /**
+     * This method gets the remaining cuts of a sleeve
+     *
+     * @param cutList a list containing the cuts that have been made
+     * @param sleeve is the one we check the remainder of
+     * @return the amount left to cut for the given sleeve
+     */
+    public int getRemaningCuts() {
+        int initialQuantity = this.getQuantity();
+//        System.out.println("Initial Quantity: " + initialQuantity);
+
+//        System.out.println("Cuts from that sleeve: " + cutList.size());
+        for (Cut cut : Main.allCuts.getCutsBySleeve(this).getList()) {
+            initialQuantity = initialQuantity - cut.getQuantity();
+        }
+
+//        System.out.println("Final Quantity: " + initialQuantity);
+        return initialQuantity;
+
     }
 }
