@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class CutTableModel extends AbstractTableModel {
 
-    private CutList cutList; // A list of cuts 
+    private CutList cutList; // A list of cuts
     private ListManager listManager;
     // The names of columns
     private String[] colNames = {"PO Description", "Date", "Operator", "Time", "Quantity"};
@@ -46,7 +46,7 @@ public class CutTableModel extends AbstractTableModel {
 
         switch (col) {
             case 0:
-                return listManager.getProductOrder(Main.allOrderData, cut.getSleeve()).getDescription();
+                return cut.getSleeve().getParent().getDescription();
             case 1:
                 DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 return df.format(new Date(cut.getDate()));

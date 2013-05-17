@@ -1,17 +1,23 @@
 package dk.easv.belman.BE;
 
-public class IEntity {
+import dk.easv.belman.BLL.ListManager;
+import java.io.Serializable;
+
+/**
+ * Main entity, what we are extending to create our framework entities. This
+ * have the basic functionality for our entities.
+ */
+public class IEntity implements Serializable {
 
     /**
      * Primary key of the Entity.
      */
     private int pk = 0;
-    
-    public IEntity(){
-        
+
+    public IEntity() {
     }
-    
-    public IEntity(int pk){
+
+    public IEntity(int pk) {
         IEntity now = new IEntity();
         now.pk = pk;
         now.update();
@@ -33,9 +39,10 @@ public class IEntity {
     public void update() {
         throw new UnsupportedOperationException("Not implemented method call");
     }
-    
+
     /**
      * Changes the Entity to another one.
+     *
      * @param indexes
      */
     public void selectByPk(int index) {

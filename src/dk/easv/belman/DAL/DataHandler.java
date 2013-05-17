@@ -16,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class DataHandler extends DBConnection {
@@ -92,7 +91,7 @@ public class DataHandler extends DBConnection {
                     po.setQuantity(rs.getInt("po_quantity"));
                 }
 
-                Item item = new Item();
+                Item item = new Item(po);
                 item.setId(rs.getInt("item_id"));
                 item.setMaterialId(rs.getInt("item_material"));
                 item.setThickness(rs.getDouble("item_thickness"));
@@ -324,9 +323,9 @@ public class DataHandler extends DBConnection {
     }
 
     /**
-     * 
+     *
      * @param stockItem
-     * @throws SQLException 
+     * @throws SQLException
      */
     public void updateStock(StockItem stockItem) throws SQLException {
         connection = dataSource.getConnection();

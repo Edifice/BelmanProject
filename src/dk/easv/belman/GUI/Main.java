@@ -40,10 +40,10 @@ public class Main {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc=" Initialized the allOrderData, allStockData and allOperatorData with data from the database. ">
-        allOrderData = lists.getAllSO();
-        allStockData = lists.getAllSI();
-        allOperatorData = lists.getAllOP();
-        allCuts = lists.getAllCuts();
+        allOrderData = ListManager.getAllSO();
+        allStockData = ListManager.getAllSI();
+        allOperatorData = ListManager.getAllOP();
+        allCuts = ListManager.getAllCuts();
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc=" Start the GUI ">
@@ -71,8 +71,8 @@ public class Main {
                 for (SalesOrder so_old : allOrderData.getList()) {
                     old_ids.add(so_old.getId());
                 }
-                allOrderData = lists.getAllSO();
-                allStockData = lists.getAllSI();
+                allOrderData = ListManager.getAllSO();
+                allStockData = ListManager.getAllSI();
                 boolean alert = false;
                 for (SalesOrder so_new : allOrderData.getList()) {
                     if (!old_ids.contains(so_new.getId())) {

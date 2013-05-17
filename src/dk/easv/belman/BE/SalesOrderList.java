@@ -1,8 +1,11 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.GUI.Main;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 
 public class SalesOrderList extends BList<SalesOrder> {
 
@@ -138,6 +141,7 @@ public class SalesOrderList extends BList<SalesOrder> {
     public void add(SalesOrder so) {
         for (ProductionOrder po : so.getProductOrderList().getList()) {
             po.setSalesOrderId(so.getId());
+            po.setParent(so);
         }
         list.add(so);
     }
@@ -148,6 +152,7 @@ public class SalesOrderList extends BList<SalesOrder> {
      * @param item Item
      * @return 0 if nothing was deleted, 1 if item was deleted, 2 if PO, 3 if SO
      */
+    //TODO MIAFASZ
     public int removeItem(Item item) {
         for (SalesOrder so : this.getList()) {
             for (ProductionOrder po : so.getProductOrderList().getList()) {
@@ -189,7 +194,7 @@ public class SalesOrderList extends BList<SalesOrder> {
         for (SalesOrder so : this.getList()) {
             for (ProductionOrder po : so.getProductOrderList().getList()) {
                 if (po.getDescription().equalsIgnoreCase(POdesc)) {
-                    if (so.getDueDate() <= now) {
+                    if (so.getDueDate() <= (now - oneDay)) {
                         return -1;
                     }
                     return ((so.getDueDate() - (oneDay * urgentDays)) <= now) ? 1 : 0;
@@ -197,5 +202,71 @@ public class SalesOrderList extends BList<SalesOrder> {
             }
         }
         return 0;
+    }
+
+    public SalesOrderList filterByDone(boolean isDone) {
+        /*SalesOrderList sol = (SalesOrderList) this.copy();
+         for (Iterator<SalesOrder> it = new ArrayList<>(sol.getList()).iterator(); it.hasNext();) {
+         SalesOrder so = it.next();
+         if (!(isDone && !so.isDone()) || !(!isDone && so.isDone())) {
+         sol.remove(so);
+         }
+         }
+         return sol;*/
+        SalesOrderList sol = new SalesOrderList();
+        for (SalesOrder so : sol.getList()) {
+            if (isDone && !so.isDone() || !isDone && so.isDone()) {
+                sol.add(so);
+            }
+        }
+        return sol;
+    }
+
+    /**
+     * This method filters a SalesOrderList by a selected StockItem and checks
+     * for the Items/Sleeves that have the SAME MaterialID, SAME Thickness,
+     * SMALLER or the SAME Width, and SMALLER or the SAME Circumference.
+     *
+     * @param sList The SalesOrderList that need to be filtered.
+     * @param stockItem the StockItem for reference.
+     *
+     * @return CURRENTLY An ItemList with the filtered Items.
+     */
+    public ItemList filterByStockItem(StockItem si) {
+        ItemList resList = new ItemList();
+
+        for (Item sleeve : this.getItemList().getList()) {
+            if (si.getMaterialId() == sleeve.getMaterialId() // Check for material id.
+                    && si.getThickness() == sleeve.getThickness() // Check for thickness.
+                    && sleeve.getWidth() <= si.getWidth() // Check for width.
+                    && sleeve.getCircumference() <= si.getLength()) { // Check for circumference.
+                resList.add(sleeve);
+            }
+        }
+
+        return resList;
+    }
+
+    public ItemList getItemList() {
+        ItemList il = new ItemList();
+        for (SalesOrder s : this.getList()) {
+            for (ProductionOrder p : s.getProductOrderList().getList()) {
+                for (Item item : p.getItemList().getList()) {
+                    il.add(item);
+                }
+            }
+        }
+        return il;
+    }
+
+    public ProductionOrderList getProductOrderList() {
+        ProductionOrderList list = new ProductionOrderList();
+
+        for (SalesOrder s : this.getList()) {
+            for (ProductionOrder p : s.getProductOrderList().getList()) {
+                list.add(p);
+            }
+        }
+        return list;
     }
 }

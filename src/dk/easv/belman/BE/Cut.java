@@ -1,7 +1,13 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.BLL.ListManager;
+
+/**
+ *
+ *
+ */
 public class Cut extends IEntity {
-    
+
     private int id;
     private Item sleeve;
     private StockItem stockItem;
@@ -11,8 +17,8 @@ public class Cut extends IEntity {
     private int quantity;
     private double waste;
     private boolean archived;
-    
-    public Cut() {   
+
+    public Cut() {
     }
 
     public Cut(Item sleeve, StockItem stockItem, Operator operator, long timeSpent, long date, int quantity, double waste, boolean archived) {
@@ -68,12 +74,10 @@ public class Cut extends IEntity {
         this.timeSpent = timeSpent;
     }
 
-   
     public Operator getOperator() {
         return operator;
     }
 
-    
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
@@ -104,8 +108,9 @@ public class Cut extends IEntity {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-        }
-	/**
+    }
+
+    /**
      * @return the id
      */
     public int getId() {
@@ -145,5 +150,27 @@ public class Cut extends IEntity {
      */
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    @Override
+    public void save() {
+        if (this.getId() == 0) {
+            ListManager.insertCut(this);
+        } else {
+            throw new UnsupportedOperationException("a-a-a");
+        }
+    }
+
+    /**
+     * This method updates the StockItem's length.
+     *
+     * @param cut The cut that was done, which contains the StockItem and the
+     * Sleeve as well.
+     * @return stockItem The updated StockItem.
+     */
+    public Cut recordCut() {
+        stockItem.setLength(stockItem.getLength() - (this.getQuantity() * this.getSleeve().getCircumference()));
+        stockItem.save();
+        return this;
     }
 }

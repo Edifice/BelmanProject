@@ -1,6 +1,11 @@
 package dk.easv.belman.BE;
 
+import static dk.easv.belman.BLL.Serialize.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Belman List. To use it, you should extend this class as in this example:
@@ -10,7 +15,7 @@ import java.util.ArrayList;
  *
  * @param <Type> Dynamic class, that extends IEntity by default
  */
-public class BList<Type extends IEntity> {
+public class BList<Type extends IEntity> implements Serializable {
 
     protected ArrayList<Type> list;
 
@@ -153,6 +158,7 @@ public class BList<Type extends IEntity> {
 
     /**
      * Removes a specific element from the stored list.
+     *
      * @param elem
      */
     public void remove(Type elem) {
@@ -166,5 +172,18 @@ public class BList<Type extends IEntity> {
         if (index != -1) {
             list.remove(index);
         }
+    }
+
+    public BList copy() {
+        try {
+            BList ret;
+            serialize(this);
+            ret = (BList) deSerialize();
+            return ret;
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(BList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 }

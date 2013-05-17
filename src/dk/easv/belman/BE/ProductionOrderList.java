@@ -1,7 +1,9 @@
 package dk.easv.belman.BE;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class ProductionOrderList extends BList<ProductionOrder> {
 
@@ -73,5 +75,23 @@ public class ProductionOrderList extends BList<ProductionOrder> {
             it.setParent(po);
         }
         list.add(po);
+    }
+
+    public ProductionOrderList filterIsDone() {
+        ProductionOrderList pol = (ProductionOrderList) this.copy();
+        for (Iterator<ProductionOrder> it = new ArrayList<>(pol.getList()).iterator(); it.hasNext();) {
+            ProductionOrder po = it.next();
+            boolean delete = false;
+            for (Iterator<Item> it2 = new ArrayList<>(po.getItemList().getList()).iterator(); it2.hasNext();) {
+                Item item = it2.next();
+                if (item.isDone()) {
+                    delete = true;
+                }
+            }
+            if (delete) {
+                pol.remove(po);
+            }
+        }
+        return pol;
     }
 }

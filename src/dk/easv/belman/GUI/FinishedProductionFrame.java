@@ -31,7 +31,7 @@ public class FinishedProductionFrame extends javax.swing.JFrame {
         //Initialize the table and sets the model
         table = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sf = new JScrollPane(table); // Creates a Scroll Pane where the table will be.
-        table.setModel(new POTableModel(listManager.getAllDoneProductionOrders(Main.allOrderData)));
+        table.setModel(new POTableModel(Main.allOrderData.getProductOrderList().filterIsDone()));
         setTableProperties(table);
 
         pnlTable.setLayout(new BorderLayout());
@@ -96,7 +96,6 @@ public class FinishedProductionFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pnlTable;
     // End of variables declaration//GEN-END:variables

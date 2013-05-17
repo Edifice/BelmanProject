@@ -1,16 +1,14 @@
 package dk.easv.belman.GUI;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.Item;
-import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.Operator;
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
-import dk.easv.belman.BLL.Calculation;
-import dk.easv.belman.BLL.Filter;
 import dk.easv.belman.BLL.ListManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,32 +27,24 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
-import javax.swing.table.TableRowSorter;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.ComponentAdapter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
+//</editor-fold>
 
 public class MainGui extends javax.swing.JFrame {
 
     // Sleeve/Item table and it's model.
     private JXTable tblSleeves;
     private SleeveTableModel sleeveModel;
-    private TableRowSorter sleeveSorter;
     // Currently selected Item/Sleeve from the table.
     private Item selectedItem;
-    // Currently selected operator
-    private Operator operator;
     // Stock table and it's model.
     private JXTable tblStock;
     private StockTableModel stockModel;
-    private TableRowSorter stockSorter;
     // Currently selected StockItem from the table.
     private StockItem selectedStockItem;
-    // BLL object.
-    private Filter filter;
-    private Calculation calc;
-    private ListManager listManager;
     // Timers for calculating time for each cut;
     private Date startTime;
     private Date endTime;
@@ -76,8 +66,8 @@ public class MainGui extends javax.swing.JFrame {
      */
     public void scheduledUpdate(boolean newOrders) {
         if (newOrders) {
-            updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem));
-            updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
+            stockModel.setStockList(Main.allStockData.filterBySleeve(selectedItem));
+            sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem));
         }
     }
 
@@ -86,15 +76,11 @@ public class MainGui extends javax.swing.JFrame {
      * Designer.
      */
     private void init() {
-        // BLL object for the filtering.
-        filter = new Filter();
-        listManager = new ListManager();
-        calc = new Calculation();
-
         // Sleeve table
         tblSleeves = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sp = new JScrollPane(tblSleeves); // Creates a Scroll Pane where the table will be.
-        sleeveModel = new SleeveTableModel(getAllSleevesNotDone()); // Initializes the SleeveTableModel.
+        sleeveModel = new SleeveTableModel(Main.allOrderData); // Initializes the SleeveTableModel.
+        //sleeveModel = new SleeveTableModel(Main.allOrderData.filterByDone(false)); // Initializes the SleeveTableModel.
         tblSleeves.setModel(sleeveModel); // Sets the table model.
         tblSleeves.setDragEnabled(false); // Dragging is disabled.
         tblSleeves.setColumnControlVisible(true); // Column control settings are enabled.
@@ -207,15 +193,15 @@ public class MainGui extends javax.swing.JFrame {
                     if (e.getSource().equals(tblSleeves)) {
                         selectedItem = sleeveModel.getItemByRow(tblSleeves.convertRowIndexToModel(tblSleeves.getSelectedRow())); // Set the selected Item/Sleeve.
                         // Filter the table with StockItems, by the currently selected Item/Sleeve.
-                        updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem));
+                        stockModel.setStockList(Main.allStockData.filterBySleeve(selectedItem));
 
                         // Set the selected Item/Sleeve ready-to-cut.
-                        txtSleeve.setText(listManager.getProductOrderList(Main.allOrderData).getById(selectedItem.getProductOrderId()).getDescription());
-                        txtQuantity.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem)));
+                        txtSleeve.setText(selectedItem.getParent().getDescription());
+                        txtQuantity.setText(String.valueOf(selectedItem.getRemaningCuts()));
                     } else {
                         selectedStockItem = stockModel.getStockByRow(tblStock.convertRowIndexToModel(tblStock.getSelectedRow())); // Set the selected StockItem.
                         // Filter the table with Items/Sleeves, by the currently selected StockItem.
-                        updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
+                        sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem));
                         // Set the selected StockItem ready-to-cut.
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
@@ -237,8 +223,8 @@ public class MainGui extends javax.swing.JFrame {
         if (selectedItem != null && selectedStockItem != null) {
             if (selectedStockItem.canCut(selectedItem)) {
                 int cutAmount = selectedStockItem.canCutHowMany(selectedItem); // Gets the actual amount possible to cut
-                if (cutAmount > listManager.getRemaningCuts(Main.allCuts, selectedItem)) { // Checks if the possible amount is greater than the quantity needed
-                    txtCutAmount.setText(String.valueOf(listManager.getRemaningCuts(Main.allCuts, selectedItem))); // In case possible amount is greater, set the amount to the needed amount
+                if (cutAmount > selectedItem.getRemaningCuts()) { // Checks if the possible amount is greater than the quantity needed
+                    txtCutAmount.setText(String.valueOf(selectedItem.getRemaningCuts())); // In case possible amount is greater, set the amount to the needed amount
                 } else {
                     txtCutAmount.setText(String.valueOf(cutAmount)); // In case possible amount is less, set the amount to the possible amount
                 }
@@ -568,7 +554,7 @@ public class MainGui extends javax.swing.JFrame {
         // StockItem search
         String search = txtStockItemSearch.getText();
         if (search.isEmpty()) {
-            updateStockTableModel(Main.allStockData);
+            stockModel.setStockList(Main.allStockData);
         } else {
             StockItemList sil = new StockItemList();
 
@@ -578,7 +564,7 @@ public class MainGui extends javax.swing.JFrame {
                 }
             }
             if (sil.size() > 0) {
-                updateStockTableModel(sil);
+                stockModel.setStockList(sil);
             } else {
                 JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
             }
@@ -586,26 +572,20 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStockItemSearchActionPerformed
 
     private void cmbbxWeekLimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbbxWeekLimitActionPerformed
-        int weeks;
+        int weeks = 0;
         switch (cmbbxWeekLimit.getSelectedIndex()) {
             case 0: // In case of 'View all' is selected...
-                updateSleeveTableModel(null, getAllSleevesNotDone()); // Set back the original SalesOrderList.
-                break;
-            case 1: // In case '1 week' is selected.
-                weeks = 1;
-                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
-                break;
-            case 2: // In case '2 week' is selected.
-                weeks = 2;
-                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
-                break;
-            case 3: // In case '3 week' is selected.
-                weeks = 3;
-                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
+                sleeveModel.setItemList(Main.allOrderData.getItemList().filterByDone(false)); // Set back the original SalesOrderList.
                 break;
             case 4: // In case '4 week' is selected.
-                weeks = 4;
-                updateSleeveTableModel(null, filter.getSalesOrderList(listManager.getAllItemsNotDone(Main.allOrderData), weeks));
+                ++weeks;
+            case 3: // In case '3 week' is selected.
+                ++weeks;
+            case 2: // In case '2 week' is selected.
+                ++weeks;
+            case 1: // In case '1 week' is selected.
+                ++weeks;
+                sleeveModel.setItemList(Main.allOrderData.getItemList().filterByDone(false).filterByWeek(weeks));
                 break;
         }
     }//GEN-LAST:event_cmbbxWeekLimitActionPerformed
@@ -639,27 +619,24 @@ public class MainGui extends javax.swing.JFrame {
                 cut.setQuantity(Integer.valueOf(txtCutAmount.getText()));
                 cut.setWaste(cut.getStockItem().getWidth() - cut.getSleeve().getWidth());
                 cut.setArchived(false);
-
-                int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, cut.getSleeve());
+                int remainingQuantity = cut.getSleeve().getRemaningCuts();
                 txtQuantity.setText(String.valueOf(remainingQuantity));
                 setCutAmount();
                 if (remainingQuantity == 0) {
-                    selectedItem.setDone(true);
-                    listManager.updateItem(selectedItem);
-
+                    selectedItem.setDone(true); // Sets the selected sleeve entity to done.
+                    selectedItem.save(); // Updates the selected sleeve (sets it to done) in the database.
                 }
-                updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem));
-                listManager.insertCut(cut);
+                sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem));
+                cut.save();
                 if (remainingQuantity == 0) { // If there are no more cuts to do for that Sleeve.
                     selectedItem.setDone(true); // Sets the selected sleeve entity to done.
-                    listManager.updateItem(selectedItem); // Updates the selected sleeve (sets it to done) in the database.
-
+                    selectedItem.save(); // Updates the selected sleeve (sets it to done) in the database.
                 }
-                listManager.updateStock(calc.updateStockEntity(cut)); // Updates a StockItem entity and the database as well.
-                updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem)); // Refreshes the Stock table.
-                updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem)); // Refreshes the Sleeve table.
+                cut.recordCut(); // Updates a StockItem entity and the database as well.
+                stockModel.setStockList(Main.allStockData.filterBySleeve(selectedItem)); // Refreshes the Stock table.
+                sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem)); // Refreshes the Sleeve table.
                 setEnabledTo(true, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
-                Main.allCuts = listManager.getAllCuts();
+                Main.allCuts = ListManager.getAllCuts();
                 cutInProgress = false;
             }
         } else {
@@ -675,7 +652,7 @@ public class MainGui extends javax.swing.JFrame {
         // Sleeve search
         String search = txtSleeveSearch.getText();
         if (search.isEmpty()) {
-            updateSleeveTableModel(null, getAllSleevesNotDone());
+            sleeveModel.setItemList(Main.allOrderData.getItemList().filterByDone(false));
         } else {
             SalesOrderList sol = new SalesOrderList();
 
@@ -694,7 +671,7 @@ public class MainGui extends javax.swing.JFrame {
                 }
             }
             if (sol.size() > 0) {
-                updateSleeveTableModel(sol, null);
+                sleeveModel.setItemList(sol);
             } else {
                 JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
             }
@@ -706,61 +683,12 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHistory1ActionPerformed
 
     /**
-     * Returns a sales order list containing all sales order which is not done
-     *
-     * @return
-     */
-    private ItemList getAllSleevesNotDone() {
-        ItemList iList = new ItemList();
-        for (Item item : listManager.getItemList(Main.allOrderData).getList()) {
-            if (!item.isDone()) {
-                iList.add(item);
-            }
-        }
-        return iList;
-
-    }
-
-    /**
-     * Sets a new SalesOrderList or ItemList to the sleeve table. In case sol is
-     * null, it will set a new ItemList and vice versa.
-     *
-     * @param sol The new SalesOrderList, iList The new ItemList
-     */
-    private void updateSleeveTableModel(SalesOrderList sol, ItemList iList) {
-        if (sol != null) {
-            sleeveModel.setItemList(sol);
-        } else {
-            sleeveModel.setItemList(iList);
-        }
-        sleeveModel.fireTableDataChanged();
-    }
-
-    /**
-     * Sets a new StockItemList to the stock table.
-     *
-     * @param sil The new SalesOrderList, iList The new ItemList
-     */
-    private void updateStockTableModel(StockItemList sil) {
-        stockModel.setStockList(sil);
-        stockModel.fireTableDataChanged();
-    }
-
-    /**
-     * Fires the data changes to the table when this method is called.
-     *
-     */
-    public void fireSleeveTableChanges() {
-        sleeveModel.fireTableDataChanged();
-    }
-
-    /**
      * Takes in multiple Components and sets the visibility option for all.
      *
      * @param visibility A boolean.
      * @param comp All the components.
      */
-    public void setVisibleTo(boolean visibility, Component... comp) {
+    private void setVisibleTo(boolean visibility, Component... comp) {
         for (Component c : comp) {
             c.setVisible(visibility);
         }
@@ -772,7 +700,7 @@ public class MainGui extends javax.swing.JFrame {
      * @param visibility A boolean.
      * @param comp All the components.
      */
-    public void setEnabledTo(boolean visibility, Component... comp) {
+    private void setEnabledTo(boolean visibility, Component... comp) {
         for (Component c : comp) {
             c.setEnabled(visibility);
         }
@@ -784,7 +712,7 @@ public class MainGui extends javax.swing.JFrame {
      * @param visibility A boolean.
      * @param comp All the components.
      */
-    public void setEditableTo(boolean visibility, JTextField... comp) {
+    private void setEditableTo(boolean visibility, JTextField... comp) {
         for (JTextField c : comp) {
             c.setEditable(visibility);
         }

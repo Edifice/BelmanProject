@@ -1,5 +1,6 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.BLL.ListManager;
 import dk.easv.belman.GUI.Main;
 
 public class Item extends IEntity {
@@ -15,27 +16,8 @@ public class Item extends IEntity {
     private boolean done;
     private ProductionOrder parent;
 
-    public Item() {
-    }
-    
     public Item(ProductionOrder parent) {
         this.parent = parent;
-    }
-
-    public Item(int id) {
-        this.setPk(id);
-
-        // @TODO get by id
-        Item now = new Item();
-
-        this.id = now.id;
-        this.productOrderId = now.productOrderId;
-        this.materialId = now.materialId;
-        this.thickness = now.thickness;
-        this.width = now.width;
-        this.circumference = now.circumference;
-        this.quantity = now.quantity;
-        this.done = now.done;
     }
 
     /**
@@ -164,7 +146,7 @@ public class Item extends IEntity {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
     /**
      * This method gets the remaining cuts of a sleeve
      *
@@ -174,16 +156,10 @@ public class Item extends IEntity {
      */
     public int getRemaningCuts() {
         int initialQuantity = this.getQuantity();
-//        System.out.println("Initial Quantity: " + initialQuantity);
-
-//        System.out.println("Cuts from that sleeve: " + cutList.size());
         for (Cut cut : Main.allCuts.getCutsBySleeve(this).getList()) {
             initialQuantity = initialQuantity - cut.getQuantity();
         }
-
-//        System.out.println("Final Quantity: " + initialQuantity);
         return initialQuantity;
-
     }
 
     /**
@@ -198,5 +174,10 @@ public class Item extends IEntity {
      */
     public void setParent(ProductionOrder parent) {
         this.parent = parent;
+    }
+
+    @Override
+    public void save() {
+        ListManager.updateItem(this);
     }
 }

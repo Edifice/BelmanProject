@@ -5,7 +5,6 @@ import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
-import dk.easv.belman.BLL.Filter;
 import javax.swing.table.AbstractTableModel;
 
 public class StockTableModel extends AbstractTableModel {
@@ -93,6 +92,7 @@ public class StockTableModel extends AbstractTableModel {
                 this.stockList.add(si);
             }
         }
+        this.fireTableDataChanged();
     }
 
     /**
@@ -116,11 +116,10 @@ public class StockTableModel extends AbstractTableModel {
     }
 
     private int stockItemOrderCount(StockItem si) {
-        Filter filter = new Filter();
         int ret = 0;
         for (SalesOrder so : Main.allOrderData.getList()) {
             for (ProductionOrder po : so.getProductOrderList().getList()) {
-                ret += filter.filterByStock(po.getItemList(), si).size();
+                ret += Main.allOrderData.filterByStockItem(si).size();
             }
         }
         return ret;

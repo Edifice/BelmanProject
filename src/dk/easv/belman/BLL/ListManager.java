@@ -20,16 +20,7 @@ import java.util.logging.Logger;
 
 public class ListManager {
 
-    private DataHandler handler; // DAL object.
-
-    public ListManager() {
-        try {
-            handler = new DataHandler();
-        } catch (FileNotFoundException | SQLException ex) {
-            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
-        }
-    }
+    private static DataHandler handler; // DAL object.
 
     /**
      * Checks if the given Product order is urgent or not.
@@ -47,12 +38,12 @@ public class ListManager {
      * @return a SalesOrderList with all the SalesOrders, ProductionOrders and
      * Items.
      */
-    public SalesOrderList getAllSO() {
+    public static SalesOrderList getAllSO() {
         try {
+            handler = new DataHandler();
             return handler.getAllSO();
-        } catch (SQLException ex) {
+        } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
         }
         return null;
     }
@@ -62,87 +53,14 @@ public class ListManager {
      *
      * @return a StockItemList with all the StockItems.
      */
-    public StockItemList getAllSI() {
+    public static StockItemList getAllSI() {
         try {
+            handler = new DataHandler();
             return handler.getAllSI();
-        } catch (SQLException ex) {
+        } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
         }
         return null;
-    }
-
-    /**
-     * Returns all the Production Orders inside a SalesOrderList.
-     *
-     * @param sList The SalesOrderList in which we look for production orders.
-     * @return A list of all production orders inside that specific
-     * SalesOrderList.
-     */
-    public ProductionOrderList getProductOrderList(SalesOrderList sList) {
-        ProductionOrderList list = new ProductionOrderList();
-        for (SalesOrder s : sList.getList()) {
-            for (ProductionOrder p : s.getProductOrderList().getList()) {
-                list.add(p);
-            }
-        }
-        return list;
-    }
-
-    /**
-     * Gets a given sleeve's product order
-     *
-     * @param sList The SalesOrderList in which we look for production orders.
-     * @param sleeve
-     * @return A list of all production orders inside that specific
-     * SalesOrderList.
-     */
-    public ProductionOrder getProductOrder(SalesOrderList sList, Item sleeve) {
-        for (SalesOrder s : sList.getList()) {
-            for (ProductionOrder p : s.getProductOrderList().getList()) {
-                if (p.getId() == sleeve.getProductOrderId()) {
-                    return p;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns a list of all Items from a specific SalesOrderList.
-     *
-     * @param sList The SalesOrderList from where we want to get the Item list.
-     * @return An Item List from a specified SalesOrderList.
-     */
-    public ItemList getItemList(SalesOrderList sList) {
-        ItemList list = new ItemList();
-        for (SalesOrder s : sList.getList()) {
-            for (ProductionOrder p : s.getProductOrderList().getList()) {
-                for (Item item : p.getItemList().getList()) {
-                    list.add(item);
-                }
-            }
-        }
-        return list;
-    }
-
-    /**
-     * Returns a sales order list containing all sales orders which product
-     * orders are not done
-     *
-     * @param sList
-     * @return a sales order list
-     */
-    public SalesOrderList getAllSalesOrderNotDone(SalesOrderList sList) {
-        SalesOrderList sol = new SalesOrderList();
-        for (Item item : getItemList(sList).getList()) {
-            if (!item.isDone()) {
-                if (!sol.hasId(item.getSalesOrderId())) {
-                    sol.add(sList.getById(item.getSalesOrderId()));
-                }
-            }
-        }
-        return sol;
     }
 
     /**
@@ -173,27 +91,6 @@ public class ListManager {
         }
         return poList;
     }
-// @TODO - Need to think about which logic to use
-//    /**
-//     * Returns a sales order list containing all sales orders which product
-//     * orders are done
-//     *
-//     * @param sList
-//     * @return a sales order list
-//     */
-//    public SalesOrderList getAllDoneSalesOrder(SalesOrderList sList) {
-//        SalesOrderList sol = new SalesOrderList();
-//        for (SalesOrder s : sList.getList()) {
-//            for (ProductionOrder p : s.getProductOrderList().getList()) {
-//                boolean isDone = false;
-//                for (Item item : p.getItemList().getList()) {
-//
-//                }
-//            }
-//        }
-//
-//        return sol;
-//    }
 
     /**
      * This method gets the remaining cuts of a sleeve
@@ -204,14 +101,10 @@ public class ListManager {
      */
     public int getRemaningCuts(CutList cutList, Item sleeve) {
         int initialQuantity = sleeve.getQuantity();
-//        System.out.println("Initial Quantity: " + initialQuantity);
-
-//        System.out.println("Cuts from that sleeve: " + cutList.size());
         for (Cut cut : cutList.getCutsBySleeve(sleeve).getList()) {
             initialQuantity = initialQuantity - cut.getQuantity();
         }
 
-//        System.out.println("Final Quantity: " + initialQuantity);
         return initialQuantity;
 
     }
@@ -222,12 +115,12 @@ public class ListManager {
      *
      * @return CutList A list of all cuts.
      */
-    public CutList getAllCuts() {
+    public static CutList getAllCuts() {
         try {
+            handler = new DataHandler();
             return handler.getAllCuts();
-        } catch (SQLException ex) {
+        } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
         }
         return null;
 
@@ -240,29 +133,28 @@ public class ListManager {
      * @param sol
      * @return itemList
      */
-    public ItemList getAllItemsNotDone(SalesOrderList sol) {
-        ItemList itemList = new ItemList();
-        for (Item item : getItemList(sol).getList()) {
-            if (!item.isDone()) {
-                if (!itemList.hasId(item.getSalesOrderId())) {
-                    itemList.add(item);
-                }
-            }
-        }
-        return itemList;
-    }
-
+    /* public ItemList getAllItemsNotDone(SalesOrderList sol) {
+     ItemList itemList = new ItemList();
+     for (Item item : getItemList(sol).getList()) {
+     if (!item.isDone()) {
+     if (!itemList.hasId(item.getSalesOrderId())) {
+     itemList.add(item);
+     }
+     }
+     }
+     return itemList;
+     }*/
     /**
      * This method returns all the Operators in an OperatorList.
      *
      * @return OperatorList A list of all operators.
      */
-    public OperatorList getAllOP() {
+    public static OperatorList getAllOP() {
         try {
+            handler = new DataHandler();
             return handler.getAllOP();
-        } catch (SQLException ex) {
+        } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
         }
         return null;
     }
@@ -272,12 +164,12 @@ public class ListManager {
      *
      * @param sleeve The selected item.
      */
-    public void updateItem(Item sleeve) {
+    public static void updateItem(Item sleeve) {
         try {
+            handler = new DataHandler();
             handler.updateItem(sleeve);
-        } catch (SQLException ex) {
+        } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
         }
     }
 
@@ -287,21 +179,21 @@ public class ListManager {
      *
      * @param cut The cut entity that needs to be inserted.
      */
-    public void insertCut(Cut cut) {
+    public static void insertCut(Cut cut) {
         try {
+            handler = new DataHandler();
             handler.insertCut(cut);
-        } catch (SQLException ex) {
+        } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
         }
     }
 
-    public void updateStock(StockItem stockItem) {
+    public static void updateStock(StockItem stockItem) {
         try {
+            handler = new DataHandler();
             handler.updateStock(stockItem);
-        } catch (SQLException ex) {
+        } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception(ex.getMessage(), ex.getCause());
         }
     }
 }

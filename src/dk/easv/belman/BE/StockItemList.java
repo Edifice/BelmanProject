@@ -39,4 +39,28 @@ public class StockItemList extends BList<StockItem> {
         }
         return null;
     }
+
+    /**
+     * This method filters a StockItemList by a selected Item/Sleeve and checks
+     * for the StockItems that have the SAME MaterialID, SAME Thickness, SMALLER
+     * or the SAME Width, and SMALLER or the SAME Length.
+     *
+     * @param sList The StockItemList that need to be filtered.
+     * @param item the Item for reference.
+     *
+     * @return A filtered StockItemList.
+     */
+    public StockItemList filterBySleeve(Item item) {
+        StockItemList ret = new StockItemList();
+
+        for (StockItem s : this.getList()) {
+            if (item.getMaterialId() == s.getMaterialId() // Check for material id.
+                    && item.getCircumference() <= s.getLength() // Check for length.
+                    && item.getThickness() == s.getThickness() // Check for thickness.
+                    && item.getWidth() <= s.getWidth()) { // Check for width.
+                ret.add(s);
+            }
+        }
+        return ret;
+    }
 }

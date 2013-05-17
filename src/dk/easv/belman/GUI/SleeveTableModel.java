@@ -3,7 +3,6 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.SalesOrderList;
-import dk.easv.belman.BLL.ListManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +11,6 @@ import javax.swing.table.AbstractTableModel;
 public class SleeveTableModel extends AbstractTableModel {
 
     private SalesOrderList sList; // A list of SalesOrders which contains the production orders and items inside it.
-    private ListManager listManager;
     private ItemList iList; // The contents of the table.
     // The names of columns
     private String[] colNames = {"Description", "Due Date", "Mat ID", "Width", "Circumferance", "Thickness", "Quantity", "Left"};
@@ -98,8 +96,9 @@ public class SleeveTableModel extends AbstractTableModel {
      * @param sList The SalesOrderList where we need to set the items.
      */
     public void setItemList(SalesOrderList sList) {
+        iList = sList.getItemList();
         this.sList = sList;
-        iList = listManager.getItemList(sList);
+        this.fireTableDataChanged();
     }
 
     /**
@@ -115,6 +114,7 @@ public class SleeveTableModel extends AbstractTableModel {
                 ret.add(item);
             }
         }
+        this.fireTableDataChanged();
         this.iList = ret;
     }
 

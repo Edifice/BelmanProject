@@ -76,7 +76,7 @@ public class XMLWriter {
             DOMSource source = new DOMSource(doc);
             Calendar c = Calendar.getInstance();
 
-            StreamResult result = new StreamResult(new File("C:\\temp\\Belman_export_" + c.get(Calendar.YEAR) + "_" + c.get(Calendar.MONTH) + "_" + c.get(Calendar.DAY_OF_MONTH) + "_" + c.get(Calendar.HOUR_OF_DAY) + "_" + c.get(Calendar.MINUTE) + "_" + c.get(Calendar.SECOND) + ".xml"));
+            StreamResult result = new StreamResult(new File("Belman_export_" + c.get(Calendar.YEAR) + "_" + c.get(Calendar.MONTH) + "_" + c.get(Calendar.DAY_OF_MONTH) + "_" + c.get(Calendar.HOUR_OF_DAY) + "_" + c.get(Calendar.MINUTE) + "_" + c.get(Calendar.SECOND) + ".xml"));
 
             // Output to console for testing
             // StreamResult result = new StreamResult(System.out);

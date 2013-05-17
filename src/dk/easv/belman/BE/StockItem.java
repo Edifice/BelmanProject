@@ -1,5 +1,7 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.BLL.ListManager;
+
 public class StockItem extends IEntity {
 
     private int id;
@@ -194,5 +196,10 @@ public class StockItem extends IEntity {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void update() {
+        ListManager.updateStock(this);
     }
 }

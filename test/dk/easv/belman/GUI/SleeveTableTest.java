@@ -20,33 +20,33 @@ import dk.easv.belman.GUI.SleeveTableModel;
  * @author Martin
  */
 public class SleeveTableTest {
-    
+
     public SleeveTableTest() {
     }
-    
+
     @Test
     public void testPopulator() {
-    SalesOrderList sol = new ListManager().getAllSO();
-    SleeveTableModel tblModel = new SleeveTableModel(sol);
-    
-    JXTreeTable table = new JXTreeTable();
-    
-    
-    //assertEquals(sol.getList().get(0).getProductOrderList().getList().get(0).getItemList().getList().get(0), tblModel.getItemByRow(1));
+        SalesOrderList sol = ListManager.getAllSO();
+        SleeveTableModel tblModel = new SleeveTableModel(sol);
+
+        JXTreeTable table = new JXTreeTable();
+
+
+        //assertEquals(sol.getList().get(0).getProductOrderList().getList().get(0).getItemList().getList().get(0), tblModel.getItemByRow(1));
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
