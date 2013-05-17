@@ -13,8 +13,13 @@ public class Item extends IEntity {
     private double width;
     private double circumference;
     private boolean done;
+    private ProductionOrder parent;
 
     public Item() {
+    }
+    
+    public Item(ProductionOrder parent) {
+        this.parent = parent;
     }
 
     public Item(int id) {
@@ -179,5 +184,19 @@ public class Item extends IEntity {
 //        System.out.println("Final Quantity: " + initialQuantity);
         return initialQuantity;
 
+    }
+
+    /**
+     * @return the parent
+     */
+    public ProductionOrder getParent() {
+        return parent;
+    }
+
+    /**
+     * @param parent the parent to set
+     */
+    public void setParent(ProductionOrder parent) {
+        this.parent = parent;
     }
 }

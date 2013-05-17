@@ -272,7 +272,7 @@ public class DataHandler extends DBConnection {
                 cut.setSleeve(sleeve);
                 cut.setStockItem(stockItem);
                 cut.setOperator(op);
-                cut.setTimeSpent(rs.getTime("time_spent").getTime());
+                cut.setTimeSpent(rs.getLong("time_spent"));
                 cut.setDate(rs.getTimestamp("date").getTime());
                 cut.setQuantity(rs.getInt("quantity"));
                 cut.setWaste(rs.getDouble("waste"));
@@ -310,7 +310,7 @@ public class DataHandler extends DBConnection {
             st.setInt(1, cut.getSleeve().getId());
             st.setInt(2, cut.getStockItem().getId());
             st.setInt(3, cut.getOperator().getId());
-            st.setTime(4, new Time(cut.getTimeSpent()));
+            st.setLong(4, cut.getTimeSpent());
             st.setTimestamp(5, new Timestamp(cut.getDate()));
             st.setInt(6, cut.getQuantity());
             st.setDouble(7, cut.getWaste());

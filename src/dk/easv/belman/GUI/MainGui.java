@@ -59,6 +59,8 @@ public class MainGui extends javax.swing.JFrame {
     private Date startTime;
     private Date endTime;
     private Timer timer;
+    // Is there a cut already in progress?
+    private boolean cutInProgress = false;
 
     /**
      * Constructor for the Main Form.
@@ -98,7 +100,7 @@ public class MainGui extends javax.swing.JFrame {
         tblSleeves.setColumnControlVisible(true); // Column control settings are enabled.
         tblSleeves.packAll(); // Packs the table.
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
-        tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
+        tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sorts the table in ascending, then descending order, finally it goes back to unsorted.
 
         final HighlightPredicate highlightUgent = new HighlightPredicate() {
             @Override
@@ -130,7 +132,7 @@ public class MainGui extends javax.swing.JFrame {
         tblStock.setColumnControlVisible(true); // Column control settings are enabled.
         tblStock.packAll(); // Packs the table.
         tblStock.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
-        tblStock.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED);
+        tblStock.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sorts the table in ascending, then descending order, finally it goes back to unsorted.
 
         pnlWest.setLayout(new BorderLayout()); // Sets the layout for the west JPanel.
         pnlWest.add(sf); // Adds the Scroll Pane with the table to the JPanel on the west.
@@ -193,10 +195,10 @@ public class MainGui extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 // In case of any clicks...
                 if (e.getSource().equals(tblSleeves)) {
-                    tblStock.clearSelection(); // Clear the selection.
+                    tblStock.clearSelection(); // Clear the selection in the other table.
                     selectedItem = sleeveModel.getItemByRow(tblSleeves.convertRowIndexToModel(tblSleeves.getSelectedRow())); // Set the new selection.
                 } else {
-                    tblSleeves.clearSelection(); // Clear the selection.
+                    tblSleeves.clearSelection(); // Clear the selection in the other table.
                     selectedStockItem = stockModel.getStockByRow(tblStock.convertRowIndexToModel(tblStock.getSelectedRow())); // Set the new selection.
 
                 }
@@ -273,6 +275,7 @@ public class MainGui extends javax.swing.JFrame {
         btnHistory = new javax.swing.JButton();
         txtSleeveSearch = new javax.swing.JTextField();
         btnSleeveSearch = new javax.swing.JButton();
+        btnHistory1 = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         pnlWest = new javax.swing.JPanel();
         pnlSpacing = new javax.swing.JPanel();
@@ -283,7 +286,6 @@ public class MainGui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 1000, 650));
-        setPreferredSize(new java.awt.Dimension(1000, 650));
 
         jpCut.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         jpCut.setForeground(new java.awt.Color(204, 204, 204));
@@ -413,6 +415,13 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
 
+        btnHistory1.setText("Finished");
+        btnHistory1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistory1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
@@ -422,11 +431,13 @@ public class MainGui extends javax.swing.JFrame {
                 .addComponent(txtStockItemSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnStockItemSearch)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
                 .addComponent(btnSleeveSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(269, 269, 269)
+                .addGap(196, 196, 196)
+                .addComponent(btnHistory1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHistory)
                 .addContainerGap())
         );
@@ -439,7 +450,8 @@ public class MainGui extends javax.swing.JFrame {
                     .addComponent(btnStockItemSearch)
                     .addComponent(btnHistory)
                     .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSleeveSearch))
+                    .addComponent(btnSleeveSearch)
+                    .addComponent(btnHistory1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -599,24 +611,22 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbbxWeekLimitActionPerformed
 
     private void btnCutActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCutActionActionPerformed
-        if (txtStockItem.getText().length() > 0 &&// Makes sure stock item has been set
-                txtSleeve.getText().length() > 0)// Makes sure that sleeve has been set
+        if (txtStockItem.getText().length() > 0 &&// Makes sure stock item has been set.
+                txtSleeve.getText().length() > 0 &&// Makes sure that sleeve has been set.
+                selectedItem.getRemaningCuts() > 0)// Makes sure that it still has something cut.
         {
 
-            if (btnCutAction.getText().equals("Start")) {
+            if (!cutInProgress) {
                 startTime = new Date(); // Sets a start time for tracking the time for the cut
                 timerStart();
-//                System.out.println("You started cutting");
                 btnCutAction.setText("Stop");
-                //System.out.println("SOL SIZE: " + getAllDoneSalesOrder().size());
+                setEnabledTo(false, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
+                cutInProgress = true;
             } else {
                 endTime = new Date(); // Sets a end time for tracking the time for the cut
                 timerStop();
                 long time = endTime.getTime() - startTime.getTime(); // Is the time it took for the cut to finish
-//                System.out.println("You stopped cutting");
                 btnCutAction.setText("Start");
-
-//                System.out.println("Before: " + Main.allCuts.size());
 
                 // Create cut entity based on the information we know.
                 Cut cut = new Cut();
@@ -629,13 +639,12 @@ public class MainGui extends javax.swing.JFrame {
                 cut.setQuantity(Integer.valueOf(txtCutAmount.getText()));
                 cut.setWaste(cut.getStockItem().getWidth() - cut.getSleeve().getWidth());
                 cut.setArchived(false);
-//                System.out.println("After: " + Main.allCuts.size());
+
                 int remainingQuantity = listManager.getRemaningCuts(Main.allCuts, cut.getSleeve());
                 txtQuantity.setText(String.valueOf(remainingQuantity));
                 setCutAmount();
                 if (remainingQuantity == 0) {
                     selectedItem.setDone(true);
-//                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
                     listManager.updateItem(selectedItem);
 
                 }
@@ -643,14 +652,15 @@ public class MainGui extends javax.swing.JFrame {
                 listManager.insertCut(cut);
                 if (remainingQuantity == 0) { // If there are no more cuts to do for that Sleeve.
                     selectedItem.setDone(true); // Sets the selected sleeve entity to done.
-//                    System.out.println("Is the sleeve you cutted done?: " + selectedItem.isDone());
                     listManager.updateItem(selectedItem); // Updates the selected sleeve (sets it to done) in the database.
 
                 }
                 listManager.updateStock(calc.updateStockEntity(cut)); // Updates a StockItem entity and the database as well.
                 updateStockTableModel(filter.filterBySleeve(Main.allStockData, selectedItem)); // Refreshes the Stock table.
                 updateSleeveTableModel(null, filter.filterByStock(getAllSleevesNotDone(), selectedStockItem)); // Refreshes the Sleeve table.
-
+                setEnabledTo(true, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
+                Main.allCuts = listManager.getAllCuts();
+                cutInProgress = false;
             }
         } else {
             JOptionPane.showMessageDialog(this, "Please make sure that values are set", "Error", JOptionPane.ERROR_MESSAGE);
@@ -690,6 +700,10 @@ public class MainGui extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnSleeveSearchActionPerformed
+
+    private void btnHistory1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistory1ActionPerformed
+        FinishedProductionFrame fpf = new FinishedProductionFrame(this);
+    }//GEN-LAST:event_btnHistory1ActionPerformed
 
     /**
      * Returns a sales order list containing all sales order which is not done
@@ -753,6 +767,18 @@ public class MainGui extends javax.swing.JFrame {
     }
 
     /**
+     * Takes in multiple Components and sets the 'enable' option for all.
+     *
+     * @param visibility A boolean.
+     * @param comp All the components.
+     */
+    public void setEnabledTo(boolean visibility, Component... comp) {
+        for (Component c : comp) {
+            c.setEnabled(visibility);
+        }
+    }
+
+    /**
      * Takes in multiple JTextFields and sets the editable attribute for all.
      *
      * @param visibility A boolean.
@@ -766,6 +792,7 @@ public class MainGui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutAction;
     private javax.swing.JButton btnHistory;
+    private javax.swing.JButton btnHistory1;
     private javax.swing.JButton btnSleeveSearch;
     private javax.swing.JButton btnStockItemSearch;
     private javax.swing.JComboBox cmbbxOperator;

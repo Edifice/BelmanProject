@@ -24,10 +24,9 @@ public class SleeveTableModel extends AbstractTableModel {
      *
      * @param sList Constructs a table model based on a SalesOrdeList.
      */
-    public SleeveTableModel(ItemList itemList) {
-        this.iList = itemList;
-        listManager = new ListManager();
-
+    public SleeveTableModel(SalesOrderList sList) {
+        this.sList = sList;
+        this.iList = sList.getItemList();
         fireTableDataChanged();
     }
 
@@ -48,7 +47,7 @@ public class SleeveTableModel extends AbstractTableModel {
 
         switch (col) {
             case 0:
-                return listManager.getProductOrderList(Main.allOrderData).getById(item.getProductOrderId()).getDescription();
+                return item.getParent().getDescription();
             case 1:
                 DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
                 return df.format(new Date(Main.allOrderData.getById(item.getSalesOrderId()).getDueDate()));
@@ -117,7 +116,6 @@ public class SleeveTableModel extends AbstractTableModel {
             }
         }
         this.iList = ret;
-
     }
 
     /**

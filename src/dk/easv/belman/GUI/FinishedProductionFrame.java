@@ -1,15 +1,13 @@
 package dk.easv.belman.GUI;
 
 import dk.easv.belman.BLL.ListManager;
-import dk.easv.belman.BLL.XMLWriter;
 import java.awt.BorderLayout;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import org.jdesktop.swingx.JXTable;
 
-public class HistoryFrame extends javax.swing.JFrame {
+public class FinishedProductionFrame extends javax.swing.JFrame {
 
     private MainGui parent;
     private JXTable table;
@@ -18,7 +16,7 @@ public class HistoryFrame extends javax.swing.JFrame {
     /**
      * Creates new form CutHistoryFrame
      */
-    public HistoryFrame(MainGui parent) {
+    public FinishedProductionFrame(MainGui parent) {
         this.parent = parent;
         initComponents();
         init();
@@ -33,7 +31,7 @@ public class HistoryFrame extends javax.swing.JFrame {
         //Initialize the table and sets the model
         table = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sf = new JScrollPane(table); // Creates a Scroll Pane where the table will be.
-        table.setModel(new CutTableModel(Main.allCuts));
+        table.setModel(new POTableModel(listManager.getAllDoneProductionOrders(Main.allOrderData)));
         setTableProperties(table);
 
         pnlTable.setLayout(new BorderLayout());
@@ -51,7 +49,6 @@ public class HistoryFrame extends javax.swing.JFrame {
         table.packAll(); // Packs the table.
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
         table.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sets the sorting order to ASC > DESC > Unsorted.
-
     }
 
     /**
@@ -64,8 +61,6 @@ public class HistoryFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlTable = new javax.swing.JPanel();
-        btnXMLExport = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,21 +70,12 @@ public class HistoryFrame extends javax.swing.JFrame {
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 573, Short.MAX_VALUE)
         );
-
-        btnXMLExport.setText("Export to XML");
-        btnXMLExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXMLExportActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Undo Cut");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,10 +83,6 @@ public class HistoryFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnXMLExport, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -108,30 +90,14 @@ public class HistoryFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnXMLExport, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnXMLExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXMLExportActionPerformed
-        XMLWriter xml = new XMLWriter();
-        if (xml.write(Main.allCuts)) {
-            JOptionPane.showMessageDialog(null, "You successfully saved the cutting history to an XML file!", "Successfull XML save", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "The program couldn't save your XML file!", "Error in XML save", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnXMLExportActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnXMLExport;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel pnlTable;
     // End of variables declaration//GEN-END:variables
 }

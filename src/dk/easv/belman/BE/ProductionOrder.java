@@ -6,11 +6,16 @@ public class ProductionOrder extends IEntity {
     private int salesOrderId;
     private String description;
     private int quantity;
-    
+    private SalesOrder parent;
     private ItemList itemList;
 
     public ProductionOrder() {
-        itemList = new ItemList();
+        this.itemList = new ItemList();
+    }
+
+    public ProductionOrder(SalesOrder parent) {
+        this.itemList = new ItemList();
+        this.parent = parent;
     }
 
     /**
@@ -94,7 +99,7 @@ public class ProductionOrder extends IEntity {
      * @param itemList the itemList to set
      */
     public void setItemList(ItemList itemList) {
-        for(Item i : itemList.getList()){
+        for (Item i : itemList.getList()) {
             i.setProductOrderId(this.id);
         }
         this.itemList = itemList;
@@ -112,5 +117,19 @@ public class ProductionOrder extends IEntity {
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    /**
+     * @return the parent
+     */
+    public SalesOrder getParent() {
+        return parent;
+    }
+
+    /**
+     * @param parent the parent to set
+     */
+    public void setParent(SalesOrder parent) {
+        this.parent = parent;
     }
 }

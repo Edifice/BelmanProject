@@ -5,7 +5,13 @@ import java.util.Comparator;
 
 public class ProductionOrderList extends BList<ProductionOrder> {
 
+    private SalesOrder parent;
+
     public ProductionOrderList() {
+    }
+
+    public ProductionOrderList(SalesOrder parent) {
+        this.parent = parent;
     }
     /**
      * This is where the sorting by ID in an ascending order happens.
@@ -44,9 +50,10 @@ public class ProductionOrderList extends BList<ProductionOrder> {
 
         return ret;
     }
-    
+
     /**
      * Search the list for 1 item by id
+     *
      * @param id
      * @return
      */
@@ -58,11 +65,12 @@ public class ProductionOrderList extends BList<ProductionOrder> {
         }
         return null;
     }
-    
+
     @Override
-    public void add(ProductionOrder po){
-        for(Item it : po.getItemList().getList()){
+    public void add(ProductionOrder po) {
+        for (Item it : po.getItemList().getList()) {
             it.setProductOrderId(po.getId());
+            it.setParent(po);
         }
         list.add(po);
     }

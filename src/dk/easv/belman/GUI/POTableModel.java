@@ -3,6 +3,9 @@ package dk.easv.belman.GUI;
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.ProductionOrderList;
 import dk.easv.belman.BLL.ListManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 public class POTableModel extends AbstractTableModel {
@@ -45,7 +48,8 @@ public class POTableModel extends AbstractTableModel {
             case 0:
                 return po.getDescription();
             case 1:
-                return "READY";
+                DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+                return df.format(new Date(po.getParent().getDueDate()));
         }
         return null;
     }

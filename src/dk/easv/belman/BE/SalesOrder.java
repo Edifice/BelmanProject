@@ -9,7 +9,7 @@ public class SalesOrder extends IEntity {
     private ProductionOrderList productOrderList;
 
     public SalesOrder() {
-        productOrderList = new ProductionOrderList();
+        productOrderList = new ProductionOrderList(this);
     }
 
     /**
@@ -109,6 +109,7 @@ public class SalesOrder extends IEntity {
     public void setProductOrderList(ProductionOrderList productOrderList) {
         for(ProductionOrder po : productOrderList.getList()){
             po.setSalesOrderId(this.id);
+            po.setParent(this);
         }
         this.productOrderList = productOrderList;
     }

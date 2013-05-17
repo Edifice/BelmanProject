@@ -158,15 +158,17 @@ public class ListManager {
      */
     public ProductionOrderList getAllDoneProductionOrders(SalesOrderList sList) {
         ProductionOrderList poList = new ProductionOrderList();
-        for (ProductionOrder po : getProductOrderList(sList).getList()) {
-            ItemList poItems = new ItemList();
-            for (Item item : po.getItemList().getList()) {
-                if (!item.isDone()) {
-                    poItems.add(item);
+        ItemList itemList = new ItemList();
+        for (SalesOrder so : sList.getList()) {
+            for (ProductionOrder po : so.getProductOrderList().getList()) {
+                for (Item item : po.getItemList().getList()) {
+                    if (!item.isDone()) {
+                        itemList.add(item);
+                    }
                 }
-            }
-            if (poItems.size() == 0) {
-                poList.add(po);
+                if (itemList.size() == 0) {
+                    poList.add(po);
+                }
             }
         }
         return poList;
