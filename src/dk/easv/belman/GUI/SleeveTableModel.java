@@ -49,7 +49,7 @@ public class SleeveTableModel extends AbstractTableModel {
             case 0:
                 return item.getParent().getDescription();
             case 1:
-                DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 return df.format(new Date(Main.allOrderData.getById(item.getSalesOrderId()).getDueDate()));
             case 2:
                 return item.getMaterialId();
@@ -93,31 +93,13 @@ public class SleeveTableModel extends AbstractTableModel {
     }
 
     /**
-     * Sets the Item list of a SalesOrderList.
-     *
-     * @param sList The SalesOrderList where we need to set the items.
-     */
-    public void setItemList(SalesOrderList sList) {
-        iList = sList.getItemList();
-        this.sList = sList;
-        this.fireTableDataChanged();
-    }
-
-    /**
      * Sets the Item list.
      *
      * @param iList the Item list.
      */
     public void setItemList(ItemList iList) {
-        ItemList ret = new ItemList();
-
-        for (Item item : iList.getList()) {
-            if (!item.isDone()) {
-                ret.add(item);
-            }
-        }
+        this.iList = iList;
         this.fireTableDataChanged();
-        this.iList = ret;
     }
 
     /**

@@ -65,7 +65,7 @@ public class MainGui extends javax.swing.JFrame {
      */
     public void scheduledUpdate(boolean newOrders) {
         if (newOrders) {
-            stockModel.setStockList(Main.allStockData.filterBySleeve(selectedItem));
+            stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem));
             sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem));
         }
     }
@@ -111,7 +111,7 @@ public class MainGui extends javax.swing.JFrame {
         // Stock table
         tblStock = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sf = new JScrollPane(tblStock); // Creates a Scroll Pane where the table will be.
-        stockModel = new StockTableModel(Main.allStockData); // Initializes the StockTableModel.
+        stockModel = new StockTableModel(Main.allStockData.getOnlyUsable()); // Initializes the StockTableModel.
         tblStock.setModel(stockModel); // Sets the table model.
         tblSleeves.setDragEnabled(false); // Dragging is disabled.
         tblStock.setColumnControlVisible(true); // Column control settings are enabled.
@@ -192,7 +192,7 @@ public class MainGui extends javax.swing.JFrame {
                     if (e.getSource().equals(tblSleeves)) {
                         selectedItem = sleeveModel.getItemByRow(tblSleeves.convertRowIndexToModel(tblSleeves.getSelectedRow())); // Set the selected Item/Sleeve.
                         // Filter the table with StockItems, by the currently selected Item/Sleeve.
-                        stockModel.setStockList(Main.allStockData.filterBySleeve(selectedItem));
+                        stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem));
 
                         // Set the selected Item/Sleeve ready-to-cut.
                         txtSleeve.setText(selectedItem.getParent().getDescription());
@@ -553,7 +553,7 @@ public class MainGui extends javax.swing.JFrame {
         // StockItem search
         String search = txtStockItemSearch.getText();
         if (search.isEmpty()) {
-            stockModel.setStockList(Main.allStockData);
+            stockModel.setStockList(Main.allStockData.getOnlyUsable());
         } else {
             StockItemList sil = new StockItemList();
 
@@ -563,7 +563,7 @@ public class MainGui extends javax.swing.JFrame {
                 }
             }
             if (sil.size() > 0) {
-                stockModel.setStockList(sil);
+                stockModel.setStockList(sil.getOnlyUsable());
             } else {
                 JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
             }
@@ -632,7 +632,7 @@ public class MainGui extends javax.swing.JFrame {
                     selectedItem.save(); // Updates the selected sleeve (sets it to done) in the database.
                 }
                 cut.recordCut(); // Updates a StockItem entity and the database as well.
-                stockModel.setStockList(Main.allStockData.filterBySleeve(selectedItem)); // Refreshes the Stock table.
+                stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem)); // Refreshes the Stock table.
                 sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem)); // Refreshes the Sleeve table.
                 setEnabledTo(true, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
                 Main.allCuts = ListManager.getAllCuts();
@@ -670,7 +670,7 @@ public class MainGui extends javax.swing.JFrame {
                 }
             }
             if (sol.size() > 0) {
-                sleeveModel.setItemList(sol);
+                sleeveModel.setItemList(sol.getItemList());
             } else {
                 JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
             }

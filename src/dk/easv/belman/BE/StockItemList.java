@@ -1,6 +1,7 @@
 package dk.easv.belman.BE;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.GUI.Main;
 import java.util.Collections;
 import java.util.Comparator;
 //</editor-fold>
@@ -9,7 +10,6 @@ public class StockItemList extends BList<StockItem> {
 
     public StockItemList() {
     }
-    
     /**
      * This is where the sorting by ID in an ascending order happens.
      */
@@ -65,5 +65,25 @@ public class StockItemList extends BList<StockItem> {
             }
         }
         return ret;
+    }
+
+    public StockItemList getOnlyUsable() {
+        StockItemList sil = new StockItemList();
+        for (StockItem si : this.getList()) {
+            boolean hasItemToCut = false;
+            for (SalesOrder so : Main.allOrderData.getList()) {
+                for (ProductionOrder po : so.getProductOrderList().getList()) {
+                    for (Item item : po.getItemList().getList()) {
+                        if (si.canCut(item)) {
+                            hasItemToCut = true;
+                        }
+                    }
+                }
+            }
+            if (hasItemToCut) {
+                sil.add(si);
+            }
+        }
+        return sil;
     }
 }

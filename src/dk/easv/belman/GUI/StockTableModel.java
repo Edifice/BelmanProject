@@ -23,7 +23,7 @@ public class StockTableModel extends AbstractTableModel {
      * @param stockList Constructs a table model based on a StockList.
      */
     public StockTableModel(StockItemList stockList) {
-        this.setStockList(stockList);
+        this.stockList = stockList;
         fireTableDataChanged();
     }
 
@@ -77,23 +77,7 @@ public class StockTableModel extends AbstractTableModel {
      * @param stockList The StockItemList that needs to be set.
      */
     public void setStockList(StockItemList stockList) {
-        this.stockList = new StockItemList();
-
-        for (StockItem si : stockList.getList()) {
-            boolean hasItemToCut = false;
-            for (SalesOrder so : Main.allOrderData.getList()) {
-                for (ProductionOrder po : so.getProductOrderList().getList()) {
-                    for (Item item : po.getItemList().getList()) {
-                        if (si.canCut(item)) {
-                            hasItemToCut = true;
-                        }
-                    }
-                }
-            }
-            if (hasItemToCut) {
-                this.stockList.add(si);
-            }
-        }
+        this.stockList = stockList;
         this.fireTableDataChanged();
     }
 

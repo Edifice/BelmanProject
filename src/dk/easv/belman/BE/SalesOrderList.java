@@ -1,9 +1,11 @@
 package dk.easv.belman.BE;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 //</editor-fold>
 
 public class SalesOrderList extends BList<SalesOrder> {
@@ -210,12 +212,14 @@ public class SalesOrderList extends BList<SalesOrder> {
      * @return 
      */
     public SalesOrderList filterByDone(boolean isDone) {
-        for (SalesOrder so : ((SalesOrderList) this.copy()).getList()) {
+        SalesOrderList sol = (SalesOrderList) this.copy();
+        for (Iterator<SalesOrder> it = new ArrayList<>(sol.getList()).iterator(); it.hasNext();) {
+            SalesOrder so = it.next();
             if (isDone && !so.isDone() || !isDone && so.isDone()) {
-                this.remove(so);
+                sol.remove(so);
             }
         }
-        return this;
+        return sol;
 //        SalesOrderList sol = new SalesOrderList();
 //         for (SalesOrder so : sol.getList()) {
 //         if (isDone && !so.isDone() || !isDone && so.isDone()) {
