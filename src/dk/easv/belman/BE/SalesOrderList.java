@@ -12,7 +12,6 @@ public class SalesOrderList extends BList<SalesOrder> {
 
     public SalesOrderList() {
     }
-    
     /**
      * This is where the sorting by ID in an ascending order happens.
      */
@@ -23,7 +22,6 @@ public class SalesOrderList extends BList<SalesOrder> {
             return codeDifference;
         }
     };
-    
     /**
      * This is where the sorting by due date in an ascending order happens.
      */
@@ -207,29 +205,6 @@ public class SalesOrderList extends BList<SalesOrder> {
     }
 
     /**
-     * @TODO JavaDoc
-     * @param isDone
-     * @return 
-     */
-    public SalesOrderList filterByDone(boolean isDone) {
-        SalesOrderList sol = (SalesOrderList) this.copy();
-        for (Iterator<SalesOrder> it = new ArrayList<>(sol.getList()).iterator(); it.hasNext();) {
-            SalesOrder so = it.next();
-            if (isDone && !so.isDone() || !isDone && so.isDone()) {
-                sol.remove(so);
-            }
-        }
-        return sol;
-//        SalesOrderList sol = new SalesOrderList();
-//         for (SalesOrder so : sol.getList()) {
-//         if (isDone && !so.isDone() || !isDone && so.isDone()) {
-//         sol.add(so);
-//         }
-//         }
-//         return sol;
-    }
-
-    /**
      * This method filters a SalesOrderList by a selected StockItem and checks
      * for the Items/Sleeves that have the SAME MaterialID, SAME Thickness,
      * SMALLER or the SAME Width, and SMALLER or the SAME Circumference.
@@ -268,7 +243,7 @@ public class SalesOrderList extends BList<SalesOrder> {
 
     /**
      * @TODO JavaDoc
-     * @return 
+     * @return
      */
     public ProductionOrderList getProductOrderList() {
         ProductionOrderList list = new ProductionOrderList();

@@ -161,7 +161,8 @@ public class Item extends IEntity {
      */
     public int getRemaningCuts() {
         int initialQuantity = this.getQuantity();
-        for (Cut cut : Main.allCuts.getCutsBySleeve(this).getList()) {
+        CutList list = Main.allCuts.getCutsBySleeve(this);
+        for (Cut cut : list.getList()) {
             initialQuantity = initialQuantity - cut.getQuantity();
         }
         return initialQuantity;

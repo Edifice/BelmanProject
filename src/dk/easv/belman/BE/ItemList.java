@@ -2,15 +2,18 @@ package dk.easv.belman.BE;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.GUI.Main;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 //</editor-fold>
 
 public class ItemList extends BList<Item> {
 
     public ItemList filterByDone(boolean isDone) {
         ItemList ret = (ItemList) this.copy();
-        for (Item i : ret.getList()) {
-            if (isDone && i.isDone() || !isDone && !i.isDone()) {
+        for (Iterator<Item> it = new ArrayList<>(ret.getList()).iterator(); it.hasNext();) {
+            Item i = it.next();
+            if ((!isDone && i.isDone()) || (isDone && !i.isDone())) {
                 ret.remove(i);
             }
         }

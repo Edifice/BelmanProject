@@ -3,6 +3,7 @@ package dk.easv.belman.GUI;
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.Item;
+import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.Operator;
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
@@ -66,7 +67,7 @@ public class MainGui extends javax.swing.JFrame {
     public void scheduledUpdate(boolean newOrders) {
         if (newOrders) {
             stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem));
-            sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem));
+            sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false));
         }
     }
 
@@ -78,8 +79,7 @@ public class MainGui extends javax.swing.JFrame {
         // Sleeve table
         tblSleeves = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sp = new JScrollPane(tblSleeves); // Creates a Scroll Pane where the table will be.
-        sleeveModel = new SleeveTableModel(Main.allOrderData); // Initializes the SleeveTableModel.
-        //sleeveModel = new SleeveTableModel(Main.allOrderData.filterByDone(false)); // Initializes the SleeveTableModel.
+        sleeveModel = new SleeveTableModel(Main.allOrderData.getItemList().filterByDone(false)); // Initializes the SleeveTableModel.
         tblSleeves.setModel(sleeveModel); // Sets the table model.
         tblSleeves.setDragEnabled(false); // Dragging is disabled.
         tblSleeves.setColumnControlVisible(true); // Column control settings are enabled.
@@ -200,7 +200,7 @@ public class MainGui extends javax.swing.JFrame {
                     } else {
                         selectedStockItem = stockModel.getStockByRow(tblStock.convertRowIndexToModel(tblStock.getSelectedRow())); // Set the selected StockItem.
                         // Filter the table with Items/Sleeves, by the currently selected StockItem.
-                        sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem));
+                        sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false));
                         // Set the selected StockItem ready-to-cut.
                         txtStockItem.setText(selectedStockItem.getCode());
                     }
@@ -625,7 +625,7 @@ public class MainGui extends javax.swing.JFrame {
                     selectedItem.setDone(true); // Sets the selected sleeve entity to done.
                     selectedItem.save(); // Updates the selected sleeve (sets it to done) in the database.
                 }
-                sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem));
+                sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false));
                 cut.save();
                 if (remainingQuantity == 0) { // If there are no more cuts to do for that Sleeve.
                     selectedItem.setDone(true); // Sets the selected sleeve entity to done.
@@ -633,7 +633,7 @@ public class MainGui extends javax.swing.JFrame {
                 }
                 cut.recordCut(); // Updates a StockItem entity and the database as well.
                 stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem)); // Refreshes the Stock table.
-                sleeveModel.setItemList(Main.allOrderData.filterByDone(false).filterByStockItem(selectedStockItem)); // Refreshes the Sleeve table.
+                sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false)); // Refreshes the Sleeve table.
                 setEnabledTo(true, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
                 Main.allCuts = ListManager.getAllCuts();
                 cutInProgress = false;
@@ -649,31 +649,10 @@ public class MainGui extends javax.swing.JFrame {
 
     private void btnSleeveSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSleeveSearchActionPerformed
         // Sleeve search
-        String search = txtSleeveSearch.getText();
-        if (search.isEmpty()) {
-            sleeveModel.setItemList(Main.allOrderData.getItemList().filterByDone(false));
-        } else {
-            SalesOrderList sol = new SalesOrderList();
-
-            for (SalesOrder s : Main.allOrderData.getList()) {
-                if (s.getDescription().contains(search) || String.valueOf(s.getId()).contains(search)) {
-                    if (!sol.hasId(s.getId())) {
-                        sol.add(s);
-                    }
-                }
-                for (ProductionOrder p : s.getProductOrderList().getList()) {
-                    if (p.getDescription().contains(search) || String.valueOf(p.getId()).contains(search)) {
-                        if (!sol.hasId(s.getId())) {
-                            sol.add(s);
-                        }
-                    }
-                }
-            }
-            if (sol.size() > 0) {
-                sleeveModel.setItemList(sol.getItemList());
-            } else {
-                JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
-            }
+        ItemList il = ListManager.searchForSleeve(txtSleeveSearch.getText());
+        sleeveModel.setItemList(il);
+        if (il.size() == 0) {
+            JOptionPane.showMessageDialog(this, "Nothing was found from your query", "Nothing found", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSleeveSearchActionPerformed
 
@@ -692,7 +671,6 @@ public class MainGui extends javax.swing.JFrame {
             c.setEnabled(visibility);
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutAction;
     private javax.swing.JButton btnHistory;

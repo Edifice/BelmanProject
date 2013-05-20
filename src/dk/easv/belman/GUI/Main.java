@@ -21,31 +21,30 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 
     //<editor-fold defaultstate="collapsed" desc=" Global storage and settings variables ">
-    public static StockItemList allStockData; // Initial stock data is stored right from the startup of the program.
     public static SalesOrderList allOrderData; // Initial order data is stored right from the startup of the program.
-    public static CutList allCuts; // Initial cut data is stored right from the startup of the program.
+    public static StockItemList allStockData; // Initial stock data is stored right from the startup of the program.
     public static OperatorList allOperatorData; // Initial operators are stored right from the statup of the program.
+    public static CutList allCuts; // Initial cut data is stored right from the startup of the program.
     public static final int URGENT_DAYS = 3; // The number of days to set a SalesOrder to Urgent if that is within.
     private static final int SCHEDULER_PERIOD = 10; // Scheduler period in minutes.
     private static final String pathToIcon = "img/logo.jpg"; // Path to the icon. @TODO Convert it to .ico and rename it from logo to icon
     private static MainGui gui; // The main UI component.
-    private static ListManager lists = new ListManager();
     //</editor-fold>
 
     public static void main(String[] args) {
+        //<editor-fold defaultstate="collapsed" desc=" Initialized the allOrderData, allStockData and allOperatorData with data from the database. ">
+        allOrderData = ListManager.getAllSO();
+        allStockData = ListManager.getAllSI();
+        allOperatorData = ListManager.getAllOP();
+        allCuts = ListManager.getAllCuts();
+        //</editor-fold>
+
         //<editor-fold defaultstate="collapsed" desc=" Set the look and feel of the program ">
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc=" Initialized the allOrderData, allStockData and allOperatorData with data from the database. ">
-        allOrderData = ListManager.getAllSO();
-        allStockData = ListManager.getAllSI();
-        allOperatorData = ListManager.getAllOP();
-        allCuts = ListManager.getAllCuts();
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc=" Start the GUI ">

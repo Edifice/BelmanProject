@@ -12,7 +12,6 @@ import javax.swing.table.AbstractTableModel;
 
 public class SleeveTableModel extends AbstractTableModel {
 
-    private SalesOrderList sList; // A list of SalesOrders which contains the production orders and items inside it.
     private ItemList iList; // The contents of the table.
     // The names of columns
     private String[] colNames = {"Description", "Due Date", "Mat ID", "Width", "Circumferance", "Thickness", "Quantity", "Left"};
@@ -24,9 +23,8 @@ public class SleeveTableModel extends AbstractTableModel {
      *
      * @param sList Constructs a table model based on a SalesOrdeList.
      */
-    public SleeveTableModel(SalesOrderList sList) {
-        this.sList = sList;
-        this.iList = sList.getItemList();
+    public SleeveTableModel(ItemList list) {
+        this.iList = list;
         fireTableDataChanged();
     }
 
@@ -65,13 +63,6 @@ public class SleeveTableModel extends AbstractTableModel {
                 return item.getRemaningCuts();
         }
         return null;
-    }
-
-    /**
-     * @return The SalesOrderList that is being used by the table model.
-     */
-    public SalesOrderList getSList() {
-        return sList;
     }
 
     /**

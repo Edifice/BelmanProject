@@ -134,7 +134,7 @@ public class ListManager {
      *
      * @param sol
      * @return itemList
-     * 
+     *
      * @TODO Check the problem
      */
 //     public ItemList getAllItemsNotDone(SalesOrderList sol) {
@@ -148,7 +148,6 @@ public class ListManager {
 //     }
 //     return itemList;
 //     }
-    
     /**
      * This method returns all the Operators in an OperatorList.
      *
@@ -195,7 +194,7 @@ public class ListManager {
 
     /**
      * @TODO JavaDoc
-     * @param stockItem 
+     * @param stockItem
      */
     public static void updateStock(StockItem stockItem) {
         try {
@@ -203,6 +202,30 @@ public class ListManager {
             handler.updateStock(stockItem);
         } catch (SQLException | FileNotFoundException ex) {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static ItemList searchForSleeve(String search) {
+        if (search.isEmpty()) {
+            return Main.allOrderData.getItemList().filterByDone(false);
+        } else {
+            SalesOrderList sol = new SalesOrderList();
+
+            for (SalesOrder s : Main.allOrderData.getList()) {
+                if (s.getDescription().contains(search) || String.valueOf(s.getId()).contains(search)) {
+                    if (!sol.hasId(s.getId())) {
+                        sol.add(s);
+                    }
+                }
+                for (ProductionOrder p : s.getProductOrderList().getList()) {
+                    if (p.getDescription().contains(search) || String.valueOf(p.getId()).contains(search)) {
+                        if (!sol.hasId(s.getId())) {
+                            sol.add(s);
+                        }
+                    }
+                }
+            }
+            return sol.getItemList();
         }
     }
 }

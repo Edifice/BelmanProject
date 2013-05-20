@@ -102,12 +102,6 @@ public class StockTableModel extends AbstractTableModel {
     }
 
     private int stockItemOrderCount(StockItem si) {
-        int ret = 0;
-        for (SalesOrder so : Main.allOrderData.getList()) {
-            for (ProductionOrder po : so.getProductOrderList().getList()) {
-                ret += Main.allOrderData.filterByStockItem(si).size();
-            }
-        }
-        return ret;
+        return Main.allOrderData.filterByStockItem(si).size();
     }
 }
