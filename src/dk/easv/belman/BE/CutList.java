@@ -1,5 +1,7 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.BLL.ListManager;
+
 public class CutList extends BList<Cut> {
 
     public CutList getCutsBySleeve(Item sleeve) {
@@ -21,5 +23,10 @@ public class CutList extends BList<Cut> {
         }
         return ret;
 
+    }
+
+    @Override
+    public void update() {
+        this.setList(ListManager.getAllCuts().getList());
     }
 }
