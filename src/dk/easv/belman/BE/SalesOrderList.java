@@ -250,6 +250,7 @@ public class SalesOrderList extends BList<SalesOrder> {
 
         for (SalesOrder s : this.getList()) {
             for (ProductionOrder p : s.getProductOrderList().getList()) {
+                p.setParent(s);
                 list.add(p);
             }
         }

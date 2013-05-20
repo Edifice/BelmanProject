@@ -20,3 +20,4 @@ nb-configuration.xml
 *.out
 /README-MarkdownPadPreview.html
 nbproject/phpcsmd.properties
+/*.serialize
