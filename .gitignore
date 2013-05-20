@@ -21,3 +21,4 @@ nb-configuration.xml
 /README-MarkdownPadPreview.html
 nbproject/phpcsmd.properties
 /*.serialize
+Belman_export_*.xml

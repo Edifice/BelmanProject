@@ -11,4 +11,15 @@ public class CutList extends BList<Cut> {
         }
         return cutList;
     }
+
+    public CutList filterByArchive(boolean isArchived) {
+        CutList ret = new CutList();
+        for (Cut cut : this.getList()) {
+            if (cut.isArchived() == isArchived) {
+                ret.add(cut);
+            }
+        }
+        return ret;
+
+    }
 }

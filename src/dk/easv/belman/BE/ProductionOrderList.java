@@ -17,7 +17,6 @@ public class ProductionOrderList extends BList<ProductionOrder> {
     public ProductionOrderList(SalesOrder parent) {
         this.parent = parent;
     }
-    
     /**
      * This is where the sorting by ID in an ascending order happens.
      */
@@ -82,16 +81,15 @@ public class ProductionOrderList extends BList<ProductionOrder> {
 
     /**
      * @TODO JavaDoc
-     * @return 
+     * @return
      */
     public ProductionOrderList filterIsDone() {
         ProductionOrderList pol = (ProductionOrderList) this.copy();
         for (Iterator<ProductionOrder> it = new ArrayList<>(pol.getList()).iterator(); it.hasNext();) {
             ProductionOrder po = it.next();
             boolean delete = false;
-            for (Iterator<Item> it2 = new ArrayList<>(po.getItemList().getList()).iterator(); it2.hasNext();) {
-                Item item = it2.next();
-                if (item.isDone()) {
+            for (Item item : po.getItemList().getList()) {
+                if (!item.isDone()) {
                     delete = true;
                 }
             }

@@ -204,4 +204,9 @@ public class StockItem extends IEntity {
     public void update() {
         ListManager.updateStock(this);
     }
+
+    @Override
+    public void save() {
+        ListManager.updateStock(this);
+    }
 }
