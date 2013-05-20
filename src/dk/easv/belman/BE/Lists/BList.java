@@ -1,6 +1,7 @@
-package dk.easv.belman.BE;
+package dk.easv.belman.BE.Lists;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.BE.IEntity;
 import static dk.easv.belman.BLL.Serialize.*;
 import java.io.IOException;
 import java.io.Serializable;

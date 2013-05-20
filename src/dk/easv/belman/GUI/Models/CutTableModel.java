@@ -1,8 +1,8 @@
-package dk.easv.belman.GUI;
+package dk.easv.belman.GUI.Models;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
-import dk.easv.belman.BE.CutList;
+import dk.easv.belman.BE.Lists.CutList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,5 +1,7 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.BE.Lists.ProductionOrderList;
+
 public class SalesOrder extends IEntity {
 
     private int id;

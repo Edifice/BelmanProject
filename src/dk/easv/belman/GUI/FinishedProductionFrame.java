@@ -1,6 +1,7 @@
 package dk.easv.belman.GUI;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.GUI.Models.POTableModel;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -10,35 +11,45 @@ import org.jdesktop.swingx.JXTable;
 
 public class FinishedProductionFrame extends javax.swing.JFrame {
 
-    private MainGui parent;
-    private JXTable table;
-
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">
+    private MainGui parent; // The parent frame.
+    private JXTable table; // The JXTable where we show the finished production orders.
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">
     /**
      * Creates new form CutHistoryFrame
      */
     public FinishedProductionFrame(MainGui parent) {
-        this.parent = parent;
-        initComponents();
-        init();
-        this.setVisible(true);
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.parent = parent; // Set the parent.
+        initComponents(); // Init components put in using the NetBeans designer.
+        init(); // Init other components.
+        this.setVisible(true); // Set the frame visible.
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Only dispose this window in case the 'Close' button is pressed.
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Initialize components ">
+    /**
+     * Initialize components which were added/created manually.
+     */
     private void init() {
         //Initialize the table and sets the model
         table = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sf = new JScrollPane(table); // Creates a Scroll Pane where the table will be.
-        table.setModel(new POTableModel(Main.allOrderData.getProductOrderList().filterIsDone()));
-        setTableProperties(table);
+        table.setModel(new POTableModel(Main.allOrderData.getProductOrderList().filterIsDone())); // Create a TableModel based on a list of only finished production orders and set in to the table.
+        setTableProperties(table); // Set the table properites.
 
-        pnlTable.setLayout(new BorderLayout());
-        pnlTable.add(sf);
+        pnlTable.setLayout(new BorderLayout()); // Set the panel layout to BorderLayout.
+        pnlTable.add(sf); // Add the panel with the table to it.
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Table properties ">
     /**
      * Set different properties for the given table.
      *
-     * @param table
+     * @param table The table to which we set the properties.
      */
     public void setTableProperties(JXTable table) {
         table.setDragEnabled(false); // Dragging is disabled.
@@ -47,7 +58,9 @@ public class FinishedProductionFrame extends javax.swing.JFrame {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
         table.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sets the sorting order to ASC > DESC > Unsorted.
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Initialize components (Auto-generated code) ">
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,7 +106,11 @@ public class FinishedProductionFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc=" More variables ">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pnlTable;
     // End of variables declaration//GEN-END:variables
+    //</editor-fold>
 }

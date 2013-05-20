@@ -3,15 +3,15 @@ package dk.easv.belman.DAL;
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.belman.BE.Cut;
-import dk.easv.belman.BE.CutList;
+import dk.easv.belman.BE.Lists.CutList;
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.Operator;
-import dk.easv.belman.BE.OperatorList;
+import dk.easv.belman.BE.Lists.OperatorList;
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
-import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.Lists.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
-import dk.easv.belman.BE.StockItemList;
+import dk.easv.belman.BE.Lists.StockItemList;
 import dk.easv.belman.GUI.Main;
 import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
@@ -144,10 +144,10 @@ public class DataHandler extends DBConnection {
         connection = dataSource.getConnection();
         try {
             connection.setAutoCommit(false);
-            PreparedStatement st = connection.prepareStatement("UPDATE Item "
-                    + "SET is_done = ? "
-                    + "WHERE id = ?");
-            st.setInt(1, sleeve.isDone() ? 1 : 0);
+            PreparedStatement st = connection.prepareStatement("UPDATE Item"
+                    + " SET is_done = ?"
+                    + " WHERE id = ?");
+            st.setBoolean(1, sleeve.isDone());
             st.setInt(2, sleeve.getId());
             st.executeUpdate();
             connection.commit();

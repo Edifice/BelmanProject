@@ -1,5 +1,6 @@
-package dk.easv.belman.BE;
+package dk.easv.belman.BE.Lists;
 
+import dk.easv.belman.BE.Operator;
 import dk.easv.belman.BLL.ListManager;
 
 public class OperatorList extends BList<Operator> {

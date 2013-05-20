@@ -1,11 +1,12 @@
-package dk.easv.belman.GUI;
+package dk.easv.belman.GUI.Models;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.StockItem;
-import dk.easv.belman.BE.StockItemList;
+import dk.easv.belman.BE.Lists.StockItemList;
+import dk.easv.belman.GUI.Main;
 import javax.swing.table.AbstractTableModel;
 //</editor-fold>
 

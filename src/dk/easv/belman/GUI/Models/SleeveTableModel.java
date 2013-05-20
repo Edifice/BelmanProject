@@ -1,9 +1,10 @@
-package dk.easv.belman.GUI;
+package dk.easv.belman.GUI.Models;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Item;
-import dk.easv.belman.BE.ItemList;
-import dk.easv.belman.BE.SalesOrderList;
+import dk.easv.belman.BE.Lists.ItemList;
+import dk.easv.belman.BE.Lists.SalesOrderList;
+import dk.easv.belman.GUI.Main;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

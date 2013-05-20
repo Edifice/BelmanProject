@@ -1,6 +1,7 @@
-package dk.easv.belman.BE;
+package dk.easv.belman.BE.Lists;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.BE.Item;
 import dk.easv.belman.GUI.Main;
 import java.util.ArrayList;
 import java.util.Date;

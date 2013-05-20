@@ -2,7 +2,7 @@ package dk.easv.belman.BLL;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
-import dk.easv.belman.BE.CutList;
+import dk.easv.belman.BE.Lists.CutList;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;

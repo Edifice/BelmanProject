@@ -1,6 +1,7 @@
 package dk.easv.belman.BE;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.BE.Lists.CutList;
 import dk.easv.belman.BLL.ListManager;
 import dk.easv.belman.GUI.Main;
 //</editor-fold>
@@ -161,7 +162,7 @@ public class Item extends IEntity {
      */
     public int getRemaningCuts() {
         int initialQuantity = this.getQuantity();
-        CutList list = Main.allCuts.getCutsBySleeve(this).filterByArchive(false);
+        CutList list = Main.allCutData.getCutsBySleeve(this).filterByArchive(false);
         for (Cut cut : list.getList()) {
             initialQuantity = initialQuantity - cut.getQuantity();
         }

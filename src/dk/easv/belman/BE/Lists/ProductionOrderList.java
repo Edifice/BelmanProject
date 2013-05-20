@@ -1,6 +1,9 @@
-package dk.easv.belman.BE;
+package dk.easv.belman.BE.Lists;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.BE.Item;
+import dk.easv.belman.BE.ProductionOrder;
+import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BLL.ListManager;
 import java.util.ArrayList;
 import java.util.Collections;

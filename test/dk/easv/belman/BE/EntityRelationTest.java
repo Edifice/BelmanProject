@@ -1,5 +1,8 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.BE.Lists.ItemList;
+import dk.easv.belman.BE.Lists.SalesOrderList;
+import dk.easv.belman.BE.Lists.ProductionOrderList;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;

@@ -1,5 +1,7 @@
-package dk.easv.belman.BE;
+package dk.easv.belman.BE.Lists;
 
+import dk.easv.belman.BE.Cut;
+import dk.easv.belman.BE.Item;
 import dk.easv.belman.BLL.ListManager;
 
 public class CutList extends BList<Cut> {
