@@ -1,6 +1,7 @@
 package dk.easv.belman.DAL;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.Item;
@@ -34,7 +35,7 @@ public class DataHandler extends DBConnection {
      */
     public SalesOrderList getAllSO() throws SQLException {
 
-//        int so_i = 0, po_i = 0, i_i = 0; // for statistics
+        int so_i = 0, po_i = 0, i_i = 0; // for statistics
 
         SalesOrderList ret = new SalesOrderList();
         connection = dataSource.getConnection();
@@ -109,19 +110,19 @@ public class DataHandler extends DBConnection {
                 if (SO_new) {
                     so.getProductOrderList().add(po);
                     ret.add(so);
-//                    so_i++;
-//                    po_i++;
-//                    i_i++;
+                    so_i++;
+                    po_i++;
+                    i_i++;
                 } else {
                     if (PO_new) {
                         so.getProductOrderList().add(po);
                         ret.set(so);
-//                        po_i++;
-//                        i_i++;
+                        po_i++;
+                        i_i++;
                     } else {
                         so.getProductOrderList().set(po);
                         ret.set(so);
-//                        i_i++;
+                        i_i++;
                     }
                 }
             }
@@ -130,7 +131,7 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("statistics: \n\tSalesOrderList size: " + so_i + ", \n\tProdcutionOrderList size: " + po_i + ", \n\tItemList size: " + i_i);
+        System.out.println("statistics: \n\tSalesOrderList size: " + so_i + ", \n\tProdcutionOrderList size: " + po_i + ", \n\tItemList size: " + i_i);
         return ret;
     }
 
@@ -154,7 +155,7 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("Statistics: \n\Item/Sleeve was set to: "+sleeve.isDone());
+        System.out.println("Statistics: \n\tSleeve was set to: " + sleeve.isDone());
     }
 
     /**
@@ -204,7 +205,7 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("Statistics: \n\tStockItemList size: " + ret.size());
+        System.out.println("Statistics: \n\tStockItemList size: " + ret.size());
         return ret;
     }
 
@@ -245,7 +246,7 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("Statistics: \n\tOperatorList size: " + ret.size());
+        System.out.println("Statistics: \n\tOperatorList size: " + ret.size());
         return ret;
     }
 
@@ -284,7 +285,7 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("Statistics: \n\tCutList size: " + ret.size());
+        System.out.println("Statistics: \n\tCutList size: " + ret.size());
         return ret;
     }
 
@@ -321,7 +322,7 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("Statistics: \n\The following cut was inserted: "+cut.getId());
+        System.out.println("Statistics: \n\tThe following cut was inserted: " + cut.getId());
     }
 
     /**
@@ -344,6 +345,30 @@ public class DataHandler extends DBConnection {
             connection.setAutoCommit(true);
             connection.close();
         }
-//        System.out.println("Statistics: \n\The length of StockItem #"+"stockItem.getId()"+" was updated to: "+stockItem.getLength());
+        System.out.println("Statistics: \n\tThe length of StockItem #" + stockItem.getId() + " was updated to: " + stockItem.getLength());
+    }
+
+    /**
+     * Setting a Cut's archived field in the database.
+     *
+     * @param cut Cut
+     * @throws SQLException
+     */
+    public void updateCut(Cut cut) throws SQLException {
+        connection = dataSource.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement st = connection.prepareStatement("UPDATE Cut "
+                    + "SET archived = ? "
+                    + "WHERE id = ?");
+            st.setBoolean(1, cut.isArchived());
+            st.setInt(2, cut.getId());
+            st.executeUpdate();
+            connection.commit();
+        } finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
+        System.out.println("Statistics: \n\tThe Cut #" + cut.getId() + " was set to :" + (cut.isArchived() ? "archived" : "unarchived"));
     }
 }

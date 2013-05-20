@@ -155,7 +155,7 @@ public class Cut extends IEntity {
         if (this.getId() == 0) {
             ListManager.insertCut(this);
         } else {
-            throw new UnsupportedOperationException("a-a-a");
+            ListManager.updateCut(this);
         }
     }
 

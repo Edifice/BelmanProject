@@ -228,4 +228,13 @@ public class ListManager {
             return sol.getItemList();
         }
     }
+
+    public static void updateCut(Cut cut) {
+        try {
+            handler = new DataHandler();
+            handler.updateCut(cut);
+        } catch (SQLException | FileNotFoundException ex) {
+            Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
