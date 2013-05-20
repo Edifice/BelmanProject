@@ -21,10 +21,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 
     //<editor-fold defaultstate="collapsed" desc=" Global storage and settings variables ">
-    public static SalesOrderList allOrderData; // Initial order data is stored right from the startup of the program.
-    public static StockItemList allStockData; // Initial stock data is stored right from the startup of the program.
-    public static OperatorList allOperatorData; // Initial operators are stored right from the statup of the program.
-    public static CutList allCuts; // Initial cut data is stored right from the startup of the program.
+    public static SalesOrderList allOrderData = new SalesOrderList(); // Initial order data is stored right from the startup of the program.
+    public static StockItemList allStockData = new StockItemList(); // Initial stock data is stored right from the startup of the program.
+    public static OperatorList allOperatorData = new OperatorList(); // Initial operators are stored right from the statup of the program.
+    public static CutList allCuts = new CutList(); // Initial cut data is stored right from the startup of the program.
     public static final int URGENT_DAYS = 3; // The number of days to set a SalesOrder to Urgent if that is within.
     private static final int SCHEDULER_PERIOD = 10; // Scheduler period in minutes.
     private static final String pathToIcon = "img/logo.jpg"; // Path to the icon. @TODO Convert it to .ico and rename it from logo to icon

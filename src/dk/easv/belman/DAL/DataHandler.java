@@ -278,6 +278,7 @@ public class DataHandler extends DBConnection {
                 cut.setDate(rs.getTimestamp("date").getTime());
                 cut.setQuantity(rs.getInt("quantity"));
                 cut.setWaste(rs.getDouble("waste"));
+                cut.setArchived(rs.getBoolean("archived"));
                 ret.add(cut);
             }
             connection.commit();
@@ -307,8 +308,9 @@ public class DataHandler extends DBConnection {
                     + "ItemStock.time_spent, "
                     + "ItemStock.[date],"
                     + "ItemStock.quantity, "
-                    + "ItemStock.waste) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    + "ItemStock.waste, "
+                    + "ItemStock.archived) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");          
             st.setInt(1, cut.getSleeve().getId());
             st.setInt(2, cut.getStockItem().getId());
             st.setInt(3, cut.getOperator().getId());
@@ -316,6 +318,7 @@ public class DataHandler extends DBConnection {
             st.setTimestamp(5, new Timestamp(cut.getDate()));
             st.setInt(6, cut.getQuantity());
             st.setDouble(7, cut.getWaste());
+            st.setBoolean(8, cut.isArchived());
             st.executeUpdate();
             connection.commit();
         } finally {
@@ -358,7 +361,7 @@ public class DataHandler extends DBConnection {
         connection = dataSource.getConnection();
         try {
             connection.setAutoCommit(false);
-            PreparedStatement st = connection.prepareStatement("UPDATE Cut "
+            PreparedStatement st = connection.prepareStatement("UPDATE ItemStock "
                     + "SET archived = ? "
                     + "WHERE id = ?");
             st.setBoolean(1, cut.isArchived());

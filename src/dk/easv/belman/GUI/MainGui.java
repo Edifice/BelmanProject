@@ -34,12 +34,12 @@ public class MainGui extends javax.swing.JFrame {
 
     // Sleeve/Item table and it's model.
     private JXTable tblSleeves;
-    private SleeveTableModel sleeveModel;
+    protected SleeveTableModel sleeveModel;
     // Currently selected Item/Sleeve from the table.
     private Item selectedItem;
     // Stock table and it's model.
     private JXTable tblStock;
-    private StockTableModel stockModel;
+    protected StockTableModel stockModel;
     // Currently selected StockItem from the table.
     private StockItem selectedStockItem;
     // Timers for calculating time for each cut;
@@ -257,7 +257,7 @@ public class MainGui extends javax.swing.JFrame {
         btnHistory = new javax.swing.JButton();
         txtSleeveSearch = new javax.swing.JTextField();
         btnSleeveSearch = new javax.swing.JButton();
-        btnHistory1 = new javax.swing.JButton();
+        btnFinished = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         pnlWest = new javax.swing.JPanel();
         pnlSpacing = new javax.swing.JPanel();
@@ -397,10 +397,10 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
 
-        btnHistory1.setText("Finished");
-        btnHistory1.addActionListener(new java.awt.event.ActionListener() {
+        btnFinished.setText("Finished");
+        btnFinished.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistory1ActionPerformed(evt);
+                btnFinishedActionPerformed(evt);
             }
         });
 
@@ -418,7 +418,7 @@ public class MainGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(196, 196, 196)
-                .addComponent(btnHistory1)
+                .addComponent(btnFinished)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHistory)
                 .addContainerGap())
@@ -433,7 +433,7 @@ public class MainGui extends javax.swing.JFrame {
                     .addComponent(btnHistory)
                     .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSleeveSearch)
-                    .addComponent(btnHistory1))
+                    .addComponent(btnFinished))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -596,7 +596,7 @@ public class MainGui extends javax.swing.JFrame {
                 startTime = new Date(); // Sets a start time for tracking the time for the cut
                 timerStart();
                 btnCutAction.setText("Stop");
-                setEnabledTo(false, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
+                setEnabledTo(false, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount, btnHistory, btnFinished);
                 cutInProgress = true;
             } else {
                 endTime = new Date(); // Sets a end time for tracking the time for the cut
@@ -618,10 +618,6 @@ public class MainGui extends javax.swing.JFrame {
                 int remainingQuantity = cut.getSleeve().getRemaningCuts();
                 txtQuantity.setText(String.valueOf(remainingQuantity));
                 setCutAmount();
-                if (remainingQuantity == 0) {
-                    selectedItem.setDone(true); // Sets the selected sleeve entity to done.
-                    selectedItem.save(); // Updates the selected sleeve (sets it to done) in the database.
-                }
                 sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false));
                 cut.save();
                 if (remainingQuantity == 0) { // If there are no more cuts to do for that Sleeve.
@@ -631,7 +627,7 @@ public class MainGui extends javax.swing.JFrame {
                 cut.recordCut(); // Updates a StockItem entity and the database as well.
                 stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem)); // Refreshes the Stock table.
                 sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false)); // Refreshes the Sleeve table.
-                setEnabledTo(true, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
+                setEnabledTo(true, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount, btnHistory, btnFinished);
                 Main.allCuts.update();
                 cutInProgress = false;
             }
@@ -653,9 +649,9 @@ public class MainGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSleeveSearchActionPerformed
 
-    private void btnHistory1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistory1ActionPerformed
+    private void btnFinishedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishedActionPerformed
         FinishedProductionFrame fpf = new FinishedProductionFrame(this);
-    }//GEN-LAST:event_btnHistory1ActionPerformed
+    }//GEN-LAST:event_btnFinishedActionPerformed
 
     /**
      * Takes in multiple Components and sets the 'enable' option for all.
@@ -670,8 +666,8 @@ public class MainGui extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutAction;
+    private javax.swing.JButton btnFinished;
     private javax.swing.JButton btnHistory;
-    private javax.swing.JButton btnHistory1;
     private javax.swing.JButton btnSleeveSearch;
     private javax.swing.JButton btnStockItemSearch;
     private javax.swing.JComboBox cmbbxOperator;

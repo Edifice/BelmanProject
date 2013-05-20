@@ -1,8 +1,12 @@
 package dk.easv.belman.GUI;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BLL.XMLWriter;
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -14,6 +18,8 @@ public class HistoryFrame extends javax.swing.JFrame {
 
     private MainGui parent;
     private JXTable table;
+    private CutTableModel model;
+    private Cut selectedCut;
 
     /**
      * Creates new form CutHistoryFrame
@@ -30,11 +36,14 @@ public class HistoryFrame extends javax.swing.JFrame {
         //Initialize the table and sets the model
         table = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sf = new JScrollPane(table); // Creates a Scroll Pane where the table will be.
-        table.setModel(new CutTableModel(Main.allCuts));
+        model = new CutTableModel(Main.allCuts);
+        table.setModel(model);
         setTableProperties(table);
 
         pnlTable.setLayout(new BorderLayout());
         pnlTable.add(sf);
+
+        jButton1.setEnabled(false);
     }
 
     /**
@@ -48,7 +57,21 @@ public class HistoryFrame extends javax.swing.JFrame {
         table.packAll(); // Packs the table.
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
         table.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sets the sorting order to ASC > DESC > Unsorted.
-
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                selectedCut = null;
+                if (e.getSource().equals(HistoryFrame.this.table)) {
+                    selectedCut = model.getCutByRow(HistoryFrame.this.table.convertRowIndexToModel(HistoryFrame.this.table.getSelectedRow()));
+                }
+                System.out.println(selectedCut.getId());
+                if (selectedCut != null) {
+                    jButton1.setEnabled(true);
+                } else {
+                    jButton1.setEnabled(false);
+                }
+            }
+        });
     }
 
     /**
@@ -87,6 +110,11 @@ public class HistoryFrame extends javax.swing.JFrame {
         });
 
         jButton1.setText("Undo Cut");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,6 +154,22 @@ public class HistoryFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "The program couldn't save your XML file!", "Error in XML save", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnXMLExportActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (selectedCut != null) {
+            selectedCut.getSleeve().setDone(false);
+            selectedCut.getSleeve().save();
+            selectedCut.setArchived(true);
+            selectedCut.save();
+            Main.allCuts.update();
+            model.setCutList(Main.allCuts.filterByArchive(false));
+            Main.allOrderData.update();
+            parent.sleeveModel.setItemList(Main.allOrderData.getItemList().filterByDone(false));
+            table.clearSelection();
+            selectedCut = null;
+            jButton1.setEnabled(false);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnXMLExport;
     private javax.swing.JButton jButton1;

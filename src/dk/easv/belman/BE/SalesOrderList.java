@@ -259,15 +259,15 @@ public class SalesOrderList extends BList<SalesOrder> {
      * @return
      */
     public ProductionOrderList getProductOrderList() {
-        ProductionOrderList list = new ProductionOrderList();
+        ProductionOrderList pList = new ProductionOrderList();
 
         for (SalesOrder s : this.getList()) {
             for (ProductionOrder p : s.getProductOrderList().getList()) {
                 p.setParent(s);
-                list.add(p);
+                pList.add(p);
             }
         }
-        return list;
+        return pList;
     }
 
     @Override

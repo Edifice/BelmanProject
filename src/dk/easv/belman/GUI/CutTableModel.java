@@ -60,30 +60,13 @@ public class CutTableModel extends AbstractTableModel {
     }
 
     /**
-     * Removes an cut from the list
-     *
-     * @param cut
-     */
-    public void removeCut(Cut cut) {
-        cutList.remove(cut);
-    }
-
-    /**
-     * Adds an cut to the list
-     *
-     * @param cut
-     */
-    public void addCut(Cut cut) {
-        cutList.add(cut);
-    }
-
-    /**
      * Sets the Cut list to new cutList
      *
      * @param cutList the list of cuts to set
      */
     public void setCutList(CutList cutList) {
         this.cutList = cutList;
+        this.fireTableDataChanged();
     }
 
     /**
