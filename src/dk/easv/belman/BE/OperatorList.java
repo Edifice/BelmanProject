@@ -1,5 +1,7 @@
 package dk.easv.belman.BE;
 
+import dk.easv.belman.BLL.ListManager;
+
 public class OperatorList extends BList<Operator> {
 
     public OperatorList() {
@@ -18,5 +20,10 @@ public class OperatorList extends BList<Operator> {
             }
         }
         return null;
+    }
+
+    @Override
+    public void update() {
+        this.setList(ListManager.getAllOP().getList());
     }
 }

@@ -1,6 +1,7 @@
 package dk.easv.belman.BE;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
+import dk.easv.belman.BLL.ListManager;
 import dk.easv.belman.GUI.Main;
 import java.util.Collections;
 import java.util.Comparator;
@@ -85,5 +86,10 @@ public class StockItemList extends BList<StockItem> {
             }
         }
         return sil;
+    }
+
+    @Override
+    public void update() {
+        this.setList(ListManager.getAllSI().getList());
     }
 }

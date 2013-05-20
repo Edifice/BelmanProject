@@ -103,7 +103,8 @@ public class ListManager {
      */
     public int getRemaningCuts(CutList cutList, Item sleeve) {
         int initialQuantity = sleeve.getQuantity();
-        for (Cut cut : cutList.getCutsBySleeve(sleeve).getList()) {
+        CutList list = cutList.getCutsBySleeve(sleeve).filterByArchive(false);
+        for (Cut cut : list.getList()) {
             initialQuantity = initialQuantity - cut.getQuantity();
         }
 

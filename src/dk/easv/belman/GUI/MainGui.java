@@ -635,7 +635,7 @@ public class MainGui extends javax.swing.JFrame {
                 stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem)); // Refreshes the Stock table.
                 sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false)); // Refreshes the Sleeve table.
                 setEnabledTo(true, tblSleeves, tblStock, txtSleeveSearch, txtStockItemSearch, btnSleeveSearch, btnStockItemSearch, cmbbxWeekLimit, cmbbxOperator, txtCutAmount);
-                Main.allCuts = ListManager.getAllCuts();
+                Main.allCuts.update();
                 cutInProgress = false;
             }
         } else {

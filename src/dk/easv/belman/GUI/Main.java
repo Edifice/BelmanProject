@@ -33,10 +33,10 @@ public class Main {
 
     public static void main(String[] args) {
         //<editor-fold defaultstate="collapsed" desc=" Initialized the allOrderData, allStockData and allOperatorData with data from the database. ">
-        allOrderData = ListManager.getAllSO();
-        allStockData = ListManager.getAllSI();
-        allOperatorData = ListManager.getAllOP();
-        allCuts = ListManager.getAllCuts();
+        allOrderData.update();
+        allStockData.update();
+        allOperatorData.update();
+        allCuts.update();
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc=" Set the look and feel of the program ">
@@ -72,8 +72,8 @@ public class Main {
                 for (SalesOrder so_old : allOrderData.getList()) {
                     old_ids.add(so_old.getId());
                 }
-                allOrderData = ListManager.getAllSO();
-                allStockData = ListManager.getAllSI();
+                allOrderData.update();
+                allStockData.update();
                 boolean alert = false;
                 for (SalesOrder so_new : allOrderData.getList()) {
                     if (!old_ids.contains(so_new.getId())) {
