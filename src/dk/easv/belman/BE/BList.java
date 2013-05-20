@@ -47,34 +47,14 @@ public class BList<Type extends IEntity> implements Serializable {
      * Saving all list elements.
      */
     public void save() {
-        for (Type type : list) {
-            type.save();
-        }
+        throw new UnsupportedOperationException("You need to create a method in the child Entity");
     }
 
     /**
      * Updating all list elements from the database.
      */
     public void update() {
-        for (Type type : list) {
-            type.update();
-        }
-    }
-
-    /**
-     * Re-populates the list with all of the existing Entities.
-     */
-    public void selectAll() {
-        throw new UnsupportedOperationException("Not implemented method call");
-    }
-
-    /**
-     * Re-populates the list with the given id's.
-     *
-     * @param indexes
-     */
-    public void selectByPk(int[] index) {
-        throw new UnsupportedOperationException("Not implemented method call");
+        throw new UnsupportedOperationException("You need to create a method in the child Entity");
     }
 
     /**
@@ -84,16 +64,6 @@ public class BList<Type extends IEntity> implements Serializable {
      */
     public Type get(int i) {
         return list.get(i);
-    }
-
-    /**
-     * Set 1 specific element in the list by index
-     *
-     * @param i index of the element
-     * @param elem new element to replace the old
-     */
-    public void set(int i, Type elem) {
-        list.set(i, elem);
     }
 
     /**
@@ -121,16 +91,6 @@ public class BList<Type extends IEntity> implements Serializable {
      */
     public void add(Type elem) {
         list.add(elem);
-    }
-
-    /**
-     * Adding a new Element into a specific index.
-     *
-     * @param i
-     * @param elem
-     */
-    public void add(int i, Type elem) {
-        list.add(i, elem);
     }
 
     /**

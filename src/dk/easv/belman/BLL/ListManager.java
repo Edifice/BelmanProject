@@ -66,53 +66,6 @@ public class ListManager {
     }
 
     /**
-     * This method gets all done production orders. It takes in a sales order
-     * list, and loops through each element and gets its production order, then
-     * loops through the production orders items, and checks whether they are
-     * done or not. We make a local storage for the items, that will contain the
-     * production orders not done items, if the lists.size is greater than 0,
-     * the production order is not done.
-     *
-     * @param sList
-     * @return a ProductionOrderList containing all done production orders
-     */
-    public ProductionOrderList getAllDoneProductionOrders(SalesOrderList sList) {
-        ProductionOrderList poList = new ProductionOrderList();
-        ItemList itemList = new ItemList();
-        for (SalesOrder so : sList.getList()) {
-            for (ProductionOrder po : so.getProductOrderList().getList()) {
-                for (Item item : po.getItemList().getList()) {
-                    if (!item.isDone()) {
-                        itemList.add(item);
-                    }
-                }
-                if (itemList.size() == 0) {
-                    poList.add(po);
-                }
-            }
-        }
-        return poList;
-    }
-
-    /**
-     * This method gets the remaining cuts of a sleeve
-     *
-     * @param cutList a list containing the cuts that have been made
-     * @param sleeve is the one we check the remainder of
-     * @return the amount left to cut for the given sleeve
-     */
-    public int getRemaningCuts(CutList cutList, Item sleeve) {
-        int initialQuantity = sleeve.getQuantity();
-        CutList list = cutList.getCutsBySleeve(sleeve).filterByArchive(false);
-        for (Cut cut : list.getList()) {
-            initialQuantity = initialQuantity - cut.getQuantity();
-        }
-
-        return initialQuantity;
-
-    }
-
-    /**
      * This method returns all the cuts that was executed before, with the Item,
      * StockItem and Operator connected to that given cut.
      *
@@ -129,26 +82,6 @@ public class ListManager {
 
     }
 
-    /**
-     * This method takes in a SalesOrderList, extracts the Items from it, and
-     * only returns the ones that are not done in an ItemList.
-     *
-     * @param sol
-     * @return itemList
-     *
-     * @TODO Check the problem
-     */
-//     public ItemList getAllItemsNotDone(SalesOrderList sol) {
-//     ItemList itemList = new ItemList();
-//     for (Item item : getItemList(sol).getList()) {
-//     if (!item.isDone()) {
-//     if (!itemList.hasId(item.getSalesOrderId())) {
-//     itemList.add(item);
-//     }
-//     }
-//     }
-//     return itemList;
-//     }
     /**
      * This method returns all the Operators in an OperatorList.
      *

@@ -18,43 +18,6 @@ public class ProductionOrderList extends BList<ProductionOrder> {
     public ProductionOrderList(SalesOrder parent) {
         this.parent = parent;
     }
-    /**
-     * This is where the sorting by ID in an ascending order happens.
-     */
-    private static Comparator<ProductionOrder> COMPARE_BY_ID = new Comparator<ProductionOrder>() {
-        @Override
-        public int compare(ProductionOrder o1, ProductionOrder o2) {
-            int codeDifference = o1.getId() - o2.getId();
-            return codeDifference;
-        }
-    };
-
-    /**
-     * Basic sort by ID in ascending order.
-     */
-    public void sortByID() {
-        Collections.sort(this.getList(), COMPARE_BY_ID);
-    }
-
-    /**
-     * Checks if have Item with the given ID.
-     *
-     * @param id
-     * @return
-     */
-    public boolean hasItem(int id) {
-        boolean ret = false;
-
-        for (ProductionOrder po : this.getList()) {
-            for (Item item : po.getItemList().getList()) {
-                if (item.getId() == id) {
-                    ret = true;
-                }
-            }
-        }
-
-        return ret;
-    }
 
     /**
      * Search the list for 1 item by id

@@ -13,21 +13,6 @@ public class ProductionOrder extends IEntity {
         this.itemList = new ItemList();
     }
 
-    public ProductionOrder(SalesOrder parent) {
-        this.itemList = new ItemList();
-        this.parent = parent;
-    }
-
-    @Override
-    public void save() {
-    
-    }
-
-    @Override
-    public void update() {
-
-    }
-
     /**
      * @return the id
      */

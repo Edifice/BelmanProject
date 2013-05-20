@@ -11,23 +11,6 @@ public class StockItemList extends BList<StockItem> {
 
     public StockItemList() {
     }
-    /**
-     * This is where the sorting by ID in an ascending order happens.
-     */
-    private static Comparator<StockItem> COMPARE_BY_ID = new Comparator<StockItem>() {
-        @Override
-        public int compare(StockItem o1, StockItem o2) {
-            int codeDifference = o1.getId() - o2.getId();
-            return codeDifference;
-        }
-    };
-
-    /**
-     * Basic sort by ID in ascending order.
-     */
-    public void sortByID() {
-        Collections.sort(this.getList(), COMPARE_BY_ID);
-    }
 
     /**
      * Search the list for a stock item by id

@@ -15,40 +15,11 @@ public class IEntity implements Serializable {
      */
     private int pk = 0;
 
-    public IEntity() {
-    }
-
-    public IEntity(int pk) {
-        IEntity now = new IEntity();
-        now.pk = pk;
-        now.update();
-    }
-
     /**
      * Saves this entity to the database. And after saving it refreshes it.
      */
     public void save() {
-        //@TODO 
-        this.update();
-        throw new UnsupportedOperationException("Not implemented method call");
-    }
-
-    /**
-     * Refreshes the Entity from the DB by primary key.
-     */
-    public void update() {
-        //@TODO
-        throw new UnsupportedOperationException("Not implemented method call");
-    }
-
-    /**
-     * Changes the Entity to another one.
-     *
-     * @param indexes
-     */
-    public void selectByPk(int index) {
-        //@TODO
-        throw new UnsupportedOperationException("Not implemented method call");
+        throw new UnsupportedOperationException("You need to create a method in the child Entity");
     }
 
     /**

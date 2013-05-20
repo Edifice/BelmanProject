@@ -200,7 +200,6 @@ public class StockItem extends IEntity {
         }
     }
 
-    @Override
     public void update() {
         ListManager.updateStock(this);
     }

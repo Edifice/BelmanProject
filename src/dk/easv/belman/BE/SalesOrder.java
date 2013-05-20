@@ -12,16 +12,6 @@ public class SalesOrder extends IEntity {
         productOrderList = new ProductionOrderList(this);
     }
 
-    @Override
-    public void save() {
-//        @TODO Implementation
-    }
-
-    @Override
-    public void update() {
-//        @TODO Implementation
-    }
-
     /**
      * @return the id
      */
@@ -90,7 +80,7 @@ public class SalesOrder extends IEntity {
      * @param productOrder the productOrder to set
      */
     public void setProductOrderList(ProductionOrderList productOrderList) {
-        for(ProductionOrder po : productOrderList.getList()){
+        for (ProductionOrder po : productOrderList.getList()) {
             po.setSalesOrderId(this.id);
             po.setParent(this);
         }

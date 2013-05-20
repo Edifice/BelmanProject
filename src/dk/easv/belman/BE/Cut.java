@@ -19,17 +19,6 @@ public class Cut extends IEntity {
     public Cut() {
     }
 
-    public Cut(Item sleeve, StockItem stockItem, Operator operator, long timeSpent, long date, int quantity, double waste, boolean archived) {
-        this.sleeve = sleeve;
-        this.stockItem = stockItem;
-        this.operator = operator;
-        this.timeSpent = timeSpent;
-        this.date = date;
-        this.quantity = quantity;
-        this.waste = waste;
-        this.archived = archived;
-    }
-
     /**
      * @return the sleeve
      */
@@ -72,10 +61,18 @@ public class Cut extends IEntity {
         this.timeSpent = timeSpent;
     }
 
+    /**
+     *
+     * @return
+     */
     public Operator getOperator() {
         return operator;
     }
 
+    /**
+     *
+     * @param operator
+     */
     public void setOperator(Operator operator) {
         this.operator = operator;
     }
