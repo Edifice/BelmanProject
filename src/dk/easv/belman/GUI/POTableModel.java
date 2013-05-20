@@ -1,17 +1,17 @@
 package dk.easv.belman.GUI;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.ProductionOrderList;
-import dk.easv.belman.BLL.ListManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.AbstractTableModel;
+//</editor-fold>
 
 public class POTableModel extends AbstractTableModel {
 
     private ProductionOrderList poList; // A list of cuts
-    private ListManager listManager;
     // The names of columns
     private String[] colNames = {"PO Description", "Date"};
     // The type of columns
@@ -24,8 +24,6 @@ public class POTableModel extends AbstractTableModel {
      */
     public POTableModel(ProductionOrderList poList) {
         this.poList = poList;
-        listManager = new ListManager();
-
         fireTableDataChanged();
     }
 

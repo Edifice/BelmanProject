@@ -1,5 +1,6 @@
 package dk.easv.belman.DAL;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.Item;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+//</editor-fold>
 
 public class DataHandler extends DBConnection {
 

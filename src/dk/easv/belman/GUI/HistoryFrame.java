@@ -1,6 +1,6 @@
 package dk.easv.belman.GUI;
 
-import dk.easv.belman.BLL.ListManager;
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BLL.XMLWriter;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
@@ -8,12 +8,12 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import org.jdesktop.swingx.JXTable;
+//</editor-fold>
 
 public class HistoryFrame extends javax.swing.JFrame {
 
     private MainGui parent;
     private JXTable table;
-    private ListManager listManager;
 
     /**
      * Creates new form CutHistoryFrame
@@ -27,9 +27,6 @@ public class HistoryFrame extends javax.swing.JFrame {
     }
 
     private void init() {
-        //Initialize BLL classes
-        listManager = new ListManager();
-
         //Initialize the table and sets the model
         table = new JXTable(); // Creates an empty JXTable (from SwingX 1.6.1) for now.
         JScrollPane sf = new JScrollPane(table); // Creates a Scroll Pane where the table will be.

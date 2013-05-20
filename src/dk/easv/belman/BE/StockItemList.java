@@ -1,12 +1,15 @@
 package dk.easv.belman.BE;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import java.util.Collections;
 import java.util.Comparator;
+//</editor-fold>
 
 public class StockItemList extends BList<StockItem> {
 
     public StockItemList() {
     }
+    
     /**
      * This is where the sorting by ID in an ascending order happens.
      */

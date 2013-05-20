@@ -1,9 +1,5 @@
 package dk.easv.belman.BE;
 
-/**
- *
- *
- */
 public class CutList extends BList<Cut> {
 
     public CutList getCutsBySleeve(Item sleeve) {

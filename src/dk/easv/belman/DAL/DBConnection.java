@@ -1,10 +1,12 @@
 package dk.easv.belman.DAL;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
+//</editor-fold>
 
 public class DBConnection {
 

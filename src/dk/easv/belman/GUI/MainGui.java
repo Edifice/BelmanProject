@@ -24,7 +24,6 @@ import java.util.TimerTask;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SortOrder;
 import org.jdesktop.swingx.JXTable;
@@ -683,18 +682,6 @@ public class MainGui extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHistory1ActionPerformed
 
     /**
-     * Takes in multiple Components and sets the visibility option for all.
-     *
-     * @param visibility A boolean.
-     * @param comp All the components.
-     */
-    private void setVisibleTo(boolean visibility, Component... comp) {
-        for (Component c : comp) {
-            c.setVisible(visibility);
-        }
-    }
-
-    /**
      * Takes in multiple Components and sets the 'enable' option for all.
      *
      * @param visibility A boolean.
@@ -706,17 +693,6 @@ public class MainGui extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Takes in multiple JTextFields and sets the editable attribute for all.
-     *
-     * @param visibility A boolean.
-     * @param comp All the components.
-     */
-    private void setEditableTo(boolean visibility, JTextField... comp) {
-        for (JTextField c : comp) {
-            c.setEditable(visibility);
-        }
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutAction;
     private javax.swing.JButton btnHistory;

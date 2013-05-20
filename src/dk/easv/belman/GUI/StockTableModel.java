@@ -1,11 +1,13 @@
 package dk.easv.belman.GUI;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ProductionOrder;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.StockItem;
 import dk.easv.belman.BE.StockItemList;
 import javax.swing.table.AbstractTableModel;
+//</editor-fold>
 
 public class StockTableModel extends AbstractTableModel {
 

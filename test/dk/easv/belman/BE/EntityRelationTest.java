@@ -63,27 +63,22 @@ public class EntityRelationTest {
         //PO
         po1 = new ProductionOrder();
         po1.setDescription("aaa");
-        po1.setDone(false);
         po1.setId(1);
 
         po2 = new ProductionOrder();
         po2.setDescription("bbb");
-        po2.setDone(false);
         po2.setId(2);
 
         po3 = new ProductionOrder();
         po3.setDescription("ccc");
-        po3.setDone(false);
         po3.setId(3);
 
         po4 = new ProductionOrder();
         po4.setDescription("ddd");
-        po4.setDone(false);
         po4.setId(4);
 
         po5 = new ProductionOrder();
         po5.setDescription("eee");
-        po5.setDone(false);
         po5.setId(5);
 
         //SO
@@ -108,24 +103,31 @@ public class EntityRelationTest {
         //Relations
         ItemList il1 = new ItemList();
         il1.add(item1);
+        item1.setParent(po1);
         po1.setItemList(il1);
 
         ItemList il2 = new ItemList();
         il2.add(item2);
+        item2.setParent(po2);
         il2.add(item3);
+        item3.setParent(po2);
         po2.setItemList(il2);
 
         ItemList il3 = new ItemList();
         il3.add(item4);
+        item4.setParent(po3);
         po3.setItemList(il3);
 
         ProductionOrderList pol1 = new ProductionOrderList();
         pol1.add(po1);
+        po1.setParent(so1);
         pol1.add(po2);
+        po2.setParent(so1);
         so1.setProductOrderList(pol1);
 
         ProductionOrderList pol2 = new ProductionOrderList();
         pol2.add(po3);
+        po3.setParent(so2);
         so2.setProductOrderList(pol2);
 
         sol1 = new SalesOrderList();

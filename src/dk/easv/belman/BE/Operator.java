@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.easv.belman.BE;
 
-/**
- *
- * @author AntalJános
- */
 public class Operator extends IEntity {
 
     private int id;
@@ -22,22 +14,6 @@ public class Operator extends IEntity {
     private String addressCountry;
 
     public Operator() {
-    }
-
-    public Operator(int id) {
-        // @TODO get by id
-        Operator now = new Operator();
-
-        this.id = now.id;
-        this.firstName = now.firstName;
-        this.lastName = now.lastName;
-        this.ssn = now.ssn;
-        this.phoneNo = now.phoneNo;
-        this.addressStreetName = now.addressStreetName;
-        this.addressStreetNo = now.addressStreetNo;
-        this.addressCity = now.addressCity;
-        this.addressZipCode = now.addressZipCode;
-        this.addressCountry = now.addressCountry;
     }
 
     /**

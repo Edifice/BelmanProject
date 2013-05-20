@@ -1,5 +1,6 @@
 package dk.easv.belman.GUI;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.OperatorList;
 import dk.easv.belman.BE.SalesOrder;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+//</editor-fold>
 
 public class Main {
 

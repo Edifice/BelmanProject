@@ -1,17 +1,17 @@
 package dk.easv.belman.GUI;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.CutList;
-import dk.easv.belman.BLL.ListManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.AbstractTableModel;
+//</editor-fold>
 
 public class CutTableModel extends AbstractTableModel {
 
     private CutList cutList; // A list of cuts
-    private ListManager listManager;
     // The names of columns
     private String[] colNames = {"PO Description", "Date", "Operator", "Time", "Quantity"};
     // The type of columns
@@ -24,7 +24,6 @@ public class CutTableModel extends AbstractTableModel {
      */
     public CutTableModel(CutList cutList) {
         this.cutList = cutList;
-        listManager = new ListManager();
 
         fireTableDataChanged();
     }

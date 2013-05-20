@@ -18,31 +18,14 @@ public class ProductionOrder extends IEntity {
         this.parent = parent;
     }
 
-    /**
-     * Getting an existing Sales order from DB by id
-     *
-     * @param pk
-     */
-    public ProductionOrder(int id) {
-        this.setPk(id);
-
-        // @TODO get by id
-        ProductionOrder now = new ProductionOrder();
-
-        this.id = now.id;
-        this.salesOrderId = now.salesOrderId;
-        this.description = now.description;
-        this.quantity = now.quantity;
-    }
-
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     /**

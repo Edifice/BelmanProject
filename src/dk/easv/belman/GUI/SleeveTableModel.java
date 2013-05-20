@@ -1,5 +1,6 @@
 package dk.easv.belman.GUI;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.ItemList;
 import dk.easv.belman.BE.SalesOrderList;
@@ -7,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.AbstractTableModel;
+//</editor-fold>
 
 public class SleeveTableModel extends AbstractTableModel {
 

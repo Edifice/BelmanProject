@@ -1,7 +1,9 @@
 package dk.easv.belman.BE;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.GUI.Main;
 import java.util.Date;
+//</editor-fold>
 
 public class ItemList extends BList<Item> {
 

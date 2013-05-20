@@ -1,7 +1,9 @@
 package dk.easv.belman.BE;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BLL.ListManager;
 import dk.easv.belman.GUI.Main;
+//</editor-fold>
 
 public class Item extends IEntity {
 
@@ -15,6 +17,9 @@ public class Item extends IEntity {
     private double circumference;
     private boolean done;
     private ProductionOrder parent;
+
+    public Item() {
+    }
 
     public Item(ProductionOrder parent) {
         this.parent = parent;

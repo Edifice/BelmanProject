@@ -1,16 +1,16 @@
 package dk.easv.belman.BE;
 
-import dk.easv.belman.GUI.Main;
-import java.util.ArrayList;
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
+//</editor-fold>
 
 public class SalesOrderList extends BList<SalesOrder> {
 
     public SalesOrderList() {
     }
+    
     /**
      * This is where the sorting by ID in an ascending order happens.
      */
@@ -21,6 +21,7 @@ public class SalesOrderList extends BList<SalesOrder> {
             return codeDifference;
         }
     };
+    
     /**
      * This is where the sorting by due date in an ascending order happens.
      */
@@ -152,9 +153,8 @@ public class SalesOrderList extends BList<SalesOrder> {
      * @param item Item
      * @return 0 if nothing was deleted, 1 if item was deleted, 2 if PO, 3 if SO
      */
-    //TODO MIAFASZ
     public int removeItem(Item item) {
-        for (SalesOrder so : this.getList()) {
+        for (SalesOrder so : ((SalesOrderList) this.copy()).getList()) {
             for (ProductionOrder po : so.getProductOrderList().getList()) {
                 for (Item i : po.getItemList().getList()) {
                     if (item.getId() == i.getId()) {
@@ -204,22 +204,25 @@ public class SalesOrderList extends BList<SalesOrder> {
         return 0;
     }
 
+    /**
+     * @TODO JavaDoc
+     * @param isDone
+     * @return 
+     */
     public SalesOrderList filterByDone(boolean isDone) {
-        /*SalesOrderList sol = (SalesOrderList) this.copy();
-         for (Iterator<SalesOrder> it = new ArrayList<>(sol.getList()).iterator(); it.hasNext();) {
-         SalesOrder so = it.next();
-         if (!(isDone && !so.isDone()) || !(!isDone && so.isDone())) {
-         sol.remove(so);
-         }
-         }
-         return sol;*/
-        SalesOrderList sol = new SalesOrderList();
-        for (SalesOrder so : sol.getList()) {
+        for (SalesOrder so : ((SalesOrderList) this.copy()).getList()) {
             if (isDone && !so.isDone() || !isDone && so.isDone()) {
-                sol.add(so);
+                this.remove(so);
             }
         }
-        return sol;
+        return this;
+//        SalesOrderList sol = new SalesOrderList();
+//         for (SalesOrder so : sol.getList()) {
+//         if (isDone && !so.isDone() || !isDone && so.isDone()) {
+//         sol.add(so);
+//         }
+//         }
+//         return sol;
     }
 
     /**
@@ -259,6 +262,10 @@ public class SalesOrderList extends BList<SalesOrder> {
         return il;
     }
 
+    /**
+     * @TODO JavaDoc
+     * @return 
+     */
     public ProductionOrderList getProductOrderList() {
         ProductionOrderList list = new ProductionOrderList();
 

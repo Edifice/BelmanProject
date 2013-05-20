@@ -1,11 +1,13 @@
 package dk.easv.belman.BE;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import static dk.easv.belman.BLL.Serialize.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+//</editor-fold>
 
 /**
  * Belman List. To use it, you should extend this class as in this example:

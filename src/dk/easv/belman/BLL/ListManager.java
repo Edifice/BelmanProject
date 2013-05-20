@@ -1,5 +1,6 @@
 package dk.easv.belman.BLL;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.CutList;
 import dk.easv.belman.BE.Item;
@@ -17,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+//</editor-fold>
 
 public class ListManager {
 
@@ -132,18 +134,21 @@ public class ListManager {
      *
      * @param sol
      * @return itemList
+     * 
+     * @TODO Check the problem
      */
-    /* public ItemList getAllItemsNotDone(SalesOrderList sol) {
-     ItemList itemList = new ItemList();
-     for (Item item : getItemList(sol).getList()) {
-     if (!item.isDone()) {
-     if (!itemList.hasId(item.getSalesOrderId())) {
-     itemList.add(item);
-     }
-     }
-     }
-     return itemList;
-     }*/
+//     public ItemList getAllItemsNotDone(SalesOrderList sol) {
+//     ItemList itemList = new ItemList();
+//     for (Item item : getItemList(sol).getList()) {
+//     if (!item.isDone()) {
+//     if (!itemList.hasId(item.getSalesOrderId())) {
+//     itemList.add(item);
+//     }
+//     }
+//     }
+//     return itemList;
+//     }
+    
     /**
      * This method returns all the Operators in an OperatorList.
      *
@@ -188,6 +193,10 @@ public class ListManager {
         }
     }
 
+    /**
+     * @TODO JavaDoc
+     * @param stockItem 
+     */
     public static void updateStock(StockItem stockItem) {
         try {
             handler = new DataHandler();

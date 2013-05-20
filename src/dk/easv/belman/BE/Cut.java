@@ -1,11 +1,9 @@
 package dk.easv.belman.BE;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BLL.ListManager;
+//</editor-fold>
 
-/**
- *
- *
- */
 public class Cut extends IEntity {
 
     private int id;

@@ -1,5 +1,6 @@
 package dk.easv.belman.BLL;
 
+//<editor-fold defaultstate="collapsed" desc=" Imports ">
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.CutList;
 import java.io.File;
@@ -11,7 +12,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -19,15 +19,28 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+//</editor-fold>
 
 public class XMLWriter {
 
+    /**
+     * @TODO JavaDoc
+     * @param name
+     * @param value
+     * @param parent
+     * @param doc 
+     */
     private void _addAttr(String name, String value, Element parent, Document doc) {
         Attr attr = doc.createAttribute(name);
         attr.setValue(value);
         parent.setAttributeNode(attr);
     }
 
+    /**
+     * @TODO JavaDoc and comments
+     * @param list
+     * @return 
+     */
     public boolean write(CutList list) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -85,11 +98,7 @@ public class XMLWriter {
 
             System.out.println("File saved!");
             return true;
-        } catch (ParserConfigurationException ex) {
-            Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerException ex) {
+        } catch (ParserConfigurationException | TransformerException ex) {
             Logger.getLogger(XMLWriter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
