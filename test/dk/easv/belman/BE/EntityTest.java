@@ -3,11 +3,12 @@ package dk.easv.belman.BE;
 import dk.easv.belman.BE.Lists.ItemList;
 import dk.easv.belman.BE.Lists.SalesOrderList;
 import dk.easv.belman.BE.Lists.ProductionOrderList;
+import java.util.Calendar;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
-public class EntityRelationTest {
+public class EntityTest {
 
     private Item item1;
     private Item item2;
@@ -22,8 +23,9 @@ public class EntityRelationTest {
     private SalesOrder so2;
     private SalesOrder so3;
     private SalesOrderList sol1;
+    private SalesOrderList sol2;
 
-    public EntityRelationTest() {
+    public EntityTest() {
     }
 
     @Before
@@ -37,7 +39,7 @@ public class EntityRelationTest {
         item1.setQuantity(2);
         item1.setThickness(1.5);
         item1.setWidth(21.5);
-        
+
         item2 = new Item();
         item2.setId(2);
         item2.setDone(false);
@@ -45,7 +47,7 @@ public class EntityRelationTest {
         item2.setQuantity(42);
         item2.setThickness(1.45);
         item2.setWidth(21.55);
-        
+
         item3 = new Item();
         item3.setId(3);
         item3.setDone(false);
@@ -53,7 +55,7 @@ public class EntityRelationTest {
         item3.setQuantity(21);
         item3.setThickness(17.5);
         item3.setWidth(21.59);
-        
+
         item4 = new Item();
         item4.setId(4);
         item4.setDone(false);
@@ -89,7 +91,9 @@ public class EntityRelationTest {
         so1.setId(1);
         so1.setDescription("so1");
         so1.setDone(false);
-        so1.setDueDate(1220227200);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 2);
+        so1.setDueDate(cal.getTimeInMillis());
 
         so2 = new SalesOrder();
         so2.setId(2);
@@ -101,7 +105,7 @@ public class EntityRelationTest {
         so3.setId(3);
         so3.setDescription("so3");
         so3.setDone(false);
-        so3.setDueDate(1220217200);
+        so3.setDueDate(1220227200);
 
         //Relations
         ItemList il1 = new ItemList();
@@ -134,7 +138,10 @@ public class EntityRelationTest {
         so2.setProductOrderList(pol2);
 
         sol1 = new SalesOrderList();
-        sol1.add(so2);
+        sol1.add(so1);
+
+        sol2 = new SalesOrderList();
+        sol2.add(so2);
     }
 
     @Test
@@ -157,7 +164,25 @@ public class EntityRelationTest {
 
     @Test
     public void testDeleteItemOfSOL() {
-        sol1.removeItem(item4);
-        assertEquals(0, sol1.size());
+        sol2.removeItem(item4);
+        assertEquals(0, sol2.size());
+    }
+
+    @Test
+    public void testCopy() {
+        SalesOrderList solTest = (SalesOrderList) sol1.copy();
+        assertNotSame(solTest, sol1);
+        assertEquals(solTest.get(0).getDescription(), sol1.get(0).getDescription());
+    }
+
+    @Test
+    public void testSize() {
+        assertEquals(1, sol1.size());
+        assertEquals(2, sol1.get(0).getProductOrderList().size());
+    }
+
+    @Test
+    public void testUrgent() {
+        assertEquals(1, sol1.isSleeveIsUrgent(po1.getDescription(), 3));
     }
 }
