@@ -13,12 +13,15 @@ import javax.swing.table.AbstractTableModel;
 
 public class SleeveTableModel extends AbstractTableModel {
 
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">
     private ItemList iList; // The contents of the table.
     // The names of columns
     private String[] colNames = {"Description", "Due Date", "Mat ID", "Width", "Circumferance", "Thickness", "Quantity", "Left"};
     // The type of columns
     private Class[] classes = {String.class, Long.class, Integer.class, Double.class, Double.class, Double.class, Integer.class, Integer.class};
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">    
     /**
      * Constructor for the SleeveTableModel.
      *
@@ -28,17 +31,23 @@ public class SleeveTableModel extends AbstractTableModel {
         this.iList = list;
         fireTableDataChanged();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get the number of rows ">
     @Override
     public int getRowCount() {
         return iList.size();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get the number of columns ">
     @Override
     public int getColumnCount() {
         return colNames.length;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a value from a specific cell ">    
     @Override
     public Object getValueAt(int row, int col) {
 
@@ -65,7 +74,9 @@ public class SleeveTableModel extends AbstractTableModel {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Remove a specific Item/Sleeve ">    
     /**
      * Removes an item from the list
      *
@@ -74,7 +85,9 @@ public class SleeveTableModel extends AbstractTableModel {
     public void removeItem(Item item) {
         iList.remove(item);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Add a specific Item/Sleeve ">    
     /**
      * Adds an item to the list
      *
@@ -83,7 +96,9 @@ public class SleeveTableModel extends AbstractTableModel {
     public void addItem(Item item) {
         iList.add(item);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Reset/Set an ItemList ">    
     /**
      * Sets the Item list.
      *
@@ -93,7 +108,9 @@ public class SleeveTableModel extends AbstractTableModel {
         this.iList = iList;
         this.fireTableDataChanged();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific Item by row ">    
     /**
      * Gets an Item by row.
      *
@@ -103,14 +120,19 @@ public class SleeveTableModel extends AbstractTableModel {
     public Item getItemByRow(int row) {
         return iList.get(row);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific column name ">    
     @Override
     public String getColumnName(int col) {
         return colNames[col];
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific column class ">
     @Override
     public Class<?> getColumnClass(int col) {
         return classes[col];
     }
+    //</editor-fold>
 }

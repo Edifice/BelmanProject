@@ -10,10 +10,13 @@ import java.util.Properties;
 
 public class DBConnection {
 
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">    
     protected Connection connection;
     protected SQLServerDataSource dataSource;
     private final String PATH = "dbconfig.cfg"; // the path to the config file
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">
     protected DBConnection() throws SQLException, FileNotFoundException {
         dataSource = new SQLServerDataSource();
         Properties conf = FileManager.readPropertiesFile(PATH);
@@ -25,4 +28,5 @@ public class DBConnection {
         dataSource.setDatabaseName(conf.getProperty("DBNAME"));
         dataSource.setPortNumber(1433);
     }
+    //</editor-fold>
 }

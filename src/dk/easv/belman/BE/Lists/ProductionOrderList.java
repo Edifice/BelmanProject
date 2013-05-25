@@ -13,15 +13,22 @@ import java.util.Iterator;
 
 public class ProductionOrderList extends BList<ProductionOrder> {
 
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">
     private SalesOrder parent; // The parent entity.
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">
     public ProductionOrderList() {
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor that takes in a SalesOrder as a parent ">
     public ProductionOrderList(SalesOrder parent) {
         this.parent = parent;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a ProductionOrder by it's id ">
     /**
      * Search the list for 1 item by id
      *
@@ -36,7 +43,9 @@ public class ProductionOrderList extends BList<ProductionOrder> {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Add a new ProductionOrder to this list ">
     @Override
     public void add(ProductionOrder po) {
         for (Item it : po.getItemList().getList()) {
@@ -45,7 +54,9 @@ public class ProductionOrderList extends BList<ProductionOrder> {
         }
         list.add(po);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Filter by the 'done' flag ">
     /**
      * @TODO JavaDoc
      * @return
@@ -65,6 +76,7 @@ public class ProductionOrderList extends BList<ProductionOrder> {
             }
         }
         return pol;
-
     }
+    //</editor-fold>
+    
 }

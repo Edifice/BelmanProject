@@ -18,6 +18,7 @@ import org.w3c.dom.Element;
 
 public class XMLWriter {
 
+    //<editor-fold defaultstate="collapsed" desc=" Add attributes to the XML ">
     /**
      * @TODO JavaDoc
      * @param name
@@ -30,7 +31,9 @@ public class XMLWriter {
         attr.setValue(value);
         parent.setAttributeNode(attr);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Write a CutList to an XML file ">
     public boolean write(CutList list) {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -78,4 +81,5 @@ public class XMLWriter {
         }
         return false;
     }
+    //</editor-fold>
 }

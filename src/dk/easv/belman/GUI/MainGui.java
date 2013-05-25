@@ -644,7 +644,8 @@ public class MainGui extends javax.swing.JFrame {
         if (txtStockItem.getText().length() > 0 &&// Makes sure stock item has been set.
                 txtSleeve.getText().length() > 0 &&// Makes sure that sleeve has been set.
                 selectedItem.getRemaningCuts() > 0 &&// Makes sure that it still has something cut.
-                cmbbxOperator.getSelectedIndex() != 0)// Makes sure that an operator is selected.
+                cmbbxOperator.getSelectedIndex() != 0 &&// Makes sure that an operator is selected.
+                Integer.parseInt(txtCutAmount.getText()) <= selectedItem.getRemaningCuts())// One last check, to make sure the entered amount is not bigger than the remaining cut amount.
         {
             if (!cutInProgress) { // If there's no cut in progress...
                 startTime = new Date(); // Create a start time.
@@ -702,7 +703,7 @@ public class MainGui extends javax.swing.JFrame {
                 cutInProgress = false; // There's no more cut in progress.
             }
         } else { // In case there's an error...
-            JOptionPane.showMessageDialog(this, "Please make sure that values are set.\nIn order to cut, you need to:\n- Mount a sleeve\n- Mount a coil\n- Select an operator", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please make sure that values are set.\nIn order to cut, you need to:\n- Mount a sleeve\n- Mount a coil\n- Select an operator\n- Incorrect cut amount was entered", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnCutActionActionPerformed
     //</editor-fold>

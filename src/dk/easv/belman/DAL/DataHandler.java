@@ -1,7 +1,6 @@
 package dk.easv.belman.DAL;
 
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.belman.BE.Cut;
 import dk.easv.belman.BE.Lists.CutList;
 import dk.easv.belman.BE.Item;
@@ -23,10 +22,13 @@ import java.sql.Timestamp;
 
 public class DataHandler extends DBConnection {
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">  
     public DataHandler() throws FileNotFoundException, SQLException { // Throws the errors because the DBConnection class deals with the databse and local files.
         super(); // Calls the constructor of the DBConnection class.
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all SalesOrders ">
     /**
      * This method returns a list of all sales order from the database.
      *
@@ -134,7 +136,9 @@ public class DataHandler extends DBConnection {
         System.out.println("statistics: \n\tSalesOrderList size: " + so_i + ", \n\tProdcutionOrderList size: " + po_i + ", \n\tItemList size: " + i_i);
         return ret;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Update a selected Item ">
     /**
      * This method updates a selected Item/Sleeve in the database.
      *
@@ -157,7 +161,9 @@ public class DataHandler extends DBConnection {
         }
         System.out.println("Statistics: \n\tSleeve was set to: " + sleeve.isDone());
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all StockItems ">
     /**
      * This method returns all the Stock items from the database.
      *
@@ -208,7 +214,9 @@ public class DataHandler extends DBConnection {
         System.out.println("Statistics: \n\tStockItemList size: " + ret.size());
         return ret;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all Operators ">
     /**
      * This method returns all the Operators in an OperatorList from the
      * database.
@@ -249,7 +257,9 @@ public class DataHandler extends DBConnection {
         System.out.println("Statistics: \n\tOperatorList size: " + ret.size());
         return ret;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all Cuts ">
     /**
      * This method returns all the cuts that was executed before and was stored
      * in the ItemStock table in the database, with the Item, StockItem and
@@ -289,7 +299,9 @@ public class DataHandler extends DBConnection {
         System.out.println("Statistics: \n\tCutList size: " + ret.size());
         return ret;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Insert a new Cut ">
     /**
      * This method inserts a new cut into the database table ItemStock, with the
      * Sleeve id, StockItem id, Operator id, time spent and the time of the cut.
@@ -310,7 +322,7 @@ public class DataHandler extends DBConnection {
                     + "ItemStock.quantity, "
                     + "ItemStock.waste, "
                     + "ItemStock.archived) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");          
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             st.setInt(1, cut.getSleeve().getId());
             st.setInt(2, cut.getStockItem().getId());
             st.setInt(3, cut.getOperator().getId());
@@ -327,7 +339,9 @@ public class DataHandler extends DBConnection {
         }
         System.out.println("Statistics: \n\tThe following cut was inserted: " + cut.getId());
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Update an existing StockItem ">
     /**
      *
      * @param stockItem
@@ -350,7 +364,9 @@ public class DataHandler extends DBConnection {
         }
         System.out.println("Statistics: \n\tThe length of StockItem #" + stockItem.getId() + " was updated to: " + stockItem.getLength());
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Update an existing Cut ">
     /**
      * Setting a Cut's archived field in the database.
      *
@@ -374,4 +390,5 @@ public class DataHandler extends DBConnection {
         }
         System.out.println("Statistics: \n\tThe Cut #" + cut.getId() + " was set to :" + (cut.isArchived() ? "archived" : "unarchived"));
     }
+    //</editor-fold>
 }

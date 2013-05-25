@@ -12,12 +12,15 @@ import javax.swing.table.AbstractTableModel;
 
 public class StockTableModel extends AbstractTableModel {
 
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">
     private StockItemList stockList; // The contents of the table.
     // The names of columns
     private String[] colNames = {"Code", "Batch ID", "Mat ID", "Width", "Length", "Thickness", "Orders"};
     // The type of columns
     private Class[] classes = {String.class, String.class, Integer.class, Double.class, Double.class, Double.class, Integer.class};
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">
     /**
      * Constructor for the StockTableModel.
      *
@@ -27,17 +30,23 @@ public class StockTableModel extends AbstractTableModel {
         this.stockList = stockList;
         fireTableDataChanged();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get row count ">
     @Override
     public int getRowCount() {
         return stockList.size();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get column count ">
     @Override
     public int getColumnCount() {
         return colNames.length;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a value from a specific cell ">
     @Override
     public Object getValueAt(int row, int col) {
 
@@ -61,7 +70,9 @@ public class StockTableModel extends AbstractTableModel {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get the StockList ">
     /**
      * Returns the Stock list from the table model.
      *
@@ -70,7 +81,9 @@ public class StockTableModel extends AbstractTableModel {
     public StockItemList getStockList() {
         return stockList;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Reset/Set a StockList ">
     /**
      * Sets the Stock list on the table model. Only with the stockItems, that
      * have Order to cut.
@@ -81,7 +94,9 @@ public class StockTableModel extends AbstractTableModel {
         this.stockList = stockList;
         this.fireTableDataChanged();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific Stock item by row ">
     /**
      * Gets a StockItem by row.
      *
@@ -91,18 +106,25 @@ public class StockTableModel extends AbstractTableModel {
     public StockItem getStockByRow(int row) {
         return stockList.get(row);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get the name of a specific column ">
     @Override
     public String getColumnName(int col) {
         return colNames[col];
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get the class of a specific column ">
     @Override
     public Class<?> getColumnClass(int col) {
         return classes[col];
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" How many orders does a stock item has ">
     private int stockItemOrderCount(StockItem si) {
         return Main.allOrderData.filterByStockItem(si).size();
     }
+    //</editor-fold>
 }

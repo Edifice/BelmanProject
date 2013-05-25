@@ -15,8 +15,12 @@ import java.util.Iterator;
 
 public class SalesOrderList extends BList<SalesOrder> {
 
+    //<editor-fold defaultstate="collapsed" desc=" SalesOrderList() ">
     public SalesOrderList() {
     }
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc=" Comparator by id used for sorting inside the list ">
     /**
      * This is where the sorting by ID in an ascending order happens.
      */
@@ -27,6 +31,10 @@ public class SalesOrderList extends BList<SalesOrder> {
             return codeDifference;
         }
     };
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc=" Comparator by due-date used for sorting inside the list ">
+
     /**
      * This is where the sorting by due date in an ascending order happens.
      */
@@ -37,21 +45,27 @@ public class SalesOrderList extends BList<SalesOrder> {
             return codeDifference;
         }
     };
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" sortByID() ">
     /**
      * Basic sort by ID in ascending order.
      */
     public void sortByID() {
         Collections.sort(this.getList(), COMPARE_BY_ID);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" sortByDate() ">
     /**
      * Basic sort by ID in ascending order.
      */
     public void sortByDate() {
         Collections.sort(this.getList(), COMPARE_BY_DATE);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" hasPO(int id) ">
     /**
      * Checks if have PO with the given ID.
      *
@@ -71,7 +85,9 @@ public class SalesOrderList extends BList<SalesOrder> {
 
         return ret;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" hasItem(int id) ">
     /**
      * Checks if have Item with the given ID.
      *
@@ -93,7 +109,9 @@ public class SalesOrderList extends BList<SalesOrder> {
 
         return ret;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" getById(int id) ">
     /**
      * Search the list for 1 item by id and return it.
      *
@@ -108,7 +126,9 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" getItemById(int id) ">
     /**
      * Search the list for 1 item by id and return it.
      *
@@ -127,7 +147,9 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" getIndex(SalesOrder so) ">
     /**
      * Returns the items index in the stored array
      *
@@ -142,7 +164,9 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return 0;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" add(SalesOrder so) ">
     @Override
     public void add(SalesOrder so) {
         for (ProductionOrder po : so.getProductOrderList().getList()) {
@@ -151,7 +175,9 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         list.add(so);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" removeItem(Item item) ">
     /**
      * Removes an item from the list's itemlist and removes all unnecessary.
      *
@@ -183,7 +209,9 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return 0;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" isSleeveIsUrgent(String POdesc, int urgentDays) ">
     /**
      * Search the list for 1 PO and ch
      *
@@ -220,7 +248,9 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return 0;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" filterByStockItem(StockItem si) ">
     /**
      * This method filters a SalesOrderList by a selected StockItem and checks
      * for the Items/Sleeves that have the SAME MaterialID, SAME Thickness,
@@ -245,7 +275,9 @@ public class SalesOrderList extends BList<SalesOrder> {
 
         return resList;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" getItemList() ">
     public ItemList getItemList() {
         ItemList il = new ItemList();
         for (SalesOrder s : this.getList()) {
@@ -257,7 +289,9 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return il;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" getProductionOrderList() ">
     /**
      * @TODO JavaDoc
      * @return
@@ -273,9 +307,12 @@ public class SalesOrderList extends BList<SalesOrder> {
         }
         return pList;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" update() ">
     @Override
     public void update() {
         this.setList(ListManager.getAllSO().getList());
     }
+    //</editor-fold>
 }

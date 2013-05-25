@@ -11,12 +11,15 @@ import javax.swing.table.AbstractTableModel;
 
 public class CutTableModel extends AbstractTableModel {
 
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">
     private CutList cutList; // A list of cuts
     // The names of columns
     private String[] colNames = {"PO Description", "Date", "Operator", "Time", "Quantity"};
     // The type of columns
     private Class[] classes = {String.class, Long.class, String.class, Long.class, Integer.class};
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">
     /**
      * Constructor for the SleeveTableModel.
      *
@@ -27,17 +30,23 @@ public class CutTableModel extends AbstractTableModel {
 
         fireTableDataChanged();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get row count ">
     @Override
     public int getRowCount() {
         return cutList.size();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get column count ">
     @Override
     public int getColumnCount() {
         return colNames.length;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get value at a specific cell ">
     @Override
     public Object getValueAt(int row, int col) {
 
@@ -58,7 +67,9 @@ public class CutTableModel extends AbstractTableModel {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Replace/Set a new CutList ">
     /**
      * Sets the Cut list to new cutList
      *
@@ -68,7 +79,9 @@ public class CutTableModel extends AbstractTableModel {
         this.cutList = cutList;
         this.fireTableDataChanged();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a Cut by row ">
     /**
      * Gets a Cut by row.
      *
@@ -78,14 +91,19 @@ public class CutTableModel extends AbstractTableModel {
     public Cut getCutByRow(int row) {
         return cutList.get(row);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific column name ">
     @Override
     public String getColumnName(int col) {
         return colNames[col];
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific column class ">
     @Override
     public Class<?> getColumnClass(int col) {
         return classes[col];
     }
+    //</editor-fold>
 }

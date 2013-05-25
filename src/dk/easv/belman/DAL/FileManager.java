@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 
 public class FileManager {
 
+    //<editor-fold defaultstate="collapsed" desc=" Read the properties file ">
     /**
      * This is a helper class that reads in a file from the given path and
      * creates a configuration file which is returned.
@@ -37,7 +38,9 @@ public class FileManager {
         }
         return config;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Write a file (for the XML) ">
     /**
      * @TODO JavaDoc and comments
      * @param list
@@ -65,4 +68,5 @@ public class FileManager {
         }
         return false;
     }
+    //</editor-fold>
 }

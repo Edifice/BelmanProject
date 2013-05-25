@@ -7,7 +7,6 @@ import dk.easv.belman.BE.Item;
 import dk.easv.belman.BE.Lists.ItemList;
 import dk.easv.belman.BE.Lists.OperatorList;
 import dk.easv.belman.BE.ProductionOrder;
-import dk.easv.belman.BE.Lists.ProductionOrderList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.Lists.SalesOrderList;
 import dk.easv.belman.BE.StockItem;
@@ -22,8 +21,11 @@ import java.util.logging.Logger;
 
 public class ListManager {
 
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">
     private static DataHandler handler; // DAL object.
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Checks if a ProductOrder is urgent or not ">
     /**
      * Checks if the given Product order is urgent or not.
      *
@@ -33,7 +35,9 @@ public class ListManager {
     public static int isUrgent(String description) {
         return Main.allOrderData.isSleeveIsUrgent(description, Main.URGENT_DAYS);
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all SalesOrders ">
     /**
      * This method returns a list of all sales orders.
      *
@@ -49,7 +53,9 @@ public class ListManager {
         }
         return null;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all StockItems ">
     /**
      * This method returns all the stock items.
      *
@@ -64,7 +70,9 @@ public class ListManager {
         }
         return null;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all Cuts ">
     /**
      * This method returns all the cuts that was executed before, with the Item,
      * StockItem and Operator connected to that given cut.
@@ -81,7 +89,9 @@ public class ListManager {
         return null;
 
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get all Operators ">
     /**
      * This method returns all the Operators in an OperatorList.
      *
@@ -96,7 +106,9 @@ public class ListManager {
         }
         return null;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Update an existing Item ">
     /**
      * This method updates a selected Item/Sleeve.
      *
@@ -110,7 +122,9 @@ public class ListManager {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Insert a new Cut ">
     /**
      * This method inserts a new cut into the database table ItemStock, with the
      * Sleeve id, StockItem id, Operator id, time spent and the time of the cut.
@@ -125,7 +139,9 @@ public class ListManager {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Update an existing StockItem ">
     /**
      * @TODO JavaDoc
      * @param stockItem
@@ -138,7 +154,9 @@ public class ListManager {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Search for a specific sleeve by a query ">
     public static ItemList searchForSleeve(String search) {
         if (search.isEmpty()) {
             return Main.allOrderData.getItemList().filterByDone(false);
@@ -162,7 +180,9 @@ public class ListManager {
             return sol.getItemList();
         }
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Update an exisiting Cut ">
     public static void updateCut(Cut cut) {
         try {
             handler = new DataHandler();
@@ -171,4 +191,6 @@ public class ListManager {
             Logger.getLogger(ListManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //</editor-fold>
+
 }

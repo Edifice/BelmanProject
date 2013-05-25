@@ -13,9 +13,12 @@ import java.util.Comparator;
 
 public class StockItemList extends BList<StockItem> {
 
+    //<editor-fold defaultstate="collapsed" desc=" StockItemList() ">
     public StockItemList() {
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" getById(int id) ">
     /**
      * Search the list for a stock item by id
      *
@@ -30,7 +33,9 @@ public class StockItemList extends BList<StockItem> {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" filterBySleeve(Item item) ">
     /**
      * This method filters a StockItemList by a selected Item/Sleeve and checks
      * for the StockItems that have the SAME MaterialID, SAME Thickness, SMALLER
@@ -54,7 +59,13 @@ public class StockItemList extends BList<StockItem> {
         }
         return ret;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" getOnlyUsable() ">
+    /**
+     * Returns a StockItemList that contains only StockItems that can be used for cutting and are not done yet.
+     * @return StockItemList
+     */
     public StockItemList getOnlyUsable() {
         StockItemList sil = new StockItemList();
         for (StockItem si : this.getList()) {
@@ -74,9 +85,12 @@ public class StockItemList extends BList<StockItem> {
         }
         return sil;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" update() ">
     @Override
     public void update() {
         this.setList(ListManager.getAllSI().getList());
     }
+    //</editor-fold>
 }

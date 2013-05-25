@@ -11,12 +11,15 @@ import javax.swing.table.AbstractTableModel;
 
 public class POTableModel extends AbstractTableModel {
 
+    //<editor-fold defaultstate="collapsed" desc=" Global variables ">
     private ProductionOrderList poList; // A list of cuts
     // The names of columns
     private String[] colNames = {"PO Description", "Date"};
     // The type of columns
     private Class[] classes = {String.class, Long.class};
-
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc=" Constructor ">
     /**
      * Constructor for the SleeveTableModel.
      *
@@ -26,17 +29,23 @@ public class POTableModel extends AbstractTableModel {
         this.poList = poList;
         fireTableDataChanged();
     }
+        //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get the number of rows ">
     @Override
     public int getRowCount() {
         return poList.size();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get the number of columns ">
     @Override
     public int getColumnCount() {
         return colNames.length;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a value from a specific cell ">
     @Override
     public Object getValueAt(int row, int col) {
 
@@ -51,7 +60,9 @@ public class POTableModel extends AbstractTableModel {
         }
         return null;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a ProductionOrder by row ">
     /**
      * Gets a PO by row.
      *
@@ -61,14 +72,20 @@ public class POTableModel extends AbstractTableModel {
     public ProductionOrder getPOByRow(int row) {
         return poList.get(row);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific column name ">
     @Override
     public String getColumnName(int col) {
         return colNames[col];
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Get a specific column class ">
     @Override
     public Class<?> getColumnClass(int col) {
         return classes[col];
     }
+        //</editor-fold>
+
 }

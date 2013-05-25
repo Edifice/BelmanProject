@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 public class ItemList extends BList<Item> {
 
+    //<editor-fold defaultstate="collapsed" desc=" Filter by the 'done' flag ">
     public ItemList filterByDone(boolean isDone) {
         ItemList ret = (ItemList) this.copy();
         for (Iterator<Item> it = new ArrayList<>(ret.getList()).iterator(); it.hasNext();) {
@@ -20,9 +21,11 @@ public class ItemList extends BList<Item> {
         }
         return ret;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" Filter by a given week number ">
     public ItemList filterByWeek(int weeks) {
-        final long oneWeek = 1000L * 60 * 60 * 24 * 7;
+        final long oneWeek = 1000L * 60 * 60 * 24 * 7; // The long value for a week.
 
         ItemList ret = (ItemList) this.copy(); // The original list shouldn't be changed, so we create an empty one.
         Date currentDate = new Date(); // We get the current Date.
@@ -37,4 +40,6 @@ public class ItemList extends BList<Item> {
         }
         return ret; // Finally, we return it.
     }
+    //</editor-fold>
+    
 }
