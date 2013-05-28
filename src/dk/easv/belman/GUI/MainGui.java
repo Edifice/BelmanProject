@@ -686,12 +686,15 @@ public class MainGui extends javax.swing.JFrame {
 
                 cut.recordCut(); // Updates a StockItem entity and the database as well.
 
+                Main.allCutData.update(); // Update the allCutData with the the new data that was pushed to the database.
+
                 if (cut.getSleeve().getRemaningCuts() == 0) { // If there are no more cuts to do for that Sleeve.
                     selectedItem.setDone(true); // Sets the selected sleeve entity to done.
                     selectedItem.save(); // Updates the selected sleeve (sets it to done) in the database.
                 }
 
-                Main.allCutData.update(); // Update the allCutData with the the new data that was pushed to the database.
+                Main.allOrderData.update(); // Update the allOrderData with the the new data that was pushed to the database.
+                Main.allStockData.update(); // Update the allStockData with the the new data that was pushed to the database.
 
                 stockModel.setStockList(Main.allStockData.getOnlyUsable().filterBySleeve(selectedItem)); // Refreshes the Stock table.
                 sleeveModel.setItemList(Main.allOrderData.filterByStockItem(selectedStockItem).filterByDone(false)); // Refreshes the Sleeve table.

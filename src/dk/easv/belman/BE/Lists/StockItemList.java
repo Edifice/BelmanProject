@@ -62,7 +62,7 @@ public class StockItemList extends BList<StockItem> {
             for (SalesOrder so : Main.allOrderData.getList()) {
                 for (ProductionOrder po : so.getProductOrderList().getList()) {
                     for (Item item : po.getItemList().getList()) {
-                        if (si.canCut(item)) {
+                        if (si.canCut(item) && !item.isDone()) {
                             hasItemToCut = true;
                         }
                     }
