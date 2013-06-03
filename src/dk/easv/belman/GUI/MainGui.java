@@ -305,6 +305,7 @@ public class MainGui extends javax.swing.JFrame {
         txtSleeveSearch = new javax.swing.JTextField();
         btnSleeveSearch = new javax.swing.JButton();
         btnFinished = new javax.swing.JButton();
+        btnHistory1 = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         pnlWest = new javax.swing.JPanel();
         pnlSpacing = new javax.swing.JPanel();
@@ -451,6 +452,13 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
 
+        btnHistory1.setText("Settings");
+        btnHistory1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistory1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
@@ -460,16 +468,21 @@ public class MainGui extends javax.swing.JFrame {
                 .addComponent(txtStockItemSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnStockItemSearch)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSleeveSearch)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(196, 196, 196)
+                .addGap(97, 97, 97)
                 .addComponent(btnFinished)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHistory)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnHistory1)
+                .addGap(11, 11, 11))
         );
+
+        pnlHeaderLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnFinished, btnHistory, btnHistory1});
+
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
@@ -480,9 +493,12 @@ public class MainGui extends javax.swing.JFrame {
                     .addComponent(btnHistory)
                     .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSleeveSearch)
-                    .addComponent(btnFinished))
+                    .addComponent(btnFinished)
+                    .addComponent(btnHistory1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pnlHeaderLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnFinished, btnHistory, btnHistory1});
 
         pnlCenter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         pnlCenter.setPreferredSize(new java.awt.Dimension(400, 0));
@@ -710,7 +726,8 @@ public class MainGui extends javax.swing.JFrame {
 
     //<editor-fold defaultstate="collapsed" desc=" History Button ">
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
-        HistoryFrame historyFrame = new HistoryFrame(this); // Create a new frame.
+        HistoryFrame historyFrame; // Create a new frame.
+        historyFrame = new HistoryFrame(this);
     }//GEN-LAST:event_btnHistoryActionPerformed
     //</editor-fold>
 
@@ -727,14 +744,21 @@ public class MainGui extends javax.swing.JFrame {
 
     //<editor-fold defaultstate="collapsed" desc=" Finished Button ">
     private void btnFinishedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishedActionPerformed
-        FinishedProductionFrame finishedProductionFrame = new FinishedProductionFrame(this);
+        FinishedProductionFrame finishedProductionFrame;
+        finishedProductionFrame = new FinishedProductionFrame(this);
     }//GEN-LAST:event_btnFinishedActionPerformed
+
+    private void btnHistory1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistory1ActionPerformed
+        SettingsFrame settingsFrame;
+        settingsFrame = new SettingsFrame(this);
+    }//GEN-LAST:event_btnHistory1ActionPerformed
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc=" More variable declarations ">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutAction;
     private javax.swing.JButton btnFinished;
     private javax.swing.JButton btnHistory;
+    private javax.swing.JButton btnHistory1;
     private javax.swing.JButton btnSleeveSearch;
     private javax.swing.JButton btnStockItemSearch;
     private javax.swing.JComboBox cmbbxOperator;

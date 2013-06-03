@@ -288,15 +288,17 @@
                   <Component id="txtStockItemSearch" min="-2" pref="161" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnStockItemSearch" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="210" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="btnSleeveSearch" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtSleeveSearch" min="-2" pref="159" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="196" max="-2" attributes="0"/>
-                  <Component id="btnFinished" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                  <Component id="btnFinished" linkSize="1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btnHistory" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnHistory" linkSize="1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnHistory1" linkSize="1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -307,10 +309,11 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtStockItemSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnStockItemSearch" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnHistory" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnHistory" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSleeveSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSleeveSearch" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnFinished" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnFinished" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnHistory1" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -355,6 +358,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFinishedActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnHistory1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Settings"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistory1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
