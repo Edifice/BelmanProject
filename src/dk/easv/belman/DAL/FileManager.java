@@ -3,6 +3,8 @@ package dk.easv.belman.DAL;
 //<editor-fold defaultstate="collapsed" desc=" Imports ">
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -69,4 +71,13 @@ public class FileManager {
         return false;
     }
     //</editor-fold>
+    
+    public static void write(Properties propFile){
+        try {
+            //save properties to project root folder
+            propFile.store(new FileOutputStream("settings.cfg"), null);
+        } catch (IOException ex) {
+            Logger.getLogger(FileManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

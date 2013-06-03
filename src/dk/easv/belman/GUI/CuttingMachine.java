@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package cuttimeestimation;
+package dk.easv.belman.GUI;
+
+import dk.easv.belman.BLL.Estimator;
 
 /**
  *
@@ -188,15 +190,11 @@ public class CuttingMachine extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        Estimator est = new Estimator(Double.valueOf(initialLength.getText()), 
-                Double.valueOf(lowSeconds.getText()), 
-                Double.valueOf(highSeconds.getText()), 
-                Double.valueOf(lowThickness.getText()), 
-                Double.valueOf(highThickness.getText()));
         
-        est.calculateTimeForCut(Integer.valueOf(amount.getText()), Double.valueOf(thickness.getText()), Double.valueOf(length.getText()));
         
-        lblTimer.setText(est.toString());
+        
+        
+        lblTimer.setText(Estimator.getTimeForCut(Double.valueOf(length.getText()), Double.valueOf(thickness.getText()), Integer.valueOf(amount.getText())));
         COLORME.setBackground(colorChooser.getColor());
     }//GEN-LAST:event_btnPrintActionPerformed
 
