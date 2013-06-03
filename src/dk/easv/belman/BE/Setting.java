@@ -1,19 +1,19 @@
 package dk.easv.belman.BE;
 
-import java.awt.Color;
+import dk.easv.belman.DAL.SettingsManager;
 
-public class Setting {
+public class Setting extends IEntity {
 
     
-    private double lowestSeconds;// Amount of seconds to cut initialEstimateLength of the lowest thickness
-    private double highestSeconds;// Amount of seconds to cut initialEstimateLength of the highest thickness
+    private int lowestSeconds;// Amount of seconds to cut initialEstimateLength of the lowest thickness.
+    private int highestSeconds;// Amount of seconds to cut initialEstimateLength of the highest thickness.
     
     private int urgentWithIn; // Amount of days an order is urgent within.
     
-    private int urgentColorRGB; // The color for the urgent orders in the table
-    private int expiredColorRGB; // The color for the expired orders in the table
+    private int urgentColorRGB; // The color for the urgent orders in the table.
+    private int expiredColorRGB; // The color for the expired orders in the table.
    
-    
+    private int refreshPeriod; // Amount of minutes until the scheduler kicks off.
 
     public Setting() {
     }   
@@ -21,28 +21,28 @@ public class Setting {
     /**
      * @return the lowestSeconds
      */
-    public double getLowestSeconds() {
+    public int getLowestSeconds() {
         return lowestSeconds;
     }
 
     /**
      * @param lowestSeconds the lowestSeconds to set
      */
-    public void setLowestSeconds(double lowestSeconds) {
+    public void setLowestSeconds(int lowestSeconds) {
         this.lowestSeconds = lowestSeconds;
     }
 
     /**
      * @return the highestSeconds
      */
-    public double getHighestSeconds() {
+    public int getHighestSeconds() {
         return highestSeconds;
     }
 
     /**
      * @param highestSeconds the highestSeconds to set
      */
-    public void setHighestSeconds(double highestSeconds) {
+    public void setHighestSeconds(int highestSeconds) {
         this.highestSeconds = highestSeconds;
     }
 
@@ -88,5 +88,24 @@ public class Setting {
         this.expiredColorRGB = expiredColorRGB;
     }
 
+    /**
+     * @return the refreshPeriod
+     */
+    public int getRefreshPeriod() {
+        return refreshPeriod;
+    }
 
+    /**
+     * @param refreshPeriod the refreshPeriod to set
+     */
+    public void setRefreshPeriod(int refreshPeriod) {
+        this.refreshPeriod = refreshPeriod;
+    }
+
+    //<editor-fold defaultstate="collapsed" desc=" save() ">
+    @Override
+    public void save() {
+        SettingsManager.setSettings(this);
+    }
+    //</editor-fold>
 }

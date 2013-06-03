@@ -32,42 +32,44 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="0" pref="249" max="32767" attributes="0"/>
-              <Component id="jButton1" linkSize="3" min="-2" max="-2" attributes="0"/>
+              <Component id="btnOk" linkSize="3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton3" linkSize="3" min="-2" max="-2" attributes="0"/>
+              <Component id="btnCancel" linkSize="3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton2" linkSize="3" min="-2" max="-2" attributes="0"/>
+              <Component id="btnApply" linkSize="3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="lblMinThickness" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblUrgentOrderColor" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblRefreshPeriod" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblUrgentOrders" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblExpiredOrderColor" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="lblMaxThickness" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jSpinner1" linkSize="5" max="32767" attributes="0"/>
-                          <Component id="jSpinner2" linkSize="5" max="32767" attributes="0"/>
-                          <Component id="jSpinner3" linkSize="5" max="32767" attributes="0"/>
-                          <Component id="jSpinner4" linkSize="5" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jSpMinThickness" linkSize="5" max="32767" attributes="0"/>
+                          <Component id="jSpMaxThickness" linkSize="5" max="32767" attributes="0"/>
+                          <Component id="jSpRefreshPeriod" linkSize="5" max="32767" attributes="0"/>
+                          <Component id="jSpUrgentOrders" linkSize="5" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblRefreshPeriodMin" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMinThicknessSec" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMaxThicknessSec" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblUrgerntOrdersDay" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jButton4" linkSize="5" max="32767" attributes="0"/>
-                  <Component id="jButton5" linkSize="5" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnUrgentColor" linkSize="5" max="32767" attributes="0"/>
+                  <Component id="btnExpiredColor" linkSize="5" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -80,51 +82,51 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblRefreshPeriod" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblRefreshPeriodMin" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSpinner3" linkSize="6" min="-2" max="-2" attributes="0"/>
+                      <Component id="jSpRefreshPeriod" linkSize="6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jSpinner1" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMinThickness" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jSpMinThickness" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMinThicknessSec" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMaxThicknessSec" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="jSpMaxThickness" linkSize="6" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="lblMaxThickness" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jSpinner2" linkSize="6" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jSpinner4" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUrgentOrders" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jSpUrgentOrders" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUrgerntOrdersDay" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton4" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUrgentOrderColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnUrgentColor" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton5" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblExpiredOrderColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnExpiredColor" linkSize="6" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton3" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnOk" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnApply" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCancel" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -132,113 +134,122 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="lblMinThickness">
       <Properties>
         <Property name="text" type="java.lang.String" value="Time to cut a sleeve with 0.2 mm thickness:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
+    <Component class="javax.swing.JLabel" name="lblMaxThickness">
       <Properties>
         <Property name="text" type="java.lang.String" value="Time to cut a sleeve with 0.8 mm thickness:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSpinner" name="jSpinner1">
+    <Component class="javax.swing.JSpinner" name="jSpMinThickness">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
           <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSpinner" name="jSpinner2">
+    <Component class="javax.swing.JSpinner" name="jSpMaxThickness">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
           <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblUrgentOrderColor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Urgent order color:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnOk">
       <Properties>
         <Property name="text" type="java.lang.String" value="OK"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOkActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="btnApply">
       <Properties>
         <Property name="text" type="java.lang.String" value="Apply"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnApplyActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="btnCancel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
+    <Component class="javax.swing.JLabel" name="lblRefreshPeriod">
       <Properties>
         <Property name="text" type="java.lang.String" value="Refresh period:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSpinner" name="jSpinner3">
+    <Component class="javax.swing.JSpinner" name="jSpRefreshPeriod">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
           <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
+    <Component class="javax.swing.JLabel" name="lblUrgentOrders">
       <Properties>
         <Property name="text" type="java.lang.String" value="Urgent order:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JSpinner" name="jSpinner4">
+    <Component class="javax.swing.JSpinner" name="jSpUrgentOrders">
       <Properties>
         <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
           <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="lblExpiredOrderColor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Expired order color:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
+    <Component class="javax.swing.JLabel" name="lblRefreshPeriodMin">
       <Properties>
         <Property name="text" type="java.lang.String" value="minute(s)"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel10">
+    <Component class="javax.swing.JLabel" name="lblMinThicknessSec">
       <Properties>
         <Property name="text" type="java.lang.String" value="second(s)"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel11">
+    <Component class="javax.swing.JLabel" name="lblMaxThicknessSec">
       <Properties>
         <Property name="text" type="java.lang.String" value="second(s)"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel12">
+    <Component class="javax.swing.JLabel" name="lblUrgerntOrdersDay">
       <Properties>
         <Property name="text" type="java.lang.String" value="day(s)"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="btnUrgentColor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Select color"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUrgentColorActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="btnExpiredColor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Select color"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExpiredColorActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -33,7 +33,7 @@ public class ListManager {
      * @return
      */
     public static int isUrgent(String description) {
-        return Main.allOrderData.isSleeveIsUrgent(description, Main.URGENT_DAYS);
+        return Main.allOrderData.isSleeveIsUrgent(description, Main.urgentDays);
     }
 //</editor-fold>
 

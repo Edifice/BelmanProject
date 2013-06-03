@@ -54,7 +54,11 @@ public class MainGui extends javax.swing.JFrame {
     private Timer timer;
     // Is there a cut already in progress?
     private boolean cutInProgress = false;
+    //
     private double estSecsForCut;
+    //
+    private HighlightPredicate highlightUrgent;
+    private HighlightPredicate highlightPast;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc=" Constructor ">
@@ -84,22 +88,20 @@ public class MainGui extends javax.swing.JFrame {
         tblSleeves.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Only one selection is allowed per table.
         tblSleeves.setSortOrderCycle(SortOrder.ASCENDING, SortOrder.DESCENDING, SortOrder.UNSORTED); // Sorts the table in ascending, then descending order, finally it goes back to unsorted.
 
-        final HighlightPredicate highlightUgent = new HighlightPredicate() {
+        //
+        highlightUrgent = new HighlightPredicate() {
             @Override
             public boolean isHighlighted(Component renderer, ComponentAdapter adapter) {
                 return ListManager.isUrgent(adapter.getString(0)) == 1;
             }
         };
-        final HighlightPredicate highlightPast = new HighlightPredicate() {
+        highlightPast = new HighlightPredicate() {
             @Override
             public boolean isHighlighted(Component renderer, ComponentAdapter adapter) {
                 return ListManager.isUrgent(adapter.getString(0)) == -1;
             }
         };
-        ColorHighlighter highlighter1 = new ColorHighlighter(highlightUgent, Color.RED, null);
-        ColorHighlighter highlighter2 = new ColorHighlighter(highlightPast, Color.MAGENTA, null);
-        tblSleeves.addHighlighter(highlighter1);
-        tblSleeves.addHighlighter(highlighter2);
+        setHighlightColors();
 
         pnlCenter.setLayout(new BorderLayout()); // Sets the layout for the center JPanel.
         pnlCenter.add(sp); // Adds the Scroll Pane with the table to the JPanel on the center.
@@ -124,6 +126,12 @@ public class MainGui extends javax.swing.JFrame {
         pupulateOperatorComboBox();
     }
     //</editor-fold>
+
+    public void setHighlightColors() {
+        ColorHighlighter highlighter1 = new ColorHighlighter(highlightUrgent, Main.urgentColor, null);
+        ColorHighlighter highlighter2 = new ColorHighlighter(highlightPast, Main.expiredColor, null);
+        tblSleeves.setHighlighters(highlighter1, highlighter2);
+    }
 
     //<editor-fold defaultstate="collapsed" desc=" Scheduled update ">
     /**
@@ -154,7 +162,7 @@ public class MainGui extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     lblTimer.setText(String.valueOf(df.format(new Date(System.currentTimeMillis() - time)))); // We deduct the current time + 1 hour so the counter will start from 0.
-                    
+
                 }
             });
         }
@@ -170,8 +178,8 @@ public class MainGui extends javax.swing.JFrame {
         Timer timer2 = new Timer();
         lblTimer.setForeground(Color.green);
         timer.schedule(new UpdateUITask(), 1, 200);
-        
-        
+
+
     }
     //</editor-fold>
 
@@ -268,8 +276,7 @@ public class MainGui extends javax.swing.JFrame {
                 }
                 if (txtStockItem.getText().length() > 0 && txtSleeve.getText().length() > 0) {
 
-                    estSecsForCut = Estimator.getTimeForCut(selectedItem.getCircumference(), selectedStockItem.getThickness(), Integer.valueOf(txtCutAmount.getText()));
-                    txtEstTime.setText(Estimator.formatSecsToHHmmss(estSecsForCut));
+                    updateEstTime();
                 } else {
                     txtEstTime.setText("00:00:00");
                     txtCutAmount.setText("");
@@ -349,7 +356,7 @@ public class MainGui extends javax.swing.JFrame {
         txtSleeveSearch = new javax.swing.JTextField();
         btnSleeveSearch = new javax.swing.JButton();
         btnFinished = new javax.swing.JButton();
-        btnHistory1 = new javax.swing.JButton();
+        btnSettings = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         pnlWest = new javax.swing.JPanel();
         pnlSpacing = new javax.swing.JPanel();
@@ -433,7 +440,7 @@ public class MainGui extends javax.swing.JFrame {
                         .addGap(10, 10, 10))
                     .addGroup(jpCutLayout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCutLayout.createSequentialGroup()
                         .addComponent(btnCutAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
@@ -510,10 +517,10 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
 
-        btnHistory1.setText("Settings");
-        btnHistory1.addActionListener(new java.awt.event.ActionListener() {
+        btnSettings.setText("Settings");
+        btnSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistory1ActionPerformed(evt);
+                btnSettingsActionPerformed(evt);
             }
         });
 
@@ -535,11 +542,11 @@ public class MainGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHistory)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHistory1)
+                .addComponent(btnSettings)
                 .addGap(11, 11, 11))
         );
 
-        pnlHeaderLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnFinished, btnHistory, btnHistory1});
+        pnlHeaderLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnFinished, btnHistory, btnSettings});
 
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -552,11 +559,11 @@ public class MainGui extends javax.swing.JFrame {
                     .addComponent(txtSleeveSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSleeveSearch)
                     .addComponent(btnFinished)
-                    .addComponent(btnHistory1))
+                    .addComponent(btnSettings))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlHeaderLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnFinished, btnHistory, btnHistory1});
+        pnlHeaderLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnFinished, btnHistory, btnSettings});
 
         pnlCenter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         pnlCenter.setPreferredSize(new java.awt.Dimension(400, 0));
@@ -805,18 +812,26 @@ public class MainGui extends javax.swing.JFrame {
         FinishedProductionFrame finishedProductionFrame;
         finishedProductionFrame = new FinishedProductionFrame(this);
     }//GEN-LAST:event_btnFinishedActionPerformed
+    //</editor-fold>
 
-    private void btnHistory1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistory1ActionPerformed
+    //<editor-fold defaultstate="collapsed" desc=" Settings Button ">
+    private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
         SettingsFrame settingsFrame;
         settingsFrame = new SettingsFrame(this);
-    }//GEN-LAST:event_btnHistory1ActionPerformed
+        btnSettings.setEnabled(false);
+    }//GEN-LAST:event_btnSettingsActionPerformed
     //</editor-fold>
+
+    public void updateEstTime() {
+        estSecsForCut = Estimator.getTimeForCut(selectedItem.getCircumference(), selectedStockItem.getThickness(), Integer.valueOf(txtCutAmount.getText()));
+        txtEstTime.setText(Estimator.formatSecsToHHmmss(estSecsForCut));
+    }
     //<editor-fold defaultstate="collapsed" desc=" More variable declarations ">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCutAction;
-    private javax.swing.JButton btnFinished;
-    private javax.swing.JButton btnHistory;
-    private javax.swing.JButton btnHistory1;
+    protected javax.swing.JButton btnFinished;
+    protected javax.swing.JButton btnHistory;
+    protected javax.swing.JButton btnSettings;
     private javax.swing.JButton btnSleeveSearch;
     private javax.swing.JButton btnStockItemSearch;
     private javax.swing.JComboBox cmbbxOperator;
@@ -838,7 +853,7 @@ public class MainGui extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSpacing;
     private javax.swing.JPanel pnlWest;
     private javax.swing.JTextField txtCutAmount;
-    private javax.swing.JTextField txtEstTime;
+    public javax.swing.JTextField txtEstTime;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtSleeve;
     private javax.swing.JTextField txtSleeveSearch;

@@ -1,17 +1,22 @@
 package dk.easv.belman.GUI;
 
+import dk.easv.belman.BE.Setting;
+import dk.easv.belman.DAL.SettingsManager;
+import java.awt.Color;
+
 public class SettingsFrame extends javax.swing.JFrame {
 
-    javax.swing.JFrame parent;
+    MainGui parent;
 
     /**
      * Creates new form SettingsFrame
      */
-    public SettingsFrame(javax.swing.JFrame parent) {
+    public SettingsFrame(MainGui parent) {
         initComponents();
         this.parent = parent;
         this.setVisible(true); // Make the frame visible.
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        init();
     }
 
     /**
@@ -24,75 +29,90 @@ public class SettingsFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
-        jLabel8 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        lblMinThickness = new javax.swing.JLabel();
+        lblMaxThickness = new javax.swing.JLabel();
+        jSpMinThickness = new javax.swing.JSpinner();
+        jSpMaxThickness = new javax.swing.JSpinner();
+        lblUrgentOrderColor = new javax.swing.JLabel();
+        btnOk = new javax.swing.JButton();
+        btnApply = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        lblRefreshPeriod = new javax.swing.JLabel();
+        jSpRefreshPeriod = new javax.swing.JSpinner();
+        lblUrgentOrders = new javax.swing.JLabel();
+        jSpUrgentOrders = new javax.swing.JSpinner();
+        lblExpiredOrderColor = new javax.swing.JLabel();
+        lblRefreshPeriodMin = new javax.swing.JLabel();
+        lblMinThicknessSec = new javax.swing.JLabel();
+        lblMaxThicknessSec = new javax.swing.JLabel();
+        lblUrgerntOrdersDay = new javax.swing.JLabel();
+        btnUrgentColor = new javax.swing.JButton();
+        btnExpiredColor = new javax.swing.JButton();
 
         jLabel5.setText("jLabel5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel4.setText("Time to cut a sleeve with 0.2 mm thickness:");
+        lblMinThickness.setText("Time to cut a sleeve with 0.2 mm thickness:");
 
-        jLabel7.setText("Time to cut a sleeve with 0.8 mm thickness:");
+        lblMaxThickness.setText("Time to cut a sleeve with 0.8 mm thickness:");
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jSpMinThickness.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jSpMaxThickness.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
 
-        jLabel1.setText("Urgent order color:");
+        lblUrgentOrderColor.setText("Urgent order color:");
 
-        jButton1.setText("OK");
-
-        jButton2.setText("Apply");
-
-        jButton3.setText("Cancel");
-
-        jLabel6.setText("Refresh period:");
-
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-
-        jLabel8.setText("Urgent order:");
-
-        jSpinner4.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
-
-        jLabel2.setText("Expired order color:");
-
-        jLabel9.setText("minute(s)");
-
-        jLabel10.setText("second(s)");
-
-        jLabel11.setText("second(s)");
-
-        jLabel12.setText("day(s)");
-
-        jButton4.setText("Select color");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnOk.setText("OK");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnOkActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Select color");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnApply.setText("Apply");
+        btnApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnApplyActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        lblRefreshPeriod.setText("Refresh period:");
+
+        jSpRefreshPeriod.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+
+        lblUrgentOrders.setText("Urgent order:");
+
+        jSpUrgentOrders.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+
+        lblExpiredOrderColor.setText("Expired order color:");
+
+        lblRefreshPeriodMin.setText("minute(s)");
+
+        lblMinThicknessSec.setText("second(s)");
+
+        lblMaxThicknessSec.setText("second(s)");
+
+        lblUrgerntOrdersDay.setText("day(s)");
+
+        btnUrgentColor.setText("Select color");
+        btnUrgentColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUrgentColorActionPerformed(evt);
+            }
+        });
+
+        btnExpiredColor.setText("Select color");
+        btnExpiredColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExpiredColorActionPerformed(evt);
             }
         });
 
@@ -102,43 +122,44 @@ public class SettingsFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 249, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnOk)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnCancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnApply)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblMinThickness)
+                        .addComponent(lblUrgentOrderColor)
+                        .addComponent(lblRefreshPeriod)
+                        .addComponent(lblUrgentOrders)
+                        .addComponent(lblExpiredOrderColor))
+                    .addComponent(lblMaxThickness))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSpinner1)
-                            .addComponent(jSpinner2)
-                            .addComponent(jSpinner3)
-                            .addComponent(jSpinner4))
+                            .addComponent(jSpMinThickness)
+                            .addComponent(jSpMaxThickness)
+                            .addComponent(jSpRefreshPeriod)
+                            .addComponent(jSpUrgentOrders))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)))
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblRefreshPeriodMin)
+                            .addComponent(lblMinThicknessSec)
+                            .addComponent(lblMaxThicknessSec)
+                            .addComponent(lblUrgerntOrdersDay)))
+                    .addComponent(btnUrgentColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExpiredColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnApply, btnCancel, btnOk});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton4, jButton5, jSpinner1, jSpinner2, jSpinner3, jSpinner4});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnExpiredColor, btnUrgentColor, jSpMaxThickness, jSpMinThickness, jSpRefreshPeriod, jSpUrgentOrders});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,81 +168,119 @@ public class SettingsFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel9))
+                            .addComponent(lblRefreshPeriod)
+                            .addComponent(lblRefreshPeriodMin))
                         .addGap(8, 8, 8))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSpRefreshPeriod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                    .addComponent(lblMinThickness)
+                    .addComponent(jSpMinThickness, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMinThicknessSec))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMaxThicknessSec)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel11))
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSpMaxThickness, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMaxThickness)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(lblUrgentOrders)
+                    .addComponent(jSpUrgentOrders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblUrgerntOrdersDay))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton4))
+                    .addComponent(lblUrgentOrderColor)
+                    .addComponent(btnUrgentColor))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton5))
+                    .addComponent(lblExpiredOrderColor)
+                    .addComponent(btnExpiredColor))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnOk)
+                    .addComponent(btnApply)
+                    .addComponent(btnCancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnApply, btnCancel, btnOk});
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton4, jButton5, jSpinner1, jSpinner2, jSpinner3, jSpinner4});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnExpiredColor, btnUrgentColor, jSpMaxThickness, jSpMinThickness, jSpRefreshPeriod, jSpUrgentOrders});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnUrgentColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUrgentColorActionPerformed
         ColorChooserFrame colorChooser;
-        colorChooser = new ColorChooserFrame(this, jButton4);
-    }//GEN-LAST:event_jButton4ActionPerformed
+        colorChooser = new ColorChooserFrame(this, btnUrgentColor);
+    }//GEN-LAST:event_btnUrgentColorActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnExpiredColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpiredColorActionPerformed
         ColorChooserFrame colorChooser;
-        colorChooser = new ColorChooserFrame(this, jButton5);
-    }//GEN-LAST:event_jButton5ActionPerformed
+        colorChooser = new ColorChooserFrame(this, btnExpiredColor);
+    }//GEN-LAST:event_btnExpiredColorActionPerformed
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        Main.settings.setRefreshPeriod((int) jSpRefreshPeriod.getValue());
+        Main.settings.setLowestSeconds((int) jSpMinThickness.getValue());
+        Main.settings.setHighestSeconds((int) jSpMaxThickness.getValue());
+        Main.settings.setUrgentWithIn((int) jSpUrgentOrders.getValue());
+        Main.settings.setExpiredColorRGB(btnExpiredColor.getBackground().getRGB());
+        Main.settings.setUrgentColorRGB(btnUrgentColor.getBackground().getRGB());
+        Main.settings.save();
+        SettingsManager.applySettings();
+        parent.btnSettings.setEnabled(true);
+        this.dispose();
+    }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        parent.btnSettings.setEnabled(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
+        Main.settings.setRefreshPeriod((int) jSpRefreshPeriod.getValue());
+        Main.settings.setLowestSeconds((int)jSpMinThickness.getValue());
+        Main.settings.setHighestSeconds((int) jSpMaxThickness.getValue());
+        Main.settings.setUrgentWithIn((int) jSpUrgentOrders.getValue());
+        Main.settings.setExpiredColorRGB(btnExpiredColor.getBackground().getRGB());
+        Main.settings.setUrgentColorRGB(btnUrgentColor.getBackground().getRGB());
+        Main.settings.save();
+        SettingsManager.applySettings();
+    }//GEN-LAST:event_btnApplyActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton btnApply;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnExpiredColor;
+    private javax.swing.JButton btnOk;
+    private javax.swing.JButton btnUrgentColor;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
+    private javax.swing.JSpinner jSpMaxThickness;
+    private javax.swing.JSpinner jSpMinThickness;
+    private javax.swing.JSpinner jSpRefreshPeriod;
+    private javax.swing.JSpinner jSpUrgentOrders;
+    private javax.swing.JLabel lblExpiredOrderColor;
+    private javax.swing.JLabel lblMaxThickness;
+    private javax.swing.JLabel lblMaxThicknessSec;
+    private javax.swing.JLabel lblMinThickness;
+    private javax.swing.JLabel lblMinThicknessSec;
+    private javax.swing.JLabel lblRefreshPeriod;
+    private javax.swing.JLabel lblRefreshPeriodMin;
+    private javax.swing.JLabel lblUrgentOrderColor;
+    private javax.swing.JLabel lblUrgentOrders;
+    private javax.swing.JLabel lblUrgerntOrdersDay;
     // End of variables declaration//GEN-END:variables
+
+    private void init() {
+        jSpRefreshPeriod.getModel().setValue(Main.settings.getRefreshPeriod());
+        jSpMinThickness.getModel().setValue(Main.settings.getLowestSeconds());
+        jSpMaxThickness.getModel().setValue(Main.settings.getHighestSeconds());
+        jSpUrgentOrders.getModel().setValue(Main.settings.getUrgentWithIn());
+        btnUrgentColor.setBackground(new Color(Main.settings.getUrgentColorRGB()));
+        btnExpiredColor.setBackground(new Color(Main.settings.getExpiredColorRGB()));
+    }
 }

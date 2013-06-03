@@ -6,6 +6,9 @@ import dk.easv.belman.BE.Lists.OperatorList;
 import dk.easv.belman.BE.SalesOrder;
 import dk.easv.belman.BE.Lists.SalesOrderList;
 import dk.easv.belman.BE.Lists.StockItemList;
+import dk.easv.belman.BE.Setting;
+import dk.easv.belman.DAL.SettingsManager;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,17 +23,28 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 
     //<editor-fold defaultstate="collapsed" desc=" Global storage and settings variables ">
+    public static Setting settings; //
     public static SalesOrderList allOrderData = new SalesOrderList(); // Initial order data is stored right from the startup of the program.
     public static StockItemList allStockData = new StockItemList(); // Initial stock data is stored right from the startup of the program.
     public static OperatorList allOperatorData = new OperatorList(); // Initial operators are stored right from the statup of the program.
     public static CutList allCutData = new CutList(); // Initial cut data is stored right from the startup of the program.
-    public static final int URGENT_DAYS = 3; // The number of days to set a SalesOrder to Urgent if that is within.
-    private static final int SCHEDULER_PERIOD = 10; // Scheduler period in minutes.
+    public static int urgentDays; // The number of days to set a SalesOrder to Urgent if that is within.
+    public static int schedulerPeriod; // Scheduler period in minutes.
+    public static Color urgentColor; //
+    public static Color expiredColor; //
     private static final String pathToIcon = "img/icon.png"; // Path to the icon.
-    private static MainGui gui; // The main UI component.
+    public static MainGui gui; // The main UI component.
     //</editor-fold>
 
     public static void main(String[] args) {
+        //<editor-fold defaultstate="collapsed" desc=" Initialized the settings. ">
+        settings = SettingsManager.getSettings();
+        urgentDays = settings.getUrgentWithIn();
+        schedulerPeriod = settings.getRefreshPeriod();
+        urgentColor = new Color(settings.getUrgentColorRGB());
+        expiredColor = new Color(settings.getExpiredColorRGB());
+        //</editor-fold>
+        
         //<editor-fold defaultstate="collapsed" desc=" Initialized the allOrderData, allStockData and allOperatorData with data from the database. ">
         allOrderData.update(); // Initially updates and fills up allOrderData with a SalesOrderList.
         allStockData.update(); // Initially updates and fills up allStockData with a StockItemList.
@@ -87,7 +101,7 @@ public class Main {
 
         ScheduledExecutorService scheduler;
         scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(scheduledTask, SCHEDULER_PERIOD, SCHEDULER_PERIOD, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(scheduledTask, schedulerPeriod, schedulerPeriod, TimeUnit.MINUTES);
     }
     //</editor-fold>
 }
