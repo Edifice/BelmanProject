@@ -21,7 +21,7 @@ public class Estimator {
     public Estimator() {
     }
 
-    public static String getTimeForCut(/*Item sleeve,*/double length, double thickness, int amountOfCuts) { // In seconds
+    public static double getTimeForCut(/*Item sleeve,*/double length, double thickness, int amountOfCuts) { // In seconds
         Setting setting = SettingsManager.getSettings();
         
 //        double length = sleeve.getCircumference();
@@ -38,12 +38,13 @@ public class Estimator {
         double timeForEachCut = (lowestSeconds + (lowestSeconds * timeMultFactor)) / cutLength;
         double timeForCut = amountOfCuts * timeForEachCut;
         
-        return formatSecsToHHmmss((int) Math.round(timeForCut));
+        return timeForCut;
     }
 
-    private static String formatSecsToHHmmss(int secs) {
-            int hours = secs / 3600,
-                remainder = secs % 3600,
+    public static String formatSecsToHHmmss(double secs) {
+        
+            int hours = (int)secs / 3600,
+                remainder = (int)secs % 3600,
                 minutes = remainder / 60,
                 seconds = remainder % 60;
 
