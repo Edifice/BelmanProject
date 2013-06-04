@@ -823,8 +823,10 @@ public class MainGui extends javax.swing.JFrame {
     //</editor-fold>
 
     public void updateEstTime() {
-        estSecsForCut = Estimator.getTimeForCut(selectedItem.getCircumference(), selectedStockItem.getThickness(), Integer.valueOf(txtCutAmount.getText()));
-        txtEstTime.setText(Estimator.formatSecsToHHmmss(estSecsForCut));
+        if (selectedItem != null && selectedStockItem != null) {
+            estSecsForCut = Estimator.getTimeForCut(selectedItem.getCircumference(), selectedStockItem.getThickness(), Integer.valueOf(txtCutAmount.getText()));
+            txtEstTime.setText(Estimator.formatSecsToHHmmss(estSecsForCut));
+        }
     }
     //<editor-fold defaultstate="collapsed" desc=" More variable declarations ">
     // Variables declaration - do not modify//GEN-BEGIN:variables

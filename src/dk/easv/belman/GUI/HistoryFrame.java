@@ -173,24 +173,30 @@ public class HistoryFrame extends javax.swing.JFrame {
     //<editor-fold defaultstate="collapsed" desc=" Undo Button ">
     private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoActionPerformed
         if (selectedCut != null) { // If there's a selected Cut...
-            selectedCut.getSleeve().setDone(false); // Set the sleeve to not done.
-            selectedCut.getSleeve().save(); // Save it to the database.
-            Main.allOrderData.update(); // Update allOrderData with the recently updated data from the database.
-
-            selectedCut.setArchived(true); // Archive the Cut.
-            selectedCut.save(); // Save it to the database.
-            Main.allCutData.update(); // Update allCutData with the recently updated data from the database.
-            model.setCutList(Main.allCutData.filterByArchive(false)); // Refresh the Cut table with all the Cuts that are NOT archived.
-
-            parent.sleeveModel.setItemList(Main.allOrderData.getItemList().filterByDone(false)); // Update the Sleeve table in the Main UI as well.
-
-            table.clearSelection(); // Clear the table selection in the Cut table.
-            selectedCut = null; // Set the selectedCut to null (nothing is selected).
-
+            ErrorFrame confirm = new ErrorFrame(this);
+            confirm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            confirm.setVisible(true);
             btnUndo.setEnabled(false); // Disable the 'Undo' button.
         }
     }//GEN-LAST:event_btnUndoActionPerformed
     //</editor-fold>
+
+    protected void undoCut() {
+        selectedCut.getSleeve().setDone(false); // Set the sleeve to not done.
+        selectedCut.getSleeve().save(); // Save it to the database.
+        Main.allOrderData.update(); // Update allOrderData with the recently updated data from the database.
+
+        selectedCut.setArchived(true); // Archive the Cut.
+        selectedCut.save(); // Save it to the database.
+        Main.allCutData.update(); // Update allCutData with the recently updated data from the database.
+        model.setCutList(Main.allCutData.filterByArchive(false)); // Refresh the Cut table with all the Cuts that are NOT archived.
+
+        parent.sleeveModel.setItemList(Main.allOrderData.getItemList().filterByDone(false)); // Update the Sleeve table in the Main UI as well.
+
+        table.clearSelection(); // Clear the table selection in the Cut table.
+        selectedCut = null; // Set the selectedCut to null (nothing is selected).
+    }
+    
     //<editor-fold defaultstate="collapsed" desc=" More variables ">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnUndo;
