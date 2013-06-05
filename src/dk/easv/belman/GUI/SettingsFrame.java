@@ -6,7 +6,6 @@ import java.awt.Color;
 public class SettingsFrame extends javax.swing.JFrame {
 
     MainGui parent;
-    boolean applied = false;
 
     /**
      * Creates new form SettingsFrame
@@ -26,7 +25,6 @@ public class SettingsFrame extends javax.swing.JFrame {
         jSpUrgentOrders.getModel().setValue(Main.settings.getUrgentWithIn());
         btnUrgentColor.setBackground(new Color(Main.settings.getUrgentColorRGB()));
         btnExpiredColor.setBackground(new Color(Main.settings.getExpiredColorRGB()));
-        btnApply.setEnabled(false);//@TODO Finish it
     }
 
     /**
@@ -234,16 +232,14 @@ public class SettingsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExpiredColorActionPerformed
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        if (!applied) {
-            Main.settings.setRefreshPeriod((int) jSpRefreshPeriod.getValue());
-            Main.settings.setLowestSeconds((int) jSpMinThickness.getValue());
-            Main.settings.setHighestSeconds((int) jSpMaxThickness.getValue());
-            Main.settings.setUrgentWithIn((int) jSpUrgentOrders.getValue());
-            Main.settings.setExpiredColorRGB(btnExpiredColor.getBackground().getRGB());
-            Main.settings.setUrgentColorRGB(btnUrgentColor.getBackground().getRGB());
-            Main.settings.save();
-            SettingsManager.applySettings();
-        }
+        Main.settings.setRefreshPeriod((int) jSpRefreshPeriod.getValue());
+        Main.settings.setLowestSeconds((int) jSpMinThickness.getValue());
+        Main.settings.setHighestSeconds((int) jSpMaxThickness.getValue());
+        Main.settings.setUrgentWithIn((int) jSpUrgentOrders.getValue());
+        Main.settings.setExpiredColorRGB(btnExpiredColor.getBackground().getRGB());
+        Main.settings.setUrgentColorRGB(btnUrgentColor.getBackground().getRGB());
+        Main.settings.save();
+        SettingsManager.applySettings();
         parent.btnSettings.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btnOkActionPerformed
@@ -254,18 +250,14 @@ public class SettingsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyActionPerformed
-        if (!applied) {
-            Main.settings.setRefreshPeriod((int) jSpRefreshPeriod.getValue());
-            Main.settings.setLowestSeconds((int) jSpMinThickness.getValue());
-            Main.settings.setHighestSeconds((int) jSpMaxThickness.getValue());
-            Main.settings.setUrgentWithIn((int) jSpUrgentOrders.getValue());
-            Main.settings.setExpiredColorRGB(btnExpiredColor.getBackground().getRGB());
-            Main.settings.setUrgentColorRGB(btnUrgentColor.getBackground().getRGB());
-            Main.settings.save();
-            SettingsManager.applySettings();
-            applied = true;
-            btnApply.setEnabled(false);
-        }
+        Main.settings.setRefreshPeriod((int) jSpRefreshPeriod.getValue());
+        Main.settings.setLowestSeconds((int) jSpMinThickness.getValue());
+        Main.settings.setHighestSeconds((int) jSpMaxThickness.getValue());
+        Main.settings.setUrgentWithIn((int) jSpUrgentOrders.getValue());
+        Main.settings.setExpiredColorRGB(btnExpiredColor.getBackground().getRGB());
+        Main.settings.setUrgentColorRGB(btnUrgentColor.getBackground().getRGB());
+        Main.settings.save();
+        SettingsManager.applySettings();
     }//GEN-LAST:event_btnApplyActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApply;
