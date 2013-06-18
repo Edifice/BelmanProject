@@ -1,5 +1,5 @@
 # Belman Project
-_**Project description:** Belman is a make-to-order company and	needs an IT system for the part	of the production where metallic sheets or coils are cut for the bellows making. The purpose of the project is to develop a proposal to a system supporting production planning in the cutting area at Belman, Esbjerg. The system might be composed of several applications._
+_**Project description:** Belman is a make-to-order company and	needs an IT system for the part	of the production where metallic sheets or coils are cut for the bellows making. The purpose of the project is to develop a proposal to a system supporting production planning in the cutting area at Belman, Esbjerg._
 
 ___
 
@@ -12,9 +12,9 @@ Our team consists of the following members:
 
 **Product owner:** Antal János Monori
 
-**Scrum Master:** Stig Salskov Iversen
+**Scrum Master:** Ole Eriksen
 
-**Coaches:** Ole Eriksen, Henrik Kühl, Bent Pedersen
+**Coaches:** Stig Salskov Iversen, Henrik Kühl, Bent Pedersen
 
 
 ## Project Setup
@@ -39,7 +39,8 @@ We use the following applications in this project:
 7. Start the process all over again.
 
 ## Coding Conventions
-
+- The coding conventions that we followed can be found at the following link:
+[Coding conventions](http://www.cs.bilgi.edu.tr/pages/standards_project/java_CodingStyle.pdf)
 
 ## Policies
 - Follow the workflow!
